@@ -86,9 +86,7 @@
 </head>
 <body class="text-slate-800 antialiased overflow-x-hidden">
 
-    <!-- ========================================== -->
-    <!-- HEADER / NAVEGACIÓN                        -->
-    <!-- ========================================== -->
+    <!-- HEADER / NAVEGACIÓN -->
     <header class="sticky top-0 z-50 glass-nav border-b-4 border-amber-300 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -96,7 +94,7 @@
                 <!-- Logo -->
                 <a href="#" class="flex items-center gap-3 group">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-300 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300">
-                        <i class="fa-solid font-bell text-white text-2xl group-hover:animate-ring-bell"></i>
+                        <i class="fa-solid fa-bell text-white text-2xl group-hover:animate-ring-bell"></i>
                     </div>
                     <div>
                         <span class="font-heading font-bold text-2xl sm:text-3xl text-slate-800 tracking-wide block leading-none">
@@ -162,36 +160,20 @@
         </div>
     </header>
 
-    <!-- ========================================== -->
-    <!-- HERO SECTION                               -->
-    <!-- ========================================== -->
+    <!-- HERO SECTION -->
     <section id="inicio" class="relative pt-8 pb-16 lg:pt-16 lg:pb-24 overflow-hidden bg-gradient-to-b from-amber-50/60 via-sky-50/40 to-transparent">
-        
-        <!-- Elementos Decorativos Flotantes (Background) -->
         <div class="absolute inset-0 pointer-events-none overflow-hidden">
-            <div class="absolute top-10 left-8 text-amber-400 text-3xl opacity-60 animate-float-slow">
-                <i class="fa-solid fa-star"></i>
-            </div>
-            <div class="absolute top-1/4 right-12 text-sky-400 text-4xl opacity-50 animate-float-delayed">
-                <i class="fa-solid fa-pencil"></i>
-            </div>
-            <div class="absolute bottom-12 left-1/6 text-purple-400 text-3xl opacity-60 animate-float-slow">
-                <i class="fa-solid fa-cloud"></i>
-            </div>
-            <div class="absolute top-1/3 left-1/2 text-emerald-400 text-3xl opacity-40 animate-float-delayed">
-                <i class="fa-solid fa-calculator"></i>
-            </div>
-            <div class="absolute bottom-20 right-1/4 text-pink-400 text-3xl opacity-50 animate-float-slow">
-                <i class="fa-solid fa-book-bookmark"></i>
-            </div>
+            <div class="absolute top-10 left-8 text-amber-400 text-3xl opacity-60 animate-float-slow"><i class="fa-solid fa-star"></i></div>
+            <div class="absolute top-1/4 right-12 text-sky-400 text-4xl opacity-50 animate-float-delayed"><i class="fa-solid fa-pencil"></i></div>
+            <div class="absolute bottom-12 left-1/6 text-purple-400 text-3xl opacity-60 animate-float-slow"><i class="fa-solid fa-cloud"></i></div>
+            <div class="absolute top-1/3 left-1/2 text-emerald-400 text-3xl opacity-40 animate-float-delayed"><i class="fa-solid fa-calculator"></i></div>
+            <div class="absolute bottom-20 right-1/4 text-pink-400 text-3xl opacity-50 animate-float-slow"><i class="fa-solid fa-book-bookmark"></i></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 
-                <!-- Columna Izquierda: Texto -->
                 <div class="lg:col-span-7 text-center lg:text-left">
-                    
                     <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100/80 border border-amber-300 text-amber-800 text-sm font-bold mb-6 animate-bounce-soft shadow-sm">
                         <span class="flex h-2.5 w-2.5 rounded-full bg-recreo-orange animate-ping"></span>
                         <i class="fa-solid fa-sparkles text-amber-500"></i>
@@ -217,7 +199,6 @@
                         </a>
                     </div>
 
-                    <!-- Métricas o Chips rápidos -->
                     <div class="mt-10 pt-8 border-t border-slate-200/80 grid grid-cols-3 gap-4 text-center lg:text-left">
                         <div>
                             <span class="font-heading font-bold text-2xl sm:text-3xl text-recreo-blue block">+100</span>
@@ -232,17 +213,12 @@
                             <span class="text-xs sm:text-sm font-semibold text-slate-500">Contenido Adaptado</span>
                         </div>
                     </div>
-
                 </div>
 
-                <!-- Columna Derecha: Ilustración Interactiva / Cards -->
                 <div class="lg:col-span-5 relative">
                     <div class="relative mx-auto max-w-md lg:max-w-none">
-                        
-                        <!-- Glow Background -->
                         <div class="absolute -inset-4 bg-gradient-to-r from-amber-300 via-sky-300 to-purple-300 rounded-3xl blur-2xl opacity-50 animate-pulse"></div>
 
-                        <!-- Card Principal Ilustrativa -->
                         <div class="relative bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-4 border-white">
                             <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
                                 <div class="flex items-center gap-3">
@@ -257,7 +233,6 @@
                                 <span class="bg-amber-100 text-amber-700 text-xs font-extrabold px-3 py-1 rounded-full">¡Activo!</span>
                             </div>
 
-                            <!-- Accesos rápidos estilo app -->
                             <div class="grid grid-cols-2 gap-3 mb-6">
                                 <a href="#areas" onclick="filterAreas('mates')" class="p-3.5 rounded-2xl bg-sky-50 border border-sky-100 hover:border-sky-300 transition-all flex items-center gap-3 group">
                                     <div class="w-9 h-9 rounded-xl bg-sky-400 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -266,7 +241,8 @@
                                     <span class="font-heading font-bold text-sm text-slate-700">Mates</span>
                                 </a>
 
-                                <a href="#areas" onclick="filterAreas('lengua')" class="p-3.5 rounded-2xl bg-amber-50 border border-amber-100 hover:border-amber-300 transition-all flex items-center gap-3 group">
+                                <!-- Enlace directo a Lengua desde el Hero -->
+                                <a href="lengua.html" class="p-3.5 rounded-2xl bg-amber-50 border border-amber-100 hover:border-amber-300 transition-all flex items-center gap-3 group">
                                     <div class="w-9 h-9 rounded-xl bg-amber-400 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <i class="fa-solid fa-book-open"></i>
                                     </div>
@@ -288,12 +264,9 @@
                                 </a>
                             </div>
 
-                            <!-- Minijuego/Reto Exprés flotante en la tarjeta -->
                             <div class="bg-slate-800 text-white rounded-2xl p-4 flex items-center justify-between">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-900 flex items-center justify-center text-xl">
-                                        💡
-                                    </div>
+                                    <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-900 flex items-center justify-center text-xl">💡</div>
                                     <div>
                                         <div class="text-xs text-amber-300 font-bold uppercase tracking-wider">Super Reto</div>
                                         <div class="text-sm font-semibold">¿Cuánto es 8 × 7 + 4?</div>
@@ -303,7 +276,6 @@
                                     Respuesta
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -312,13 +284,10 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- SECCIÓN DE ÁREAS PRINCIPALES (MATERIAS)    -->
-    <!-- ========================================== -->
+    <!-- SECCIÓN DE ÁREAS PRINCIPALES -->
     <section id="areas" class="py-16 lg:py-24 bg-white pattern-bg relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Título de Sección -->
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <span class="font-heading font-extrabold text-recreo-orange text-sm uppercase tracking-widest bg-amber-100 px-4 py-1.5 rounded-full inline-block mb-3">
                     Asignaturas y Conocimiento
@@ -330,7 +299,6 @@
                     Aprender nunca fue tan entretenido. Elige tu materia favorita y descubre un mundo lleno de juegos, problemas divertidos y experimentos.
                 </p>
                 
-                <!-- Filtros Dinámicos de Asignatura -->
                 <div class="flex flex-wrap items-center justify-center gap-2 mt-8">
                     <button onclick="filterAreas('all')" class="filter-btn active font-heading font-bold px-5 py-2.5 rounded-full text-sm transition-all duration-200 bg-slate-800 text-white shadow-md">
                         Todas las Áreas
@@ -350,7 +318,6 @@
                 </div>
             </div>
 
-            <!-- Grid de Tarjetas de Asignaturas -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="areas-grid">
                 
                 <!-- Card 1: Matemáticas -->
@@ -365,15 +332,9 @@
                             Domina las tablas de multiplicar, resuelve acertijos geométricos, cálculo mental rápido y problemas divertidos del día a día.
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700 font-semibold mb-6">
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-sky-500"></i> Cálculo Mental Rápido
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-sky-500"></i> Geometría Interactiva
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-sky-500"></i> Problemas de la Vida Real
-                            </li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-sky-500"></i> Cálculo Mental Rápido</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-sky-500"></i> Geometría Interactiva</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-sky-500"></i> Problemas de la Vida Real</li>
                         </ul>
                     </div>
                     <button onclick="openSubjectModal('Matemáticas', 'Mates', 'sky')" class="w-full font-heading font-bold bg-sky-500 hover:bg-sky-600 text-white py-3 rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-sm">
@@ -382,7 +343,7 @@
                     </button>
                 </div>
 
-                <!-- Card 2: Lengua Castellana -->
+                <!-- Card 2: Lengua Castellana (CON ENLACE DIRECTO A LENGUA.HTML) -->
                 <div class="area-card lengua bg-gradient-to-b from-amber-50 to-white border-2 border-amber-200 rounded-3xl p-6 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
                     <div>
                         <div class="w-16 h-16 rounded-2xl bg-amber-400 text-white flex items-center justify-center text-3xl mb-6 shadow-lg shadow-amber-200">
@@ -391,24 +352,19 @@
                         <span class="text-xs font-extrabold uppercase tracking-wider text-amber-600 bg-amber-100 px-3 py-1 rounded-full">Lectura y Escritura</span>
                         <h3 class="font-heading font-bold text-2xl text-slate-800 mt-3 mb-3">Lengua Castellana</h3>
                         <p class="text-slate-600 text-sm mb-6 leading-relaxed">
-                            Mejora tu ortografía sin aburrirte, descubre cuentos fascinantes, reglas gramaticales y talleres de creación de historias.
+                            Mejora tu vocabulario con el juego de Sinónimos y Antónimos, ortografía divertida y talleres de creación de historias.
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700 font-semibold mb-6">
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-amber-500"></i> Ortografía Divertida
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-amber-500"></i> Lectura Comprehensiva
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-amber-500"></i> Taller de Cuentos
-                            </li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-500"></i> Sinónimos y Antónimos</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-500"></i> Ortografía Divertida</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-500"></i> Lectura Comprensiva</li>
                         </ul>
                     </div>
-                    <button onclick="openSubjectModal('Lengua Castellana', 'Lengua', 'amber')" class="w-full font-heading font-bold bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-sm">
+                    <!-- Enlace directo a lengua.html -->
+                    <a href="lengua.html" class="w-full font-heading font-bold bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-sm text-center">
                         <span>Entrar a Lengua</span>
                         <i class="fa-solid fa-arrow-right text-sm"></i>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Card 3: Inglés -->
@@ -423,15 +379,9 @@
                             Aprende vocabulario en inglés jugando, mejora tu pronunciación con audios sencillos, canciones y juegos de memoria.
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700 font-semibold mb-6">
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-purple-500"></i> Interactive Vocab
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-purple-500"></i> Listening & Songs
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-purple-500"></i> Daily Word Challenges
-                            </li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-purple-500"></i> Interactive Vocab</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-purple-500"></i> Listening & Songs</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-purple-500"></i> Daily Word Challenges</li>
                         </ul>
                     </div>
                     <button onclick="openSubjectModal('Inglés / English', 'English', 'purple')" class="w-full font-heading font-bold bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-sm">
@@ -452,15 +402,9 @@
                             Descubre el cuerpo humano, los animales, el sistema solar, experimentos caseros seguros y la sostenibilidad del planeta.
                         </p>
                         <ul class="space-y-2 text-sm text-slate-700 font-semibold mb-6">
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-emerald-500"></i> Experimentos Caseros
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-emerald-500"></i> El Cuerpo Humano y Planeta
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-emerald-500"></i> Historia y Geografía
-                            </li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> Experimentos Caseros</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> El Cuerpo Humano y Planeta</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-500"></i> Historia y Geografía</li>
                         </ul>
                     </div>
                     <button onclick="openSubjectModal('Conocimiento del Medio', 'Medio', 'emerald')" class="w-full font-heading font-bold bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-2xl transition-colors flex items-center justify-center gap-2 shadow-sm">
@@ -473,17 +417,12 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
     <!-- RINCÓN INTERACTIVO DE JUEGOS Y ADIVINANZAS -->
-    <!-- ========================================== -->
     <section id="rincon-interactivo" class="py-16 lg:py-24 bg-slate-900 text-white relative overflow-hidden">
-        
-        <!-- Luces de fondo decorativas -->
         <div class="absolute top-0 left-1/4 w-96 h-96 bg-recreo-orange/20 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-recreo-violet/20 rounded-full blur-3xl"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            
             <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="font-heading font-bold text-amber-400 text-sm uppercase tracking-widest bg-slate-800 px-4 py-1.5 rounded-full border border-slate-700 inline-block mb-3">
                     <i class="fa-solid fa-gamepad text-amber-400 mr-2"></i>Minijuegos en Vivo
@@ -492,27 +431,22 @@
                     El Rincón del Recreo Interactivo
                 </h2>
                 <p class="text-slate-300 text-lg font-medium">
-                    ¡Pone a prueba tu ingenio! Resuelve las adivinanzas diarias o genera un reto relámpago de matemáticas o palabras.
+                    ¡Ponte a prueba! Resuelve las adivinanzas diarias o genera un reto relámpago de matemáticas o palabras.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-                
-                <!-- CARD 1: EL RINCÓN DE LA ADIVINANZA -->
+                <!-- CARD 1: ADIVINANZA -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl relative backdrop-blur-sm">
                     <div>
                         <div class="flex items-center justify-between mb-6">
                             <span class="bg-amber-400/20 text-amber-300 font-heading font-bold text-xs uppercase px-3 py-1 rounded-full border border-amber-400/30">
                                 🧩 Adivinanza Diaria
                             </span>
-                            <div class="text-amber-400 text-2xl">
-                                <i class="fa-solid fa-lightbulb"></i>
-                            </div>
+                            <div class="text-amber-400 text-2xl"><i class="fa-solid fa-lightbulb"></i></div>
                         </div>
 
-                        <h3 class="font-heading font-bold text-2xl text-white mb-4">
-                            ¿Aceptas el desafío?
-                        </h3>
+                        <h3 class="font-heading font-bold text-2xl text-white mb-4">¿Aceptas el desafío?</h3>
 
                         <div class="bg-slate-900/80 rounded-2xl p-6 border border-slate-700 mb-6 text-center min-h-[140px] flex flex-col items-center justify-center">
                             <p id="riddle-text" class="text-lg sm:text-xl font-medium text-slate-200 italic">
@@ -520,7 +454,6 @@
                             </p>
                         </div>
 
-                        <!-- Respuesta Oculta -->
                         <div id="riddle-answer" class="hidden bg-emerald-500/20 border border-emerald-500/40 rounded-2xl p-4 text-center mb-6 text-emerald-300 font-heading font-bold text-xl animate-fade-in">
                             🎉 ¡Respuesta: El Reloj! ⏰
                         </div>
@@ -537,7 +470,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 2: GENERADOR DE RETOS FLASH INTERACTIVO -->
+                <!-- CARD 2: GENERADOR DE RETOS -->
                 <div class="bg-slate-800/90 border border-slate-700/80 rounded-3xl p-6 sm:p-8 flex flex-col justify-between shadow-xl relative backdrop-blur-sm">
                     <div>
                         <div class="flex items-center justify-between mb-6">
@@ -551,26 +484,16 @@
                         </div>
 
                         <div class="flex gap-2 mb-6">
-                            <button onclick="generateChallenge('math')" id="tab-math" class="challenge-tab active text-xs sm:text-sm font-heading font-bold px-4 py-2 rounded-xl bg-sky-500 text-white transition-all flex-1">
-                                🔢 Mates
-                            </button>
-                            <button onclick="generateChallenge('words')" id="tab-words" class="challenge-tab text-xs sm:text-sm font-heading font-bold px-4 py-2 rounded-xl bg-slate-700 text-slate-300 hover:bg-slate-600 transition-all flex-1">
-                                📝 Palabras
-                            </button>
-                            <button onclick="generateChallenge('science')" id="tab-science" class="challenge-tab text-xs sm:text-sm font-heading font-bold px-4 py-2 rounded-xl bg-slate-700 text-slate-300 hover:bg-slate-600 transition-all flex-1">
-                                🧪 Ciencia
-                            </button>
+                            <button onclick="generateChallenge('math')" id="tab-math" class="challenge-tab active text-xs sm:text-sm font-heading font-bold px-4 py-2 rounded-xl bg-sky-500 text-white transition-all flex-1">🔢 Mates</button>
+                            <button onclick="generateChallenge('words')" id="tab-words" class="challenge-tab text-xs sm:text-sm font-heading font-bold px-4 py-2 rounded-xl bg-slate-700 text-slate-300 hover:bg-slate-600 transition-all flex-1">📝 Palabras</button>
+                            <button onclick="generateChallenge('science')" id="tab-science" class="challenge-tab text-xs sm:text-sm font-heading font-bold px-4 py-2 rounded-xl bg-slate-700 text-slate-300 hover:bg-slate-600 transition-all flex-1">🧪 Ciencia</button>
                         </div>
 
                         <div class="bg-slate-900/80 rounded-2xl p-6 border border-slate-700 mb-6 text-center">
                             <div id="challenge-question" class="text-lg sm:text-xl font-bold text-white mb-4">
                                 Clic en los botones para generar un reto
                             </div>
-                            
-                            <div id="challenge-options" class="grid grid-cols-2 gap-3">
-                                <!-- Opciones cargadas por JS -->
-                            </div>
-
+                            <div id="challenge-options" class="grid grid-cols-2 gap-3"></div>
                             <div id="challenge-feedback" class="mt-4 text-sm font-bold min-h-[24px]"></div>
                         </div>
                     </div>
@@ -580,17 +503,13 @@
                         <span>Generar Nuevo Reto Aleatorio</span>
                     </button>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- RECURSOS DESTACADOS                        -->
-    <!-- ========================================== -->
+    <!-- RECURSOS DESTACADOS -->
     <section id="recursos" class="py-16 lg:py-24 bg-slate-50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
                 <div>
                     <span class="font-heading font-bold text-recreo-mint text-sm uppercase tracking-widest bg-emerald-100 px-4 py-1.5 rounded-full inline-block mb-3">
@@ -608,9 +527,7 @@
                 </div>
             </div>
 
-            <!-- Cards de Recursos -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
                 <!-- Recurso 1 -->
                 <div class="bg-white rounded-3xl p-6 shadow-md border border-slate-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
                     <div>
@@ -618,12 +535,8 @@
                             <span class="absolute top-3 left-3 bg-white text-amber-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">PDF Imprimible</span>
                             <i class="fa-solid fa-file-pdf text-6xl text-amber-400"></i>
                         </div>
-                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">
-                            Fichas de Cálculo Mental Divertido (1º a 6º)
-                        </h3>
-                        <p class="text-slate-600 text-sm mb-4">
-                            Colección de 20 fichas listas para descargar e imprimir con laberintos matemáticos y coloreables.
-                        </p>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">Fichas de Cálculo Mental Divertido (1º a 6º)</h3>
+                        <p class="text-slate-600 text-sm mb-4">Colección de 20 fichas listas para descargar e imprimir con laberintos matemáticos y coloreables.</p>
                     </div>
                     <button onclick="downloadResourceMock('Fichas de Cálculo Mental')" class="w-full font-heading font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 py-3 rounded-2xl transition-colors flex items-center justify-center gap-2">
                         <i class="fa-solid fa-download"></i>
@@ -638,12 +551,8 @@
                             <span class="absolute top-3 left-3 bg-white text-purple-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Interactive Flashcards</span>
                             <i class="fa-solid fa-layer-group text-6xl text-purple-400"></i>
                         </div>
-                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">
-                            Tarjetas de Vocabulario en Inglés (Animals & Nature)
-                        </h3>
-                        <p class="text-slate-600 text-sm mb-4">
-                            Flashcards con ilustraciones vectoriales y pronunciación para repasar en clase o tablet.
-                        </p>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">Tarjetas de Vocabulario en Inglés (Animals & Nature)</h3>
+                        <p class="text-slate-600 text-sm mb-4">Flashcards con ilustraciones vectoriales y pronunciación para repasar en clase o tablet.</p>
                     </div>
                     <button onclick="downloadResourceMock('Tarjetas Inglés')" class="w-full font-heading font-bold bg-purple-50 hover:bg-purple-100 text-purple-800 py-3 rounded-2xl transition-colors flex items-center justify-center gap-2">
                         <i class="fa-solid fa-eye"></i>
@@ -658,36 +567,25 @@
                             <span class="absolute top-3 left-3 bg-white text-emerald-700 text-xs font-bold px-3 py-1 rounded-full shadow-sm">Experimento</span>
                             <i class="fa-solid fa-vial-circle-check text-6xl text-emerald-400"></i>
                         </div>
-                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">
-                            Guía de Experimentos Seguros para Casa
-                        </h3>
-                        <p class="text-slate-600 text-sm mb-4">
-                            5 experimentos científicos fáciles usando ingredientes de cocina (volcán, tinta invisible y más).
-                        </p>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">Guía de Experimentos Seguros para Casa</h3>
+                        <p class="text-slate-600 text-sm mb-4">5 experimentos científicos fáciles usando ingredientes de cocina (volcán, tinta invisible y más).</p>
                     </div>
                     <button onclick="downloadResourceMock('Guía de Experimentos')" class="w-full font-heading font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 py-3 rounded-2xl transition-colors flex items-center justify-center gap-2">
                         <i class="fa-solid fa-file-arrow-down"></i>
                         <span>Descargar Guía</span>
                     </button>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- BANNER COMUNIDAD EDUCACIÓN                 -->
-    <!-- ========================================== -->
+    <!-- BANNER COMUNIDAD -->
     <section class="py-12 bg-gradient-to-r from-recreo-orange via-amber-400 to-amber-500 text-slate-900 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
                 <div>
-                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">
-                        ¿Eres Profesor/a o Padre/Madre?
-                    </h2>
-                    <p class="text-slate-800 text-lg font-medium max-w-2xl">
-                        Únete a nuestro boletín semanal gratuito. Recibe nuevas fichas, dinámicas de recreo e ideas para el aula directamente en tu email.
-                    </p>
+                    <h2 class="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">¿Eres Profesor/a o Padre/Madre?</h2>
+                    <p class="text-slate-800 text-lg font-medium max-w-2xl">Únete a nuestro boletín semanal gratuito. Recibe nuevas fichas, dinámicas de recreo e ideas para el aula directamente en tu email.</p>
                 </div>
                 <div class="w-full sm:w-auto">
                     <form onsubmit="subscribeNewsletter(event)" class="flex flex-col sm:flex-row gap-3">
@@ -701,14 +599,10 @@
         </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- PIE DE PÁGINA (FOOTER)                     -->
-    <!-- ========================================== -->
+    <!-- FOOTER -->
     <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t-8 border-recreo-orange">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
-                
-                <!-- Columna 1: Logo e Info -->
                 <div class="lg:col-span-2">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center text-slate-900 font-bold text-xl">
@@ -719,34 +613,19 @@
                     <p class="text-slate-400 text-sm leading-relaxed mb-6 max-w-sm">
                         Plataforma educativa interactiva diseñada para motivar el aprendizaje en educación primaria a través del juego, la curiosidad y recursos accesibles para todos.
                     </p>
-                    <div class="flex gap-3">
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-400 hover:text-slate-900 text-slate-300 flex items-center justify-center transition-all">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-400 hover:text-slate-900 text-slate-300 flex items-center justify-center transition-all">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-400 hover:text-slate-900 text-slate-300 flex items-center justify-center transition-all">
-                            <i class="fa-brands fa-youtube"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-amber-400 hover:text-slate-900 text-slate-300 flex items-center justify-center transition-all">
-                            <i class="fa-brands fa-pinterest"></i>
-                        </a>
-                    </div>
                 </div>
 
-                <!-- Columna 2: Asignaturas -->
                 <div>
                     <h4 class="font-heading font-bold text-white text-lg mb-4">Asignaturas</h4>
                     <ul class="space-y-2.5 text-sm font-medium">
                         <li><a href="#areas" onclick="filterAreas('mates')" class="hover:text-amber-400 transition-colors">Matemáticas</a></li>
-                        <li><a href="#areas" onclick="filterAreas('lengua')" class="hover:text-amber-400 transition-colors">Lengua Castellana</a></li>
+                        <!-- Enlace directo a Lengua en el footer -->
+                        <li><a href="lengua.html" class="hover:text-amber-400 transition-colors font-bold text-amber-300">Lengua Castellana ➔</a></li>
                         <li><a href="#areas" onclick="filterAreas('ingles')" class="hover:text-amber-400 transition-colors">Inglés (English)</a></li>
                         <li><a href="#areas" onclick="filterAreas('medio')" class="hover:text-amber-400 transition-colors">Conocimiento del Medio</a></li>
                     </ul>
                 </div>
 
-                <!-- Columna 3: Enlaces Rápidos -->
                 <div>
                     <h4 class="font-heading font-bold text-white text-lg mb-4">Secciones</h4>
                     <ul class="space-y-2.5 text-sm font-medium">
@@ -757,20 +636,16 @@
                     </ul>
                 </div>
 
-                <!-- Columna 4: Legal & Créditos -->
                 <div>
                     <h4 class="font-heading font-bold text-white text-lg mb-4">Legal</h4>
                     <ul class="space-y-2.5 text-sm font-medium">
                         <li><a href="#" onclick="showToast('Aviso Legal: Portal web educativo libre de anuncios nocivos para menores.')" class="hover:text-amber-400 transition-colors">Aviso Legal</a></li>
                         <li><a href="#" onclick="showToast('Política de Privacidad: Protegemos los datos de menores y familias.')" class="hover:text-amber-400 transition-colors">Privacidad y Cookies</a></li>
                         <li><a href="#" onclick="showToast('Uso Educativo: Todo el contenido es libre para aulas de primaria.')" class="hover:text-amber-400 transition-colors">Uso Educativo Libre</a></li>
-                        <li><a href="#" onclick="showToast('Contacto: hola@eltimbredelrecreo.edu')" class="hover:text-amber-400 transition-colors">Contacto</a></li>
                     </ul>
                 </div>
-
             </div>
 
-            <!-- Bottom Credits -->
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 font-medium">
                 <p>© <span id="current-year"></span> El Timbre del Recreo. Creado con ❤️ para la educación primaria.</p>
                 <p class="mt-2 sm:mt-0">Aprender jugando • Todos los derechos reservados</p>
@@ -778,17 +653,12 @@
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- MODALES Y ELEMENTOS INTERACTIVOS (JS)      -->
-    <!-- ========================================== -->
-
-    <!-- Modal Zona Alumnos / Profes -->
-    <div id="modal-zona" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden transition-opacity">
-        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative animate-bounce-soft">
+    <!-- MODALES Y JAVASCRIPT -->
+    <div id="modal-zona" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
             <button onclick="closeModalZona()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            
             <div class="text-center mb-6">
                 <div class="w-16 h-16 rounded-2xl bg-amber-100 text-amber-600 mx-auto flex items-center justify-center text-3xl mb-3">
                     <i class="fa-solid fa-user-graduate"></i>
@@ -796,7 +666,6 @@
                 <h3 class="font-heading font-bold text-2xl text-slate-800">Zona Alumnos & Profes</h3>
                 <p class="text-slate-500 text-sm mt-1">Selecciona cómo deseas ingresar al portal</p>
             </div>
-
             <div class="space-y-3">
                 <button onclick="simulateLogin('Alumno')" class="w-full p-4 rounded-2xl bg-sky-50 border-2 border-sky-200 hover:bg-sky-100 text-slate-800 font-heading font-bold flex items-center gap-4 transition-all">
                     <span class="text-3xl">🎒</span>
@@ -805,7 +674,6 @@
                         <div class="text-xs font-normal text-slate-500">Accede a tus medallas y retos diarios</div>
                     </div>
                 </button>
-
                 <button onclick="simulateLogin('Profesor/a')" class="w-full p-4 rounded-2xl bg-purple-50 border-2 border-purple-200 hover:bg-purple-100 text-slate-800 font-heading font-bold flex items-center gap-4 transition-all">
                     <span class="text-3xl">👩‍🏫</span>
                     <div class="text-left">
@@ -817,32 +685,23 @@
         </div>
     </div>
 
-    <!-- Modal Detalle Asignatura -->
     <div id="modal-subject" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
             <button onclick="closeSubjectModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            <div id="modal-subject-content">
-                <!-- Se llena dinámicamente con JS -->
-            </div>
+            <div id="modal-subject-content"></div>
         </div>
     </div>
 
-    <!-- TOAST NOTIFICACIÓN -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-800 text-white px-6 py-4 rounded-2xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3">
         <i class="fa-solid fa-bell text-amber-400 text-xl" id="toast-icon"></i>
         <span id="toast-message" class="font-heading font-semibold text-sm">Mensaje de notificación</span>
     </div>
 
-    <!-- ========================================== -->
-    <!-- JAVASCRIPT LÓGICA COMPLETA                 -->
-    <!-- ========================================== -->
     <script>
-        // Año actual footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // 1. Menú Móvil Responsive
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
@@ -869,13 +728,8 @@
             });
         });
 
-        // 2. Filtros de Asignaturas
         function filterAreas(category) {
             const cards = document.querySelectorAll('.area-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-
-            buttons.forEach(btn => btn.classList.remove('active', 'bg-slate-800', 'text-white'));
-
             cards.forEach(card => {
                 if (category === 'all' || card.classList.contains(category)) {
                     card.style.display = 'flex';
@@ -885,20 +739,17 @@
             });
         }
 
-        // 3. Sistema de Adivinanzas
         const riddles = [
             { question: '"Tengo agujas pero no sé coser, tengo números pero no sé leer. ¿Qué soy?"', answer: '🎉 ¡Respuesta: El Reloj! ⏰' },
             { question: '"Vuelo de noche, duermo de día y nunca verás plumas en la ala mía. ¿Qué soy?"', answer: '🦇 ¡Respuesta: El Murciélago! 🦇' },
             { question: '"Blanca por dentro, verde por fuera. Si quieres que te lo diga, espera. ¿Qué es?"', answer: '🍐 ¡Respuesta: La Pera! 🍐' },
-            { question: '"Cuanto más le quitas, más grande es. ¿Qué es?"', answer: '🕳️ ¡Respuesta: Un Agujero! 🕳️' },
-            { question: '"Subo llena y bajo vacía, si no me apuro la sopa se enfría. ¿Qué soy?"', answer: '🥄 ¡Respuesta: La Cuchara! 🥄' }
+            { question: '"Cuanto más le quitas, más grande es. ¿Qué es?"', answer: '🕳️ ¡Respuesta: Un Agujero! 🕳️' }
         ];
         let currentRiddleIndex = 0;
 
         function toggleRiddleAnswer() {
             const answerDiv = document.getElementById('riddle-answer');
             const revealBtn = document.getElementById('reveal-btn');
-            
             if (answerDiv.classList.contains('hidden')) {
                 answerDiv.classList.remove('hidden');
                 revealBtn.textContent = 'Ocultar Respuesta';
@@ -916,35 +767,23 @@
             document.getElementById('reveal-btn').textContent = 'Revelar Respuesta';
         }
 
-        // 4. Generador de Retos Flash (Mates, Palabras, Ciencia)
         let score = 0;
-        let currentChallengeType = 'math';
-
         const challenges = {
             math: [
                 { q: "¿Cuánto es 9 × 8?", options: ["64", "72", "81", "70"], correct: 1 },
-                { q: "¿Cuál es el doble de 35?", options: ["60", "70", "80", "75"], correct: 1 },
-                { q: "Si tengo 3 manzanas y compro 4 más, luego regalo 2, ¿cuántas me quedan?", options: ["4", "5", "6", "3"], correct: 1 },
-                { q: "¿Cuántos lados tiene un hexágono?", options: ["5", "6", "8", "7"], correct: 1 }
+                { q: "¿Cuál es el doble de 35?", options: ["60", "70", "80", "75"], correct: 1 }
             ],
             words: [
                 { q: "¿Cuál es el sinónimo de 'contento'?", options: ["Triste", "Alegre", "Enojado", "Rápido"], correct: 1 },
-                { q: "¿Cuál de estas palabras lleva tilde por ser esdrújula?", options: ["Pájaro", "Camión", "Mesa", "Árbol"], correct: 0 },
-                { q: "¿Cuál es el antónimo de 'construir'?", options: ["Crear", "Destruir", "Pintar", "Armar"], correct: 1 },
-                { q: "¿Cuál es el plural de 'Lápiz'?", options: ["Lápizes", "Lápices", "Lápizs", "Lapices"], correct: 1 }
+                { q: "¿Cuál de estas palabras lleva tilde por ser esdrújula?", options: ["Pájaro", "Camión", "Mesa", "Árbol"], correct: 0 }
             ],
             science: [
                 { q: "¿En qué estado se encuentra el hielo?", options: ["Líquido", "Gaseoso", "Sólido", "Plasma"], correct: 2 },
-                { q: "¿Cuál es el planeta más cercano al Sol?", options: ["Tierra", "Marte", "Mercurio", "Júpiter"], correct: 2 },
-                { q: "¿Qué gas respiramos para vivir?", options: ["Oxígeno", "Dióxido de Carbono", "Nitrógeno", "Helio"], correct: 0 },
-                { q: "¿Qué tipo de animal es una ballena?", options: ["Pez", "Mamífero", "Anfibio", "Reptil"], correct: 1 }
+                { q: "¿Cuál es el planeta más cercano al Sol?", options: ["Tierra", "Marte", "Mercurio", "Júpiter"], correct: 2 }
             ]
         };
 
         function generateChallenge(type) {
-            currentChallengeType = type;
-            
-            // Actualizar pestañas
             document.querySelectorAll('.challenge-tab').forEach(tab => {
                 tab.classList.remove('bg-sky-500', 'bg-amber-500', 'bg-emerald-500', 'text-white');
                 tab.classList.add('bg-slate-700', 'text-slate-300');
@@ -957,8 +796,7 @@
             if(type === 'science') activeTab.classList.add('bg-emerald-500', 'text-white');
 
             const list = challenges[type];
-            const randomIndex = Math.floor(Math.random() * list.length);
-            const item = list[randomIndex];
+            const item = list[Math.floor(Math.random() * list.length)];
 
             document.getElementById('challenge-question').textContent = item.q;
             document.getElementById('challenge-feedback').textContent = '';
@@ -979,11 +817,7 @@
             const feedback = document.getElementById('challenge-feedback');
             const allBtns = document.getElementById('challenge-options').children;
 
-            // Deshabilitar todos los botones
-            for(let b of allBtns) {
-                b.disabled = true;
-                b.classList.add('opacity-50');
-            }
+            for(let b of allBtns) { b.disabled = true; b.classList.add('opacity-50'); }
 
             if (selectedIndex === correctIndex) {
                 btnElement.classList.remove('bg-slate-800', 'opacity-50');
@@ -1000,31 +834,15 @@
 
         function generateRandomChallenge() {
             const types = ['math', 'words', 'science'];
-            const randomType = types[Math.floor(Math.random() * types.length)];
-            generateChallenge(randomType);
+            generateChallenge(types[Math.floor(Math.random() * types.length)]);
         }
 
-        // Inicializar un reto al cargar
         generateChallenge('math');
 
-        // Reto Exprés del Hero
-        function quickAnswerHero(btn) {
-            showToast('💡 Respuesta: 8 × 7 = 56, más 4 = ¡60! ¡Excelente!');
-        }
-
-        // 5. Modales y Toasts
-        function openModalZona() {
-            document.getElementById('modal-zona').classList.remove('hidden');
-        }
-
-        function closeModalZona() {
-            document.getElementById('modal-zona').classList.add('hidden');
-        }
-
-        function simulateLogin(type) {
-            closeModalZona();
-            showToast(`Bienvenido a la Zona de ${type}. ¡Sesión iniciada con éxito! 🎉`);
-        }
+        function quickAnswerHero(btn) { showToast('💡 Respuesta: 8 × 7 = 56, más 4 = ¡60!'); }
+        function openModalZona() { document.getElementById('modal-zona').classList.remove('hidden'); }
+        function closeModalZona() { document.getElementById('modal-zona').classList.add('hidden'); }
+        function simulateLogin(type) { closeModalZona(); showToast(`Bienvenido a la Zona de ${type}. 🎉`); }
 
         function openSubjectModal(title, subjectKey, color) {
             const modal = document.getElementById('modal-subject');
@@ -1038,52 +856,30 @@
                     <h3 class="font-heading font-bold text-2xl text-slate-800">Sección: ${title}</h3>
                     <p class="text-slate-500 text-sm mt-1">Elige qué actividad deseas realizar</p>
                 </div>
-
                 <div class="space-y-3">
                     <button onclick="closeSubjectModal(); showToast('Cargando Juegos de ${title}...');" class="w-full p-4 rounded-2xl bg-${color}-50 border border-${color}-200 hover:bg-${color}-100 text-slate-800 font-heading font-bold text-left flex items-center justify-between">
-                        <span>🎮 Juegos Interactivos y Quizzes</span>
+                        <span>🎮 Juegos Interactivos</span>
                         <i class="fa-solid fa-chevron-right text-slate-400"></i>
                     </button>
-                    <button onclick="closeSubjectModal(); showToast('Descargando Fichas de ${title}...');" class="w-full p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-heading font-bold text-left flex items-center justify-between">
-                        <span>📄 Fichas en PDF Imprimibles</span>
-                        <i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>
-                    <button onclick="closeSubjectModal(); showToast('Abriendo Taller Didáctico...');" class="w-full p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-heading font-bold text-left flex items-center justify-between">
-                        <span>🌟 Retos y Medallas del Trimestre</span>
+                    <button onclick="closeSubjectModal(); showToast('Descargando Fichas...');" class="w-full p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-heading font-bold text-left flex items-center justify-between">
+                        <span>📄 Fichas PDF Imprimibles</span>
                         <i class="fa-solid fa-chevron-right text-slate-400"></i>
                     </button>
                 </div>
             `;
-
             modal.classList.remove('hidden');
         }
 
-        function closeSubjectModal() {
-            document.getElementById('modal-subject').classList.add('hidden');
-        }
-
-        function downloadResourceMock(resourceName) {
-            showToast(`Descargando "${resourceName}" en formato PDF... 📥`);
-        }
-
-        function openResourceToast() {
-            showToast('Abriendo la biblioteca completa con +500 recursos gratuitos...');
-        }
-
-        function subscribeNewsletter(e) {
-            e.preventDefault();
-            showToast('¡Gracias por suscribirte! Te hemos enviado un correo de bienvenida. 📬');
-            e.target.reset();
-        }
+        function closeSubjectModal() { document.getElementById('modal-subject').classList.add('hidden'); }
+        function downloadResourceMock(name) { showToast(`Descargando "${name}" en PDF... 📥`); }
+        function openResourceToast() { showToast('Abriendo la biblioteca completa...'); }
+        function subscribeNewsletter(e) { e.preventDefault(); showToast('¡Gracias por suscribirte! 📬'); e.target.reset(); }
 
         function showToast(message) {
             const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toast-message');
-            
-            toastMessage.textContent = message;
+            document.getElementById('toast-message').textContent = message;
             toast.classList.remove('translate-y-24', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
-
             setTimeout(() => {
                 toast.classList.remove('translate-y-0', 'opacity-100');
                 toast.classList.add('translate-y-24', 'opacity-0');
