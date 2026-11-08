@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Bosque de los Antónimos 🍂 - 3º de Primaria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-top: #2c1a0e;
+      --bg-bottom: #5c2c16;
+      --card-bg: rgba(255, 248, 240, 0.95);
+      --primary: #d96b27;
+      --primary-hover: #b85417;
+      --accent: #e5a93b;
+      --green-correct: #4caf50;
+      --red-wrong: #e53935;
+      --text-dark: #3e2723;
+      --text-light: #fff8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #3d1e11 0%, #6e3519 50%, #8c431d 100%);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    canvas#leavesCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 720px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 0 0 3px #e0a96d;
+      padding: 24px;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(5px);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Fredoka', cursive;
+      color: #7c2d12;
+      font-size: 2.1rem;
+      text-shadow: 1px 1px 0px #ffedd5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      background: #fde8d0;
+      padding: 10px 18px;
+      border-radius: 50px;
+      border: 2px solid #ecc095;
+    }
+
+    .stat-badge {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.1rem;
+      color: #63260a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-edit-mode {
+      background: #8c431d;
+      color: white;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .btn-edit-mode:hover {
+      background: #5c2c16;
+      transform: scale(1.03);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 14px;
+      background: #e2d2c1;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #e5a93b, #d96b27);
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 10px;
+    }
+
+    .question-card {
+      text-align: center;
+    }
+
+    .prompt-text {
+      font-size: 1.1rem;
+      color: #63260a;
+      font-weight: 600;
+    }
+
+    .target-word {
+      font-family: 'Fredoka', cursive;
+      font-size: 2.5rem;
+      color: #9a3412;
+      margin: 12px 0 24px 0;
+      letter-spacing: 1px;
+      background: #ffedd5;
+      display: inline-block;
+      padding: 8px 24px;
+      border-radius: 16px;
+      border: 2px dashed #d97706;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 500px) {
+      .options-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .btn-option {
+      background: #ffffff;
+      border: 3px solid #e5a93b;
+      color: #4a2411;
+      padding: 16px 10px;
+      border-radius: 16px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 0 #c78b27;
+    }
+
+    .btn-option:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #c78b27;
+      background: #fffbeb;
+    }
+
+    .btn-option:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #c78b27;
+    }
+
+    .btn-option.correct {
+      background: var(--green-correct) !important;
+      color: white !important;
+      border-color: #2e7d32 !important;
+      box-shadow: 0 4px 0 #1b5e20 !important;
+    }
+
+    .btn-option.wrong {
+      background: var(--red-wrong) !important;
+      color: white !important;
+      border-color: #c62828 !important;
+      box-shadow: 0 4px 0 #b71c1c !important;
+    }
+
+    .feedback-box {
+      min-height: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+
+    .feedback-box.correct-text { color: #2e7d32; }
+    .feedback-box.wrong-text { color: #c62828; }
+
+    /* Modal / Panel de Edición */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background: #fff8f0;
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      border-radius: 20px;
+      padding: 24px;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #fed7aa;
+      padding-bottom: 10px;
+    }
+
+    .editor-item {
+      background: #fff;
+      border: 1px solid #fdba74;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .editor-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      padding: 8px 12px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .inp-word { font-weight: bold; width: 140px; }
+    .inp-opt { flex: 1; min-width: 90px; }
+
+    select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .btn-action {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-save { background: #22c55e; color: white; }
+    .btn-save:hover { background: #16a34a; }
+    .btn-add { background: #3b82f6; color: white; margin-bottom: 15px; }
+    .btn-reset { background: #ef4444; color: white; }
+    .btn-del { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+
+    /* Results Screen */
+    .results-screen {
+      text-align: center;
+      display: none;
+    }
+
+    .stars-container {
+      font-size: 3.5rem;
+      margin: 15px 0;
+    }
+
+    .btn-restart {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-family: 'Fredoka', cursive;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #9a3412;
+      margin-top: 15px;
+    }
+
+    .btn-restart:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="leavesCanvas"></canvas>
+
+  <div class="app-container">
+    <header>
+      <h1>🍁 Bosque de Antónimos 🦊</h1>
+    </header>
+
+    <div class="top-bar">
+      <div class="stat-badge" id="questionCounter">Pregunta 1/10</div>
+      <div class="stat-badge" id="scoreCounter">⭐ Puntos: 0</div>
+      <button class="btn-edit-mode" onclick="openEditor()">⚙️ Modo Profesor</button>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="gameScreen" class="question-card">
+      <div class="prompt-text">¿Cuál es la palabra <strong>antónima</strong> (lo contrario) de?</div>
+      <div class="target-word" id="targetWord">...</div>
+      
+      <div class="options-grid" id="optionsContainer">
+        <!-- Generado dinámicamente -->
+      </div>
+
+      <div class="feedback-box" id="feedbackBox"></div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="resultsScreen" class="results-screen">
+      <h2>¡Actividad Completada! 🎉</h2>
+      <div class="stars-container" id="starsDisplay">⭐⭐⭐</div>
+      <p id="finalScoreText" style="font-size: 1.3rem; font-weight: 700; color: #7c2d12;"></p>
+      <p id="motivationalText" style="margin-top: 8px; color: #4a2411;"></p>
+      <button class="btn-restart" onclick="restartGame()">🔁 Volver a Jugar</button>
+    </div>
+  </div>
+
+  <!-- Modal Modo Profesor / Edición -->
+  <div class="modal-overlay" id="editorModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 style="color: #7c2d12;">⚙️ Configurar Preguntas</h2>
+        <button onclick="closeEditor()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">❌</button>
+      </div>
+
+      <button class="btn-action btn-add" onclick="addNewQuestion()">➕ Añadir Nueva Pregunta</button>
+      <button class="btn-action btn-reset" onclick="resetDefaultQuestions()" style="float: right;">🔄 Restaurar por Defecto</button>
+      
+      <div id="editorList"></div>
+
+      <div style="margin-top: 20px; text-align: right;">
+        <button class="btn-action btn-save" onclick="saveEditorChanges()">💾 Guardar y Reiniciar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Preguntas por defecto para 3º de Primaria
+    const defaultQuestions = [
+      { word: "RÁPIDO", options: ["Lento", "Fuerte", "Suave"], correct: 0 },
+      { word: "ALTO", options: ["Corto", "Bajo", "Ancho"], correct: 1 },
+      { word: "ALEGRE", options: ["Enfadado", "Triste", "Cansado"], correct: 1 },
+      { word: "ENCENDIDO", options: ["Roto", "Oscuro", "Apagado"], correct: 2 },
+      { word: "LIMPIO", options: ["Sucio", "Feo", "Viejo"], correct: 0 },
+      { word: "CALIENTE", options: ["Templado", "Frío", "Helado"], correct: 1 },
+      { word: "COMPRAR", options: ["Regalar", "Pagar", "Vender"], correct: 2 },
+      { word: "VALIENTE", options: ["Cobarde", "Flojo", "Tímido"], correct: 0 },
+      { word: "CONSTRUIR", options: ["Destruir", "Romper", "Tirar"], correct: 0 },
+      { word: "ABIERTO", options: ["Oculto", "Cerrado", "Guardado"], correct: 1 }
+    ];
+
+    let questions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let audioCtx = null;
+
+    // Inicializar Audio
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playSound(type) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'correct') {
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+        osc.frequency.exponentialRampToValueAtTime(659.25, audioCtx.currentTime + 0.15); // E5
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else {
+        osc.frequency.setValueAtTime(220, audioCtx.currentTime); // A3
+        osc.frequency.exponentialRampToValueAtTime(180, audioCtx.currentTime + 0.2);
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.25);
+      }
+    }
+
+    // Cargar preguntas desde LocalStorage o por defecto
+    function loadQuestions() {
+      const saved = localStorage.getItem('antonimos_questions_v1');
+      if (saved) {
+        try { questions = JSON.parse(saved); } 
+        catch (e) { questions = [...defaultQuestions]; }
+      } else {
+        questions = [...defaultQuestions];
+      }
+    }
+
+    function startGame() {
+      loadQuestions();
+      currentIndex = 0;
+      score = 0;
+      document.getElementById('gameScreen').style.display = 'block';
+      document.getElementById('resultsScreen').style.display = 'none';
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = questions[currentIndex];
+      document.getElementById('questionCounter').innerText = `Pregunta ${currentIndex + 1}/${questions.length}`;
+      document.getElementById('scoreCounter').innerText = `⭐ Puntos: ${score}`;
+      document.getElementById('targetWord').innerText = q.word;
+      document.getElementById('feedbackBox').innerText = '';
+      document.getElementById('feedbackBox').className = 'feedback-box';
+
+      const progressPct = ((currentIndex) / questions.length) * 100;
+      document.getElementById('progressBar').style.width = `${progressPct}%`;
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.innerText = opt;
+        btn.onclick = () => selectOption(idx);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(selectedIdx) {
+      initAudio();
+      const q = questions[currentIndex];
+      const buttons = document.querySelectorAll('.btn-option');
+      buttons.forEach(b => b.disabled = true);
+
+      const feedback = document.getElementById('feedbackBox');
+
+      if (selectedIdx === q.correct) {
+        buttons[selectedIdx].classList.add('correct');
+        feedback.innerText = '¡Excelente! ¡Es correcto! 🌟';
+        feedback.classList.add('correct-text');
+        playSound('correct');
+        score += 10;
+      } else {
+        buttons[selectedIdx].classList.add('wrong');
+        buttons[q.correct].classList.add('correct');
+        feedback.innerText = `¡Casi! El antónimo de ${q.word} es ${q.options[q.correct]}.`;
+        feedback.classList.add('wrong-text');
+        playSound('wrong');
+      }
+
+      document.getElementById('scoreCounter').innerText = `⭐ Puntos: ${score}`;
+
+      setTimeout(() => {
+        currentIndex++;
+        if (currentIndex < questions.length) {
+          renderQuestion();
+        } else {
+          showResults();
+        }
+      }, 1800);
+    }
+
+    function showResults() {
+      document.getElementById('gameScreen').style.display = 'none';
+      document.getElementById('resultsScreen').style.display = 'block';
+      document.getElementById('progressBar').style.width = '100%';
+
+      const maxScore = questions.length * 10;
+      const ratio = score / maxScore;
+      
+      let stars = "⭐";
+      let msg = "¡Sigue practicando! Seguro que la próxima vez lo haces mucho mejor.";
+      
+      if (ratio >= 0.8) {
+        stars = "⭐⭐⭐";
+        msg = "¡Fantástico! Eres un maestro/a de los antónimos. 🏆";
+      } else if (ratio >= 0.5
