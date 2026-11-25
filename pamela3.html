@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pamela Panamá contra la Bruja Descalza · Violeta Monreal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Patrick+Hand&family=Nunito:wght@600;700;800&display=swap');
+
+    :root {
+      /* Paleta extraída fielmente de la edición ISBN 978-84-667-5208-4 (Anaya, El Duende Verde) */
+      --amarillo-duende: #ffc90e;
+      --verde-duende: #00923f;
+      --morado-vestido: #6e358b;
+      --morado-claro: #a468c2;
+      --rojo-botas: #e31e24;
+      --naranja-pelo: #f37021;
+      --azul-cielo: #2a85c7;
+      --verde-hoja: #4db848;
+      --rosa-flor: #f48fb1;
+      --papel-blanco: #fcfaf5;
+      --papel-crema: #f7f1e3;
+      --tinta: #1e1b18;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 14px 60px;
+      font-family: 'Nunito', sans-serif;
+      color: var(--tinta);
+      /* Fondo amarillo brillante y limpio como la portada de El Duende Verde (ISBN 978-84-667-5208-4) con textura sutil de papel */
+      background-color: var(--amarillo-duende);
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.28) 1.5px, transparent 0),
+        radial-gradient(rgba(227, 30, 36, 0.06) 2px, transparent 0);
+      background-size: 28px 28px, 44px 44px;
+      background-position: 0 0, 14px 18px;
+    }
+
+    .contenedor {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    /* Portada fiel al diseño editorial de Anaya / El Duende Verde (ISBN 978-84-667-5208-4) */
+    .libro-portada {
+      background: var(--papel-blanco);
+      border: 3px solid var(--tinta);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+      margin-bottom: 26px;
+    }
+
+    /* Franja superior blanca limpia de la colección con el duendecillo y el título editorial */
+    .franja-editorial {
+      background: #ffffff;
+      padding: 12px 20px;
+      border-bottom: 3px solid var(--tinta);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .marca-coleccion {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .circulo-duende {
+      width: 34px;
+      height: 34px;
+      background: var(--verde-duende);
+      border: 2px solid var(--tinta);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+
+    .nombre-coleccion {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      color: var(--verde-duende);
+      letter-spacing: 0.3px;
+    }
+
+    .badge-isbn {
+      background: var(--morado-vestido);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.88rem;
+      padding: 5px 12px;
+      border-radius: 8px;
+      border: 2px solid var(--tinta);
+    }
+
+    /* Cuerpo amarillo de la portada con la escena en collage de papel rasgado de Violeta Monreal */
+    .escena-portada {
+      background: var(--amarillo-duende);
+      padding: 24px 22px 26px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 22px;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    @media (max-width: 680px) {
+      .escena-portada {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    /* Flores recortadas con papel rasgado típicas de Violeta Monreal en este libro */
+    .flor-decorativa {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .flor-1 { top: 10px; right: 16px; width: 62px; height: 62px; }
+    .flor-2 { bottom: 12px; right: 28px; width: 52px; height: 52px; }
+
+    .bloque-titulo {
+      position: relative;
+      z-index: 2;
+    }
+
+    .autora-texto {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      color: var(--tinta);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .bloque-titulo h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      color: var(--rojo-botas);
+      margin: 0 0 8px;
+      line-height: 1.08;
+      -webkit-text-stroke: 1px var(--tinta);
+      text-shadow: 3px 3px 0 #ffffff;
+    }
+
+    .bloque-titulo h1 span {
+      display: block;
+      color: var(--morado-vestido);
+      font-size: 0.78em;
+      -webkit-text-stroke: 0.8px var(--tinta);
+      text-shadow: 2px 2px 0 #ffffff;
+      margin-top: 4px;
+    }
+
+    .subtitulo-actividad {
+      display: inline-block;
+      background: #ffffff;
+      border: 2.5px solid var(--tinta);
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.2rem;
+      color: var(--tinta);
+      box-shadow: 3px 3px 0 var(--tinta);
+      margin-top: 8px;
+    }
+
+    /* Barra de progreso sobre papel blanco recortado */
+    .barra-estado {
+      background: #ffffff;
+      border: 3px solid var(--tinta);
+      border-radius: 14px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      box-shadow: 4px 5px 0 var(--tinta);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .progreso-texto {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .barra-fondo {
+      flex: 1;
+      min-width: 180px;
+      height: 18px;
+      background: var(--papel-crema);
+      border-radius: 10px;
+      border: 2.5px solid var(--tinta);
+      overflow: hidden;
+    }
+
+    .barra-relleno {
+      height: 100%;
+      width: 0%;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--morado-vestido),
+        var(--morado-vestido) 10px,
+        var(--morado-claro) 10px,
+        var(--morado-claro) 20px
+      );
+      transition: width 0.35s ease;
+    }
+
+    /* Tarjetas de pregunta estilo lámina de papel blanco con recortes rasgados y texturas de fibras */
+    .tarjeta-pregunta {
+      background: #ffffff;
+      border: 3px solid var(--tinta);
+      border-radius: 16px;
+      padding: 24px 22px 20px;
+      margin-bottom: 24px;
+      box-shadow: 5px 6px 0 var(--tinta);
+      position: relative;
+    }
+
+    /* Recorte de papel rasgado de color en la parte superior de cada tarjeta */
+    .etiqueta-recorte {
+      position: absolute;
+      top: -13px;
+      right: 18px;
+      padding: 3px 14px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      border: 2px solid var(--tinta);
+      /* Borde rasgado irregular sin rotación artificial */
+      clip-path: polygon(2% 6%, 98% 0%, 100% 92%, 94% 100%, 4% 96%, 0% 14%);
+    }
+
+    .encabezado-pregunta {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    /* Número dentro de una flor / recorte de papel de Violeta Monreal */
+    .numero-flor {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2.5px solid var(--tinta);
+      border-radius: 50% 42% 48% 44%;
+      box-shadow: 2px 3px 0 var(--tinta);
+    }
+
+    .texto-pregunta {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.16rem;
+      line-height: 1.36;
+      margin: 4px 0 0;
+      color: var(--tinta);
+    }
+
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opcion-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      background: var(--papel-crema);
+      border: 2.5px solid var(--tinta);
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--tinta);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 rgba(30, 27, 24, 0.2);
+      transition: transform 0.14s ease, background 0.14s ease;
+    }
+
+    .opcion-btn:hover:not(:disabled) {
+      background: #fff3b8;
+      transform: translateX(4px);
+    }
+
+    .letra-opcion {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: var(--amarillo-duende);
+      border: 2px solid var(--tinta);
+      border-radius: 8px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .opcion-btn.correcta {
+      background: #d8f5e3;
+      border-color: var(--verde-duende);
+      color: #0b4a26;
+      box-shadow: 3px 3px 0 var(--verde-duende);
+    }
+
+    .opcion-btn.correcta .letra-opcion {
+      background: var(--verde-duende);
+      color: #fff;
+    }
+
+    .opcion-btn.incorrecta {
+      background: #fde0e0;
+      border-color: var(--rojo-botas);
+      color: #781216;
+    }
+
+    .opcion-btn.incorrecta .letra-opcion {
+      background: var(--rojo-botas);
+      color: #fff;
+    }
+
+    .feedback {
+      margin-top: 13px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: none;
+      border: 2px dashed var(--tinta);
+    }
+
+    .feedback.visible {
+      display: block;
+      animation: aparecer 0.22s ease;
+    }
+
+    .feedback.ok {
+      background: #e9fbf0;
+      color: #0e522b;
+    }
+
+    .feedback.error {
+      background: #fff6d6;
+      color: #6b4300;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Panel final estilo contraportada del libro */
+    .panel-final {
+      background: #ffffff;
+      border: 3px solid var(--tinta);
+      border-radius: 18px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: 6px 7px 0 var(--tinta);
+      margin-top: 30px;
+    }
+
+    .panel-final h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.75rem;
+      color: var(--morado-vestido);
+      margin: 0 0 10px;
+    }
+
+    .puntuacion-grande {
+      display: inline-block;
+      background: var(--amarillo-duende);
+      color: var(--tinta);
+      border: 3px solid var(--tinta);
+      border-radius: 14px;
+      padding: 10px 28px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.1rem;
+      margin: 8px 0 14px;
+      box-shadow: 4px 4px 0 var(--tinta);
+    }
+
+    .btn-reiniciar {
+      background: var(--rojo-botas);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      padding: 12px 26px;
+      border: 3px solid var(--tinta);
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--tinta);
+      transition: transform 0.15s ease;
+    }
+
+    .btn-reiniciar:hover {
+      transform: scale(1.04);
+      background: #c4161c;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <!-- Cabecera que replica el diseño editorial de la obra ISBN 978-84-667-5208-4 -->
+  <header class="libro-portada">
+    <div class="franja-editorial">
+      <div class="marca-coleccion">
+        <div class="circulo-duende">🍀</div>
+        <span class="nombre-coleccion">El Duende Verde · Anaya</span>
+      </div>
+      <div class="badge-isbn">3.º de Primaria · Comprensión Lectora</div>
+    </div>
+
+    <div class="escena-portada">
+      <!-- Flores recortadas en papel de colores estilo Violeta Monreal -->
+      <svg class="flor-decorativa flor-1" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,6 50,24 72,22 58,40 70,60 48,54 38,74 28,54 8,60 20,40 8,22 30,24" fill="#f48fb1" stroke="#1e1b18" stroke-width="2"/>
+        <circle cx="40" cy="40" r="10" fill="#f37021" stroke="#1e1b18" stroke-width="2"/>
+      </svg>
+      <svg class="flor-decorativa flor-2" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,8 52,26 74,28 58,44 66,66 44,56 26,68 28,46 10,32 32,26" fill="#4db848" stroke="#1e1b18" stroke-width="2"/>
+        <circle cx="42" cy="41" r="9" fill="#ffffff" stroke="#1e1b18" stroke-width="2"/>
+      </svg>
+
+      <!-- Ilustración fiel a la portada: Pamela con su vestido morado, sombrero Panamá, melena naranja y sus botas rojas mágicas -->
+      <svg width="210" height="225" viewBox="0 0 220 235" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustración en papel rasgado de Pamela Panamá con vestido morado, sombrero Panamá y botas rojas">
+        <!-- Base de hierba / hojas rasgadas verdes en los pies -->
+        <polygon points="24,205 55,192 85,202 115,190 148,204 185,194 196,216 18,218" fill="#4db848" stroke="#1e1b18" stroke-width="2"/>
+
+        <!-- Vestido morado acampanado de Pamela (papel rasgado con textura) -->
+        <polygon points="82,102 138,102 162,168 58,168" fill="#6e358b" stroke="#1e1b18" stroke-width="2.2"/>
+        <!-- Cuello blanco recortado -->
+        <polygon points="94,102 110,114 126,102" fill="#ffffff" stroke="#1e1b18" stroke-width="1.8"/>
+        <!-- Brazos y manos -->
+        <polygon points="82,106 54,132 62,140 86,118" fill="#fbd5c0" stroke="#1e1b18" stroke-width="2"/>
+        <polygon points="138,106 166,132 158,140 134,118" fill="#fbd5c0" stroke="#1e1b18" stroke-width="2"/>
+
+        <!-- Piernas con medias rayadas blancas y moradas -->
+        <rect x="84" y="168" width="14" height="24" fill="#ffffff" stroke="#1e1b18" stroke-width="2"/>
+        <line x1="84" y1="175" x2="98" y2="175" stroke="#6e358b" stroke-width="3"/>
+        <line x1="84" y1="183" x2="98" y2="183" stroke="#6e358b" stroke-width="3"/>
+
+        <rect x="122" y="168" width="14" height="24" fill="#ffffff" stroke="#1e1b18" stroke-width="2"/>
+        <line x1="122" y1="175" x2="136" y2="175" stroke="#6e358b" stroke-width="3"/>
+        <line x1="122" y1="183" x2="136" y2="183" stroke="#6e358b" stroke-width="3"/>
+
+        <!-- Botas rojas mágicas protagonistas -->
+        <polygon points="78,188 100,188 100,206 66,208 66,198 78,196" fill="#e31e24" stroke="#1e1b18" stroke-width="2.2"/>
+        <polygon points="120,188 142,188 142,196 154,198 154,208 120,206" fill="#e31e24" stroke="#1e1b18" stroke-width="2.2"/>
+        <!-- Detalles amarillos en las botas -->
+        <circle cx="89" cy="194" r="2.5" fill="#ffc90e"/>
+        <circle cx="131" cy="194" r="2.5" fill="#ffc90e"/>
+
+        <!-- Melena naranja / rojiza rasgada de Violeta Monreal -->
+        <polygon points="62,56 78,42 142,42 158,58 166,106 144,98 140,66 80,66 74,98 54,106" fill="#f37021" stroke="#1e1b18" stroke-width="2.2"/>
+
+        <!-- Cara recortada -->
+        <polygon points="82,56 138,56 142,96 110,108 78,96" fill="#fbd5c0" stroke="#1e1b18" stroke-width="2"/>
+
+        <!-- Gran sombrero Panamá de paja clara con cinta morada/azul -->
+        <polygon points="34,54 186,50 172,64 46,66" fill="#fff6cc" stroke="#1e1b18" stroke-width="2.2"/>
+        <polygon points="74,22 146,20 154,52 66,54" fill="#ffef9f" stroke="#1e1b18" stroke-width="2.2"/>
+        <polygon points="68,44 152,42 154,52 66,54" fill="#2a85c7" stroke="#1e1b18" stroke-width="1.8"/>
+
+        <!-- Rasgos faciales dibujados a lápiz negro -->
+        <circle cx="96" cy="77" r="4" fill="#1e1b18"/>
+        <circle cx="124" cy="77" r="4" fill="#1e1b18"/>
+        <circle cx="97.2" cy="75.8" r="1.3" fill="#ffffff"/>
+        <circle cx="125.2" cy="75.8" r="1.3" fill="#ffffff"/>
+        <!-- Mofletes -->
+        <circle cx="87" cy="85" r="4.5" fill="#f48fb1" opacity="0.8"/>
+        <circle cx="133" cy="85" r="4.5" fill="#f48fb1" opacity="0.8"/>
+        <!-- Sonrisa -->
+        <path d="M 101 91 Q 110 99 119 91" fill="none" stroke="#1e1b18" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+
+      <div class="bloque-titulo">
+        <div class="autora-texto">Violeta Monreal</div>
+        <h1>Pamela Panamá <span>contra la Bruja Descalza</span></h1>
+        <div class="subtitulo-actividad">✂️ Cuestionario interactivo de comprensión lectora (10 preguntas)</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="barra-estado">
+    <div class="progreso-texto" id="texto-progreso">Respondidas: <strong>0 / 10</strong></div>
+    <div class="barra-fondo">
+      <div class="barra-relleno" id="barra-relleno"></div>
+    </div>
+    <div class="progreso-texto" id="texto-aciertos">Aciertos: <strong>0</strong> ⭐</div>
+  </div>
+
+  <main id="contenedor-preguntas"></main>
+
+  <section class="panel-final" id="panel-final">
+    <h2>🏆 Resultado de tu lectura</h2>
+    <div class="puntuacion-grande" id="nota-final">0 / 10</div>
+    <p id="mensaje-final" style="font-size: 1.1rem; font-weight: 700; margin-bottom: 18px;">
+      Responde a las 10 preguntas sobre la historia de Pamela y Andrés para ver tu nota.
+    </p>
+    <button class="btn-reiniciar" onclick="reiniciarCuestionario()">🔄 Repetir cuestionario</button>
+  </section>
+</div>
+
+<script>
+  const preguntas = [
+    {
+      etiqueta: "1. El regalo de Papahígo",
+      color: "#e31e24",
+      pregunta: "¿Qué regalo recibe Pamela de su abuelo Papahígo por su cumpleaños al comenzar esta segunda aventura?",
+      opciones: [
+        "Un par de botas mágicas que la llevan a otro viaje.",
+        "Un frasco de cristal azul lleno de polvo de estrellas.",
+        "Un sombrero Panamá nuevo con plumas de colores."
+      ],
+      correcta: 0,
+      explicacion: "¡Exacto! En el primer libro le regaló el frasco azul, pero en esta obra le regala unas botas mágicas por su cumpleaños."
+    },
+    {
+      etiqueta: "2. El compañero de aventura",
+      color: "#6e358b",
+      pregunta: "¿Quién acompaña a Pamela cuando las botas la transportan de nuevo al mundo mágico?",
+      opciones: [
+        "Su amigo Andrés.",
+        "Su abuelo Papahígo.",
+        "Su prima Chistera."
+      ],
+      correcta: 0,
+      explicacion: "¡Muy bien! En esta ocasión Pamela viaja acompañada por su amigo Andrés."
+    },
+    {
+      etiqueta: "3. El mundo fantástico",
+      color: "#2a85c7",
+      pregunta: "¿Cómo se llama el reino mágico al que llegan Pamela y Andrés?",
+      opciones: [
+        "El reino de Jipi-Japa.",
+        "El reino de Bombín-Bom.",
+        "El reino de Sombrerilla."
+      ],
+      correcta: 0,
+      explicacion: "¡Correcto! El reino mágico donde ocurren sus aventuras se llama Jipi-Japa."
+    },
+    {
+      etiqueta: "4. Los nombres del libro",
+      color: "#00923f",
+      pregunta: "Todos los personajes tienen nombres de sombreros. ¿Quiénes son Salacot y Caperuza?",
+      opciones: [
+        "Salacot es su amigo de Jipi-Japa y Caperuza es la bruja malvada.",
+        "Salacot es el padre de Andrés y Caperuza es una reina buena.",
+        "Salacot es un caballo volador y Caperuza es la hermana de Pamela."
+      ],
+      correcta: 0,
+      explicacion: "¡Así es! Salacot es el amigo al que ayudan en Jipi-Japa y Caperuza es la bruja que busca venganza."
+    },
+    {
+      etiqueta: "5. La Bruja Descalza",
+      color: "#f37021",
+      pregunta: "¿Por qué a la malvada bruja Caperuza la llaman «la Bruja Descalza»?",
+      opciones: [
+        "Porque perdió su calzado mágico y quiere apoderarse de las botas de Pamela.",
+        "Porque en su castillo está prohibido llevar zapatos puestos.",
+        "Porque prefiere caminar sin zapatos sobre la nieve."
+      ],
+      correcta: 0,
+      explicacion: "¡Genial! La bruja Caperuza va descalza y codicia las botas especiales que lleva Pamela."
+    },
+    {
+      etiqueta: "6. La amenaza en Jipi-Japa",
+      color: "#e31e24",
+      pregunta: "¿Qué pretende hacer la bruja Caperuza en el reino de Jipi-Japa?",
+      opciones: [
+        "Vengarse de lo que ocurrió en la aventura anterior y poner en peligro a todos.",
+        "Organizar una fiesta de cumpleaños para pedir perdón a Salacot.",
+        "Convertir todos los sombreros del reino en calabazas gigantes."
+      ],
+      correcta: 0,
+      explicacion: "¡Muy atento! La bruja Caperuza regresa con ganas de venganza y amenaza la paz de Jipi-Japa."
+    },
+    {
+      etiqueta: "7. Los engaños de la bruja",
+      color: "#6e358b",
+      pregunta: "¿De qué manera intenta la bruja Caperuza engañar a Pamela y a Andrés?",
+      opciones: [
+        "Creando trampas y falsas apariencias para confundirlos.",
+        "Encerrándolos dentro de un reloj de arena gigante.",
+        "Haciéndoles olvidar sus propios nombres."
+      ],
+      correcta: 0,
+      explicacion: "¡Exacto! La bruja utiliza la mentira y las ilusiones para intentar que caigan en sus trampas."
+    },
+    {
+      etiqueta: "8. La clave para vencer",
+      color: "#2a85c7",
+      pregunta: "¿Qué habilidad resulta fundamental para que Pamela logre salvar a sus amigos?",
+      opciones: [
+        "Saber distinguir lo verdadero de lo falso.",
+        "Aprender a volar en escoba más rápido que la bruja.",
+        "Encontrar una llave de oro escondida bajo el mar."
+      ],
+      correcta: 0,
+      explicacion: "¡Bravo! Distinguir la verdad de la mentira es la prueba clave que permite derrotar los planes de Caperuza."
+    },
+    {
+      etiqueta: "9. La valentía de Andrés",
+      color: "#00923f",
+      pregunta: "¿Qué demuestra Andrés durante esta aventura junto a Pamela?",
+      opciones: [
+        "Que es capaz de superar sus miedos para ayudar y comprometerse con sus amigos.",
+        "Que prefiere quedarse escondido hasta que todo termine.",
+        "Que no cree en la magia aunque la vea delante de sus ojos."
+      ],
+      correcta: 0,
+      explicacion: "¡Estupendo! El compromiso con los demás y la superación de los propios miedos son valores centrales del libro."
+    },
+    {
+      etiqueta: "10. El estilo de Violeta Monreal",
+      color: "#f37021",
+      pregunta: "¿Cómo están creadas las ilustraciones de Violeta Monreal en este libro?",
+      opciones: [
+        "Con collages de papeles rasgados a mano de colores vivos y detalles a lápiz.",
+        "Con acuarelas muy pálidas en tonos grises y marrones.",
+        "Con fotografías reales recortadas de revistas."
+      ],
+      correcta: 0,
+      explicacion: "¡Di en el clavo! Violeta Monreal rasga papeles de colores con los dedos para dar forma a personajes como Pamela con su vestido morado y sus botas rojas."
+    }
+  ];
+
+  let respondidas = 0;
+  let aciertos = 0;
+  const letras = ["A", "B", "C"];
+
+  function renderizarCuestionario() {
+    const contenedor = document.getElementById("contenedor-preguntas");
+    contenedor.innerHTML = "";
+    respondidas = 0;
+    aciertos = 0;
+    actualizarMarcador();
+
+    preguntas.forEach((item, index) => {
+      const tarjeta = document.createElement("article");
+      tarjeta.className = "tarjeta-pregunta";
+      tarjeta.id = `pregunta-${index}`;
+
+      let botonesHTML = "";
+      item.opciones.forEach((opcion, iOpcion) => {
+        botonesHTML += `
+          <button class="opcion-btn" onclick="seleccionarRespuesta(${index}, ${iOpcion}, this)">
+            <span class="letra-opcion">${letras[iOpcion]}</span>
+            <span>${opcion}</span>
+          </button>
+        `;
+      });
+
+      tarjeta.innerHTML = `
+        <div class="etiqueta-recorte" style="background: ${item.color};">${item.etiqueta}</div>
+        <div class="encabezado-pregunta">
+          <div class="numero-flor" style="background: ${item.color};">${index + 1}</div>
+          <h3 class="texto-pregunta">${item.pregunta}</h3>
+        </div>
+        <div class="opciones" id="opciones-${index}">
+          ${botonesHTML}
+        </div>
+        <div class="feedback" id="feedback-${index}"></div>
+      `;
+
+      contenedor.appendChild(tarjeta);
+    });
+  }
+
+  function seleccionarRespuesta(indicePregunta, indiceOpcion, botonPulsado) {
+    const contenedorOpciones = document.getElementById(`opciones-${indicePregunta}`);
+    const botones = contenedorOpciones.querySelectorAll(".opcion-btn");
+    const feedback = document.getElementById(`feedback-${indicePregunta}`);
+    const datosPregunta = preguntas[indicePregunta];
+
+    botones.forEach(btn => btn.disabled = true);
+    respondidas++;
+
+    if (indiceOpcion === datosPregunta.correcta) {
+      aciertos++;
+      botonPulsado.classList.add("correcta");
+      feedback.className = "feedback visible ok";
+      feedback.innerHTML = `🎉 <strong>¡Correcto!</strong> ${datosPregunta.explicacion}`;
+    } else {
+      botonPulsado.classList.add("incorrecta");
+      botones[datosPregunta.correcta].classList.add("correcta");
+      feedback.className = "feedback visible error";
+      feedback.innerHTML = `💡 <strong>¡Casi!</strong> La respuesta correcta era la <strong>${letras[datosPregunta.correcta]}</strong>. ${datosPregunta.explicacion}`;
+    }
+
+    actualizarMarcador();
+  }
+
+  function actualizarMarcador() {
+    document.getElementById("texto-progreso").innerHTML = `Respondidas: <strong>${respondidas} / ${preguntas.length}</strong>`;
+    document.getElementById("texto-aciertos").innerHTML = `Aciertos: <strong>${aciertos}</strong> ⭐`;
+    document.getElementById("barra-relleno").style.width = `${(respondidas / preguntas.length) * 100}%`;
+    document.getElementById("nota-final").textContent = `${aciertos} / ${preguntas.length}`;
+
+    const mensajeFinal = document.getElementById("mensaje-final");
+    if (respondidas === preguntas.length) {
+      if (aciertos >= 9) {
+        mensajeFinal.textContent = "👑 ¡Excelente comprensión lectora! Has seguido toda la historia de Pamela y Andrés en Jipi-Japa sin perder detalle.";
+      } else if (aciertos >= 6) {
+        mensajeFinal.textContent = "👢 ¡Buen trabajo! Conoces bien el argumento, aunque algún engaño de la bruja Caperuza casi te despista.";
+      } else {
+        mensajeFinal.textContent = "📖 ¡Conviene releer algunos capítulos! Vuelve a revisar la historia para recordar mejor qué ocurre en Jipi-Japa.";
+      }
+    } else {
+      mensajeFinal.textContent = "Responde a las 10 preguntas sobre la historia de Pamela y Andrés para ver tu nota.";
+    }
+  }
+
+  function reiniciarCuestionario() {
+    renderizarCuestionario();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  renderizarCuestionario();
+</script>
+
+</body>
+</html>
