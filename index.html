@@ -1,78 +1,1251 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Timbre del Recreo | Plataforma Educativa Divertida</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Fredoka (Títulos) y Nunito (Cuerpo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8faf9;
+            --surface: #ffffff;
+            --dark: #1e293b;
+            --muted: #475569;
+            --border: #e2e8f0;
+            --orange: #f97316;
+            --orange-dark: #ea580c;
+            --amber: #f59e0b;
+            --sky: #0284c7;
+            --sky-bg: #f0f9ff;
+            --pink: #db2777;
+            --pink-bg: #fdf2f8;
+            --purple: #7c3aed;
+            --purple-bg: #f5f3ff;
+            --emerald: #059669;
+            --emerald-bg: #ecfdf5;
+            --radius: 20px;
+            --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+        }
 
-    <!-- Configuración personalizada de Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        fredoka: ['Fredoka', 'sans-serif'],
-                        nunito: ['Nunito', 'sans-serif'],
-                    },
-                    colors: {
-                        recreo: {
-                            yellow: '#FFD166',
-                            orange: '#FF9F1C',
-                            pink: '#FF70A6',
-                            purple: '#70D6FF',
-                            violet: '#A06CD5',
-                            mint: '#06D6A0',
-                            blue: '#118AB2',
-                            dark: '#2B2D42',
-                        }
-                    },
-                    animation: {
-                        'float-slow': 'float 4s ease-in-out infinite',
-                        'float-delayed': 'float 5s ease-in-out 2s infinite',
-                        'bounce-soft': 'bounceSoft 2s infinite',
-                        'ring-bell': 'ring 2s ease infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-                            '50%': { transform: 'translateY(-14px) rotate(4deg)' },
-                        },
-                        bounceSoft: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-8px)' },
-                        },
-                        ring: {
-                            '0%, 100%': { transform: 'rotate(0deg)' },
-                            '10%, 30%, 50%': { transform: 'rotate(12deg)' },
-                            '20%, 40%': { transform: 'rotate(-12deg)' },
-                            '60%': { transform: 'rotate(0deg)' },
-                        }
-                    }
-                }
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+            margin-top: 0;
+            line-height: 1.2;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 4px solid #fcd34d;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 76px;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-badge {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fbbf24, var(--orange));
+            color: #fff;
+            display: grid;
+            place-items: center;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+
+        .logo-title {
+            font-size: 1.45rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .logo-title span {
+            color: var(--orange);
+        }
+
+        .logo-sub {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--sky);
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #334155;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: #fef3c7;
+            color: var(--orange-dark);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 14px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: transform 0.15s, background-color 0.2s, opacity 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--orange-dark);
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: var(--dark);
+            border: 2px solid var(--border);
+        }
+
+        .btn-dark {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: #fef3c7;
+            color: var(--dark);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: #fff;
+            border-bottom: 2px solid #fde68a;
+            padding: 12px 20px 20px;
+        }
+
+        .mobile-menu.open {
+            display: block;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .mobile-menu a:hover {
+            background: #fffbeb;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 48px 0 64px;
+            background: linear-gradient(180deg, #fffbeb 0%, #f0f9ff 55%, var(--bg) 100%);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 36px;
+            align-items: center;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: var(--orange-dark);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--muted);
+            margin: 0 0 24px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-num {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .quick-card {
+            background: var(--surface);
+            border: 2px solid #f1f5f9;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .quick-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+        }
+
+        .quick-item.sky { background: var(--sky-bg); color: #0369a1; border-color: #bae6fd; }
+        .quick-item.amber { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+        .quick-item.pink { background: var(--pink-bg); color: #be185d; border-color: #fbcfe8; }
+        .quick-item.emerald { background: var(--emerald-bg); color: #047857; border-color: #a7f3d0; }
+
+        .hero-reto {
+            background: var(--dark);
+            color: #fff;
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .hero-reto small {
+            color: #fcd34d;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            display: block;
+        }
+
+        /* Áreas */
+        section.pad {
+            padding: 64px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 36px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .filter-btn.active {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .cards-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .area-card {
+            background: #fff;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+        }
+
+        .area-card.hidden-card {
+            display: none;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .area-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 14px 0 20px;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .area-card li {
+            margin-bottom: 6px;
+        }
+
+        .shortcuts-bar {
+            margin-top: 28px;
+            background: #fffbeb;
+            border: 2px solid #fde68a;
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .shortcuts-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Rincón interactivo */
+        .dark-section {
+            background: #0f172a;
+            color: #fff;
+            padding: 64px 0;
+        }
+
+        .dark-section .section-header p {
+            color: #cbd5e1;
+        }
+
+        .two-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .dark-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .box-inner {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin: 16px 0;
+        }
+
+        .answer-box {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.45);
+            color: #6ee7b7;
+            padding: 12px;
+            border-radius: 14px;
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: #334155;
+            color: #e2e8f0;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .tab-btn.active-math { background: var(--sky); color: #fff; }
+        .tab-btn.active-words { background: var(--amber); color: #0f172a; }
+        .tab-btn.active-science { background: var(--emerald); color: #fff; }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .opt-btn {
+            padding: 10px;
+            border-radius: 12px;
+            background: #1e293b;
+            color: #f8fafc;
+            border: 1px solid #475569;
+            font-weight: 700;
+        }
+
+        .opt-btn.ok { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+        .opt-btn.bad { background: #e11d48; border-color: #e11d48; color: #fff; }
+
+        /* Recursos y newsletter */
+        .cards-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .res-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .res-thumb {
+            height: 120px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .newsletter {
+            background: linear-gradient(90deg, #fbbf24, var(--orange));
+            padding: 40px 0;
+        }
+
+        .newsletter-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .newsletter form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .newsletter input {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            min-width: 240px;
+            font-family: inherit;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: #cbd5e1;
+            padding: 48px 0 28px;
+            border-top: 6px solid var(--orange);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 28px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .footer-grid ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-grid li {
+            margin-bottom: 8px;
+            font-size: 0.92rem;
+        }
+
+        .footer-grid a:hover {
+            color: #fbbf24;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        /* Modal & Toast */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            background: rgba(15, 23, 42, 0.65);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .modal-box {
+            background: #fff;
+            color: var(--dark);
+            border-radius: 24px;
+            max-width: 460px;
+            width: 100%;
+            padding: 24px;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            font-weight: 700;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 70;
+            background: var(--dark);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            transition: opacity 0.25s, transform 0.25s;
+        }
+
+        @media (max-width: 820px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+            .menu-toggle {
+                display: inline-grid;
+                place-items: center;
+            }
+            .hero-grid {
+                grid-template-columns: 1fr;
             }
         }
-    </script>
+    </style>
+</head>
+<body>
 
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #F8FAF9;
-        }
-        h1, h2, h3, h4, .font-heading {
-            font-family: 'Fredoka', cursive, sans-serif;
-        }
-        .pattern-bg {
-            background-image: radial-gradient(#06D6A0 0.75px, transparent 0.75px), radial-gradient(#FF9F1C 0.75px, #F8FAF9 0.75px);
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px
+    <header>
+        <div class="container nav-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-badge">🔔</div>
+                <div>
+                    <span class="logo-title">El Timbre<span> del Recreo</span></span>
+                    <span class="logo-sub">Aprender es Divertido</span>
+                </div>
+            </a>
+
+            <nav class="nav-links" aria-label="Navegación principal">
+                <a href="#inicio">Inicio</a>
+                <a href="#areas">Áreas</a>
+                <a href="lengua.html">Lengua</a>
+                <a href="antonimos.html">Antónimos</a>
+                <a href="tren.html">El Tren</a>
+                <a href="#rincon-interactivo">Juegos</a>
+                <a href="#recursos">Recursos</a>
+            </nav>
+
+            <div class="nav-cta">
+                <button type="button" class="btn btn-primary" onclick="openModalZona()">Zona Alumnos / Profes</button>
+            </div>
+
+            <button type="button" class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+        </div>
+
+        <div class="mobile-menu" id="mobile-menu">
+            <a href="#inicio" class="mobile-link">Inicio</a>
+            <a href="#areas" class="mobile-link">Áreas Educativas</a>
+            <a href="lengua.html" class="mobile-link">Lengua (lengua.html)</a>
+            <a href="antonimos.html" class="mobile-link">Antónimos (antonimos.html)</a>
+            <a href="tren.html" class="mobile-link">El Tren (tren.html)</a>
+            <a href="#rincon-interactivo" class="mobile-link">Juegos y Retos</a>
+            <a href="#recursos" class="mobile-link">Recursos</a>
+            <button type="button" class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="openModalZona()">Zona Alumnos / Profes</button>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container hero-grid">
+                <div>
+                    <div class="pill">✨ ¡Tu lugar favorito para aprender jugando!</div>
+                    <h1>¡El aprendizaje no termina con el timbre, <span>apenas comienza!</span></h1>
+                    <p>
+                        Explora matemáticas, lengua, inglés y conocimiento del medio con juegos interactivos,
+                        fichas gratuitas y retos diarios pensados para primaria.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#areas" class="btn btn-primary">Explorar Áreas →</a>
+                        <a href="#rincon-interactivo" class="btn btn-secondary">🎲 Reto del Día</a>
+                    </div>
+                    <div class="stats">
+                        <div>
+                            <span class="stat-num" style="color:var(--sky);">+100</span>
+                            <span class="stat-label">Juegos Interactivos</span>
+                        </div>
+                        <div>
+                            <span class="stat-num" style="color:var(--emerald);">100%</span>
+                            <span class="stat-label">Gratuito y Seguro</span>
+                        </div>
+                        <div>
+                            <span class="stat-num" style="color:var(--orange-dark);">Primaria</span>
+                            <span class="stat-label">Contenido Adaptado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <h2 style="font-size:1.3rem; margin-bottom:2px;">Menú del Recreo</h2>
+                            <small style="color:var(--muted);">¿Qué quieres abrir hoy?</small>
+                        </div>
+                        <span class="tag" style="background:#fef3c7; color:#92400e; margin:0;">¡Activo!</span>
+                    </div>
+
+                    <div class="quick-grid">
+                        <a href="#areas" class="quick-item sky" onclick="filterAreas('mates')">🧮 Mates</a>
+                        <a href="lengua.html" class="quick-item amber">📖 Lengua</a>
+                        <a href="antonimos.html" class="quick-item pink">↔️ Antónimos</a>
+                        <a href="tren.html" class="quick-item emerald">🚂 El Tren</a>
+                    </div>
+
+                    <div class="hero-reto">
+                        <div>
+                            <small>Super Reto</small>
+                            <strong>¿Cuánto es 8 × 7 + 4?</strong>
+                        </div>
+                        <button type="button" class="btn" style="background:#fbbf24; color:#0f172a; padding:8px 14px; font-size:0.88rem;" onclick="quickAnswerHero()">Respuesta</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="areas" class="pad">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tag" style="background:#fef3c7; color:#92400e;">Asignaturas y Conocimiento</span>
+                    <h2>Explora Nuestras Áreas de Aprendizaje</h2>
+                    <p>Elige una materia o accede directamente a los juegos disponibles.</p>
+                    <div class="filters">
+                        <button type="button" class="filter-btn active" data-filter="all" onclick="filterAreas('all', this)">Todas</button>
+                        <button type="button" class="filter-btn" data-filter="mates" onclick="filterAreas('mates', this)">Matemáticas</button>
+                        <button type="button" class="filter-btn" data-filter="lengua" onclick="filterAreas('lengua', this)">Lengua</button>
+                        <button type="button" class="filter-btn" data-filter="ingles" onclick="filterAreas('ingles', this)">Inglés</button>
+                        <button type="button" class="filter-btn" data-filter="medio" onclick="filterAreas('medio', this)">Cono del Medio</button>
+                    </div>
+                </div>
+
+                <div class="cards-4" id="areas-grid">
+                    <article class="area-card mates" style="border-color:#bae6fd;">
+                        <div>
+                            <span class="tag" style="background:var(--sky-bg); color:#0369a1;">Números y Lógica</span>
+                            <h3>Matemáticas</h3>
+                            <p style="color:var(--muted); font-size:0.93rem;">Tablas, cálculo mental rápido, geometría y juegos interactivos.</p>
+                            <ul>
+                                <li>✓ Cálculo Mental Rápido</li>
+                                <li>✓ Geometría Interactiva</li>
+                                <li>✓ <a href="tren.html" style="color:var(--sky); text-decoration:underline;">Juego: El Tren (tren.html)</a></li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn" style="background:var(--sky); color:#fff; width:100%;" onclick="openSubjectModal('Matemáticas', 'Mates')">Entrar a Mates →</button>
+                    </article>
+
+                    <article class="area-card lengua" style="border-color:#fde68a;">
+                        <div>
+                            <span class="tag" style="background:#fef3c7; color:#b45309;">Lectura y Escritura</span>
+                            <h3>Lengua Castellana</h3>
+                            <p style="color:var(--muted); font-size:0.93rem;">Vocabulario, ortografía, lectura comprensiva y juegos de palabras.</p>
+                            <ul>
+                                <li>✓ <a href="antonimos.html" style="color:#b45309; text-decoration:underline;">Juego de Antónimos (antonimos.html)</a></li>
+                                <li>✓ Ortografía Divertida</li>
+                                <li>✓ Lectura Comprensiva</li>
+                            </ul>
+                        </div>
+                        <a href="lengua.html" class="btn" style="background:var(--amber); color:#0f172a; width:100%;">Entrar a Lengua →</a>
+                    </article>
+
+                    <article class="area-card ingles" style="border-color:#ddd6fe;">
+                        <div>
+                            <span class="tag" style="background:var(--purple-bg); color:#5b21b6;">Vocabulary & Fun</span>
+                            <h3>English Zone</h3>
+                            <p style="color:var(--muted); font-size:0.93rem;">Vocabulario en inglés, canciones, memoria y retos diarios.</p>
+                            <ul>
+                                <li>✓ Interactive Vocab</li>
+                                <li>✓ Listening & Songs</li>
+                                <li>✓ Daily Word Challenges</li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn" style="background:var(--purple); color:#fff; width:100%;" onclick="openSubjectModal('Inglés / English', 'English')">Entrar a Inglés →</button>
+                    </article>
+
+                    <article class="area-card medio" style="border-color:#a7f3d0;">
+                        <div>
+                            <span class="tag" style="background:var(--emerald-bg); color:#047857;">Ciencia y Naturaleza</span>
+                            <h3>Conocimiento del Medio</h3>
+                            <p style="color:var(--muted); font-size:0.93rem;">Cuerpo humano, naturaleza, planeta, historia y experimentos.</p>
+                            <ul>
+                                <li>✓ Experimentos Caseros</li>
+                                <li>✓ El Cuerpo Humano y Planeta</li>
+                                <li>✓ Historia y Geografía</li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn" style="background:var(--emerald); color:#fff; width:100%;" onclick="openSubjectModal('Conocimiento del Medio', 'Medio')">Entrar a Cono →</button>
+                    </article>
+                </div>
+
+                <div class="shortcuts-bar">
+                    <div>
+                        <strong style="font-size:1.1rem; display:block;">Accesos directos a páginas de actividades:</strong>
+                        <span style="color:var(--muted); font-size:0.92rem;">Abre directamente cualquiera de estos tres archivos:</span>
+                    </div>
+                    <div class="shortcuts-links">
+                        <a href="antonimos.html" class="btn" style="background:var(--pink); color:#fff;">antonimos.html</a>
+                        <a href="tren.html" class="btn" style="background:var(--sky); color:#fff;">tren.html</a>
+                        <a href="lengua.html" class="btn" style="background:var(--amber); color:#0f172a;">lengua.html</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rincon-interactivo" class="dark-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tag" style="background:#1e293b; color:#fbbf24; border:1px solid #334155;">Minijuegos en Vivo</span>
+                    <h2>El Rincón del Recreo Interactivo</h2>
+                    <p>Resuelve adivinanzas o pon a prueba tus puntos con retos rápidos.</p>
+                </div>
+
+                <div class="two-col">
+                    <div class="dark-card">
+                        <div>
+                            <span class="tag" style="background:rgba(251,191,36,0.15); color:#fde68a;">🧩 Adivinanza Diaria</span>
+                            <h3>¿Aceptas el desafío?</h3>
+                            <div class="box-inner">
+                                <p id="riddle-text" style="margin:0; font-size:1.05rem; font-style:italic;">"Tengo agujas pero no sé coser, tengo números pero no sé leer. ¿Qué soy?"</p>
+                            </div>
+                            <div id="riddle-answer" class="answer-box hidden">🎉 ¡Respuesta: El Reloj! ⏰</div>
+                        </div>
+                        <div style="display:flex; flex-wrap:wrap; gap:10px;">
+                            <button type="button" id="reveal-btn" class="btn" style="flex:1; background:#fbbf24; color:#0f172a;" onclick="toggleRiddleAnswer()">Revelar Respuesta</button>
+                            <button type="button" class="btn btn-secondary" onclick="nextRiddle()">Otra Adivinanza</button>
+                        </div>
+                    </div>
+
+                    <div class="dark-card">
+                        <div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap;">
+                                <span class="tag" style="background:rgba(56,189,248,0.15); color:#7dd3fc; margin:0;">⚡ Retos Exprés</span>
+                                <strong style="color:#fde68a;">Puntos: <span id="user-score">0</span> 🌟</strong>
+                            </div>
+                            <div class="tabs">
+                                <button type="button" id="tab-math" class="tab-btn active-math" onclick="generateChallenge('math')">🔢 Mates</button>
+                                <button type="button" id="tab-words" class="tab-btn" onclick="generateChallenge('words')">📝 Palabras</button>
+                                <button type="button" id="tab-science" class="tab-btn" onclick="generateChallenge('science')">🧪 Ciencia</button>
+                            </div>
+                            <div class="box-inner">
+                                <div id="challenge-question" style="font-weight:800; font-size:1.05rem;">Cargando reto...</div>
+                                <div id="challenge-options" class="options-grid"></div>
+                                <div id="challenge-feedback" style="margin-top:12px; font-weight:800; min-height:22px;"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn" style="width:100%; background:var(--purple); color:#fff;" onclick="generateRandomChallenge()">⚡ Generar Nuevo Reto Aleatorio</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="pad">
+            <div class="container">
+                <div class="section-header">
+                    <span class="tag" style="background:var(--emerald-bg); color:#047857;">Material para Clase y Casa</span>
+                    <h2>Recursos Destacados</h2>
+                    <p>Fichas y actividades listas para practicar.</p>
+                </div>
+
+                <div class="cards-3">
+                    <div class="res-card">
+                        <div>
+                            <div class="res-thumb" style="background:#fef3c7;">📄</div>
+                            <h3>Fichas de Cálculo Mental (1º a 6º)</h3>
+                            <p style="color:var(--muted); font-size:0.92rem;">Actividades de cálculo rápido y laberintos numéricos.</p>
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="width:100%; margin-top:12px;" onclick="downloadResourceMock('Fichas de Cálculo Mental')">Descargar PDF Gratis</button>
+                    </div>
+
+                    <div class="res-card">
+                        <div>
+                            <div class="res-thumb" style="background:var(--purple-bg);">🃏</div>
+                            <h3>Tarjetas de Vocabulario en Inglés</h3>
+                            <p style="color:var(--muted); font-size:0.92rem;">Repaso visual de animales y naturaleza.</p>
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="width:100%; margin-top:12px;" onclick="downloadResourceMock('Tarjetas Inglés')">Ver Tarjetas</button>
+                    </div>
+
+                    <div class="res-card">
+                        <div>
+                            <div class="res-thumb" style="background:var(--emerald-bg);">🧪</div>
+                            <h3>Guía de Experimentos Seguros</h3>
+                            <p style="color:var(--muted); font-size:0.92rem;">Experimentos sencillos para hacer en casa o en el aula.</p>
+                        </div>
+                        <button type="button" class="btn btn-secondary" style="width:100%; margin-top:12px;" onclick="downloadResourceMock('Guía de Experimentos')">Descargar Guía</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <div class="container newsletter-inner">
+                <div>
+                    <h2 style="margin-bottom:4px;">¿Eres Profesor/a o Padre/Madre?</h2>
+                    <p style="margin:0; font-weight:600;">Recibe novedades, recursos y dinámicas educativas en tu correo.</p>
+                </div>
+                <form onsubmit="subscribeNewsletter(event)">
+                    <input type="email" required placeholder="Tu correo electrónico..." aria-label="Tu correo electrónico">
+                    <button type="submit" class="btn btn-dark">¡Suscribirme Gratis!</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h3 style="color:#fff;">El Timbre del Recreo</h3>
+                    <p style="font-size:0.9rem; color:#94a3b8; margin:0;">Plataforma educativa para aprender jugando en primaria.</p>
+                </div>
+                <div>
+                    <h4 style="color:#fff;">Asignaturas</h4>
+                    <ul>
+                        <li><a href="#areas" onclick="filterAreas('mates')">Matemáticas</a></li>
+                        <li><a href="lengua.html">Lengua Castellana (lengua.html)</a></li>
+                        <li><a href="#areas" onclick="filterAreas('ingles')">Inglés</a></li>
+                        <li><a href="#areas" onclick="filterAreas('medio')">Conocimiento del Medio</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:#fff;">Páginas y Juegos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio (index.html)</a></li>
+                        <li><a href="antonimos.html">Antónimos (antonimos.html)</a></li>
+                        <li><a href="tren.html">El Tren (tren.html)</a></li>
+                        <li><a href="#recursos">Recursos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color:#fff;">Información</h4>
+                    <ul>
+                        <li><a href="#" onclick="showToast('Portal educativo gratuito para primaria.'); return false;">Uso Educativo</a></li>
+                        <li><a href="#" onclick="showToast('Contenido adaptado para familias y docentes.'); return false;">Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© <span id="current-year">2026</span> El Timbre del Recreo.</span>
+                <span>Aprender jugando</span>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal-zona" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-zona-title">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeModalZona()" aria-label="Cerrar ventana">✕</button>
+            <h3 id="modal-zona-title" style="text-align:center; margin-bottom:8px;">Zona Alumnos & Profes</h3>
+            <p style="text-align:center; color:var(--muted); font-size:0.92rem; margin-bottom:18px;">Selecciona cómo deseas acceder</p>
+            <div style="display:grid; gap:10px;">
+                <button type="button" class="btn" style="background:var(--sky-bg); color:#0369a1; justify-content:flex-start; padding:14px;" onclick="simulateLogin('Alumno')">🎒 Soy Alumno / Alumna</button>
+                <button type="button" class="btn" style="background:var(--purple-bg); color:#5b21b6; justify-content:flex-start; padding:14px;" onclick="simulateLogin('Profesor/a')">👩‍🏫 Soy Profesor / Profesora</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-subject" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-subject-title">
+        <div class="modal-box">
+            <button type="button" class="modal-close" onclick="closeSubjectModal()" aria-label="Cerrar ventana">✕</button>
+            <div id="modal-subject-content"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden" role="status" aria-live="polite">
+        <span id="toast-message"></span>
+    </div>
+
+    <script>
+        (function () {
+            const riddles = [
+                { question: '"Tengo agujas pero no sé coser, tengo números pero no sé leer. ¿Qué soy?"', answer: '🎉 ¡Respuesta: El Reloj! ⏰' },
+                { question: '"Vuelo de noche, duermo de día y nunca verás plumas en la ala mía. ¿Qué soy?"', answer: '🦇 ¡Respuesta: El Murciélago! 🦇' },
+                { question: '"Blanca por dentro, verde por fuera. Si quieres que te lo diga, espera. ¿Qué es?"', answer: '🍐 ¡Respuesta: La Pera! 🍐' },
+                { question: '"Cuanto más le quitas, más grande es. ¿Qué es?"', answer: '🕳️ ¡Respuesta: Un Agujero! 🕳️' }
+            ];
+
+            const challenges = {
+                math: [
+                    { q: "¿Cuánto es 9 × 8?", options: ["64", "72", "81", "70"], correct: 1 },
+                    { q: "¿Cuál es el doble de 35?", options: ["60", "70", "80", "75"], correct: 1 }
+                ],
+                words: [
+                    { q: "¿Cuál es el sinónimo de 'contento'?", options: ["Triste", "Alegre", "Enojado", "Rápido"], correct: 1 },
+                    { q: "¿Cuál de estas palabras lleva tilde por ser esdrújula?", options: ["Pájaro", "Camión", "Mesa", "Árbol"], correct: 0 }
+                ],
+                science: [
+                    { q: "¿En qué estado se encuentra el hielo?", options: ["Líquido", "Gaseoso", "Sólido", "Plasma"], correct: 2 },
+                    { q: "¿Cuál es el planeta más cercano al Sol?", options: ["Tierra", "Marte", "Mercurio", "Júpiter"], correct: 2 }
+                ]
+            };
+
+            let currentRiddleIndex = 0;
+            let score = 0;
+            let toastTimer = null;
+
+            function byId(id) {
+                return document.getElementById(id);
+            }
+
+            window.showToast = function (message) {
+                const toast = byId("toast");
+                const msg = byId("toast-message");
+                if (!toast || !msg) return;
+                msg.textContent = message;
+                toast.classList.remove("hidden");
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toast.classList.add("hidden");
+                }, 3200);
+            };
+
+            window.filterAreas = function (category, btn) {
+                document.querySelectorAll(".area-card").forEach((card) => {
+                    const show = category === "all" || card.classList.contains(category);
+                    card.classList.toggle("hidden-card", !show);
+                });
+                document.querySelectorAll(".filter-btn").forEach((b) => {
+                    b.classList.toggle("active", b.dataset.filter === category);
+                });
+                if (btn) btn.blur();
+            };
+
+            window.toggleRiddleAnswer = function () {
+                const answerDiv = byId("riddle-answer");
+                const revealBtn = byId("reveal-btn");
+                if (!answerDiv || !revealBtn) return;
+                const isHidden = answerDiv.classList.toggle("hidden");
+                revealBtn.textContent = isHidden ? "Revelar Respuesta" : "Ocultar Respuesta";
+            };
+
+            window.nextRiddle = function () {
+                currentRiddleIndex = (currentRiddleIndex + 1) % riddles.length;
+                byId("riddle-text").textContent = riddles[currentRiddleIndex].question;
+                byId("riddle-answer").textContent = riddles[currentRiddleIndex].answer;
+                byId("riddle-answer").classList.add("hidden");
+                byId("reveal-btn").textContent = "Revelar Respuesta";
+            };
+
+            window.generateChallenge = function (type) {
+                const list = challenges[type];
+                if (!list) return;
+
+                ["math", "words", "science"].forEach((t) => {
+                    const tab = byId("tab-" + t);
+                    if (tab) {
+                        tab.classList.remove("active-math", "active-words", "active-science");
+                        if (t === type) tab.classList.add("active-" + t);
+                    }
+                });
+
+                const item = list[Math.floor(Math.random() * list.length)];
+                byId("challenge-question").textContent = item.q;
+                byId("challenge-feedback").textContent = "";
+
+                const optionsContainer = byId("challenge-options");
+                optionsContainer.innerHTML = "";
+
+                item.options.forEach((opt, idx) => {
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "opt-btn";
+                    btn.textContent = opt;
+                    btn.addEventListener("click", () => checkChallengeAnswer(idx, item.correct, btn));
+                    optionsContainer.appendChild(btn);
+                });
+            };
+
+            function checkChallengeAnswer(selectedIndex, correctIndex, btnElement) {
+                const feedback = byId("challenge-feedback");
+                const allBtns = byId("challenge-options").querySelectorAll("button");
+                allBtns.forEach((b) => {
+                    b.disabled = true;
+                    b.style.opacity = "0.6";
+                });
+
+                if (selectedIndex === correctIndex) {
+                    btnElement.classList.add("ok");
+                    btnElement.style.opacity = "1";
+                    feedback.style.color = "#6ee7b7";
+                    feedback.textContent = "🎉 ¡Correcto! +10 Puntos";
+                    score += 10;
+                    byId("user-score").textContent = String(score);
+                } else {
+                    btnElement.classList.add("bad");
+                    btnElement.style.opacity = "1";
+                    feedback.style.color = "#fda4af";
+                    feedback.textContent = "❌ ¡Casi! Prueba con otro reto";
+                }
+            }
+
+            window.generateRandomChallenge = function () {
+                const types = ["math", "words", "science"];
+                generateChallenge(types[Math.floor(Math.random() * types.length)]);
+            };
+
+            window.quickAnswerHero = function () {
+                showToast("💡 Respuesta: 8 × 7 = 56, más 4 = ¡60!");
+            };
+
+            window.openModalZona = function () {
+                byId("modal-zona").classList.remove("hidden");
+            };
+
+            window.closeModalZona = function () {
+                byId("modal-zona").classList.add("hidden");
+            };
+
+            window.simulateLogin = function (role) {
+                closeModalZona();
+                showToast("Bienvenido a la Zona de " + role + ". 🎉");
+            };
+
+            window.openSubjectModal = function (title, key) {
+                const content = byId("modal-subject-content");
+                let extra = "";
+                if (key === "Mates") {
+                    extra = '<a href="tren.html" class="btn btn-secondary" style="width:100%; justify-content:space-between;"><span>🚂 Ir a El Tren (tren.html)</span><span>→</span></a>';
+                }
+                content.innerHTML = `
+                    <h3 id="modal-subject-title" style="text-align:center; margin-bottom:6px;">${title}</h3>
+                    <p style="text-align:center; color:var(--muted); font-size:0.92rem; margin-bottom:16px;">Elige una opción</p>
+                    <div style="display:grid; gap:10px;">
+                        ${extra}
+                        <button type="button" class="btn btn-secondary" style="width:100%; justify-content:space-between;" onclick="closeSubjectModal(); showToast('Abriendo juegos de ${title}...');">
+                            <span>🎮 Juegos Interactivos</span><span>→</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary" style="width:100%; justify-content:space-between;" onclick="closeSubjectModal(); showToast('Preparando fichas...');">
+                            <span>📄 Fichas Imprimibles</span><span>→</span>
+                        </button>
+                    </div>
+                `;
+                byId("modal-subject").classList.remove("hidden");
+            };
+
+            window.closeSubjectModal = function () {
+                byId("modal-subject").classList.add("hidden");
+            };
+
+            window.downloadResourceMock = function (name) {
+                showToast('Abriendo "' + name + '"... 📥');
+            };
+
+            window.subscribeNewsletter = function (e) {
+                e.preventDefault();
+                showToast("¡Gracias por suscribirte! 📬");
+                e.target.reset();
+            };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const yearEl = byId("current-year");
+                if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+                const menuBtn = byId("mobile-menu-btn");
+                const mobileMenu = byId("mobile-menu");
+                if (menuBtn && mobileMenu) {
+                    menuBtn.addEventListener("click", function () {
+                        const open = mobileMenu.classList.toggle("open");
+                        menuBtn.setAttribute("aria-expanded", String(open));
+                        menuBtn.textContent = open ? "✕" : "☰";
+                    });
+
+                    mobileMenu.querySelectorAll(".mobile-link").forEach((link) => {
+                        link.addEventListener("click", function () {
+                            mobileMenu.classList.remove("open");
+                            menuBtn.setAttribute("aria-expanded", "false");
+                            menuBtn.textContent = "☰";
+                        });
+                    });
+                }
+
+                generateChallenge("math");
+            });
+        })();
+    </script>
+</body>
+</html>
