@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MATRIX · Dictado de Números (3.º de Primaria)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030a04;
+      --panel: rgba(5, 18, 9, 0.92);
+      --panel-soft: rgba(9, 28, 15, 0.88);
+      --neon: #00ff41;
+      --neon-dim: #00b831;
+      --neon-glow: rgba(0, 255, 65, 0.35);
+      --cyan: #00f0ff;
+      --amber: #ffb800;
+      --red: #ff3b5c;
+      --text: #d8ffe1;
+      --muted: #78b888;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 18px 14px 56px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Lluvia digital de Matrix */
+    #matrix-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.32;
+      pointer-events: none;
+    }
+
+    /* Efecto sutil de líneas de monitor CRT */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.14) 0px,
+        rgba(0, 0, 0, 0.14) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    }
+
+    .terminal-wrap {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* Cabecera estilo terminal Matrix */
+    .header-matrix {
+      background: var(--panel);
+      border: 2px solid var(--neon);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 24px rgba(0, 255, 65, 0.18), inset 0 0 20px rgba(0, 255, 65, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .matrix-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      border: 2px solid var(--neon);
+      background: rgba(0, 255, 65, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.7rem;
+      color: var(--neon);
+      text-shadow: 0 0 10px var(--neon);
+      flex-shrink: 0;
+    }
+
+    .brand-title h1 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1.35rem, 3.2vw, 2rem);
+      margin: 0;
+      color: var(--neon);
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(0, 255, 65, 0.55);
+    }
+
+    .brand-title p {
+      margin: 4px 0 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .top-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      background: rgba(0, 255, 65, 0.08);
+      color: var(--neon);
+      border: 1.5px solid var(--neon-dim);
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .btn-mini:hover {
+      background: rgba(0, 255, 65, 0.22);
+      box-shadow: 0 0 12px var(--neon-glow);
+    }
+
+    /* Panel de ejemplos sin spoiler */
+    .panel-ejemplos {
+      background: var(--panel-soft);
+      border: 1.5px dashed var(--cyan);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.1);
+    }
+
+    .panel-ejemplos.oculto {
+      display: none;
+    }
+
+    .titulo-ejemplos {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--cyan);
+      font-size: 1rem;
+      margin: 0 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .grid-ejemplos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 720px) {
+      .grid-ejemplos {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ejemplo-card {
+      background: rgba(0, 240, 255, 0.06);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .ejemplo-card strong {
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 4px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .flecha {
+      color: var(--neon);
+      font-weight: 800;
+    }
+
+    /* Barra de progreso y estado */
+    .hud-bar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 14px;
+      align-items: center;
+      background: var(--panel);
+      border: 1.5px solid var(--neon-dim);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 650px) {
+      .hud-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .progreso-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .progreso-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .barra-fondo {
+      width: 100%;
+      height: 12px;
+      background: rgba(0, 255, 65, 0.1);
+      border: 1px solid var(--neon-dim);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .barra-relleno {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00b831, #00ff41, #80ff9f);
+      box-shadow: 0 0 10px var(--neon);
+      transition: width 0.35s ease;
+    }
+
+    .stat-pill {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1.5px solid var(--neon-dim);
+      background: rgba(0, 255, 65, 0.08);
+      color: var(--neon);
+      text-align: center;
+    }
+
+    .stat-pill.banco {
+      border-color: rgba(0, 240, 255, 0.5);
+      color: var(--cyan);
+      background: rgba(0, 240, 255, 0.06);
+    }
+
+    /* Consola principal de la pregunta */
+    .consola-juego {
+      background: var(--panel);
+      border: 2px solid var(--neon);
+      border-radius: 16px;
+      padding: 26px 24px 24px;
+      box-shadow: 0 0 34px rgba(0, 255, 65, 0.16), inset 0 0 28px rgba(0, 255, 65, 0.05);
+    }
+
+    .meta-pregunta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tag-tipo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.98rem;
+      padding: 5px 14px;
+      border-radius: 6px;
+      border: 1.5px solid var(--neon);
+      background: rgba(0, 255, 65, 0.14);
+      color: var(--neon);
+    }
+
+    .tag-tipo.ordinal {
+      border-color: var(--cyan);
+      background: rgba(0, 240, 255, 0.12);
+      color: var(--cyan);
+    }
+
+    .intentos-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.45);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--neon-dim);
+    }
+
+    .escudo {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: var(--neon);
+      box-shadow: 0 0 8px var(--neon);
+      transition: all 0.25s ease;
+    }
+
+    .escudo.perdido {
+      background: #2b1419;
+      border: 1px solid var(--red);
+      box-shadow: none;
+    }
+
+    /* Pantalla de dictado (el número que debe decodificar) */
+    .pantalla-dictado {
+      background: #020803;
+      border: 2px solid var(--neon-dim);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 18px;
+      position: relative;
+      box-shadow: inset 0 0 24px rgba(0, 255, 65, 0.12);
+    }
+
+    .orden-mision {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      color: var(--amber);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .valor-mostrado {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(1.55rem, 4.2vw, 2.55rem);
+      font-weight: 700;
+      color: var(--neon);
+      text-shadow: 0 0 14px rgba(0, 255, 65, 0.65);
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .btn-voz {
+      margin-top: 14px;
+      background: rgba(0, 240, 255, 0.1);
+      color: var(--cyan);
+      border: 1.5px solid var(--cyan);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-voz:hover {
+      background: rgba(0, 240, 255, 0.24);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
+    }
+
+    /* Entrada de respuesta */
+    .form-codigo {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .input-matrix {
+      flex: 1;
+      min-width: 220px;
+      background: #031006;
+      color: #e6ffec;
+      border: 2px solid var(--neon-dim);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-matrix::placeholder {
+      color: #4f855d;
+      font-weight: 500;
+    }
+
+    .input-matrix:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 0 3px rgba(0, 255, 65, 0.22);
+    }
+
+    .btn-matrix {
+      background: var(--neon);
+      color: #031206;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.12rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 0 16px rgba(0, 255, 65, 0.4);
+      transition: transform 0.12s ease, filter 0.15s ease;
+    }
+
+    .btn-matrix:hover:not(:disabled) {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-matrix:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-siguiente {
+      display: none;
+      width: 100%;
+      margin-top: 14px;
+      background: var(--cyan);
+      color: #021417;
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.4);
+    }
+
+    .btn-siguiente.visible {
+      display: block;
+    }
+
+    /* Botones rápidos para tildes y símbolo º */
+    .teclado-ayuda {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .teclado-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+
+    .btn-char {
+      background: rgba(0, 255, 65, 0.08);
+      color: var(--text);
+      border: 1px solid var(--neon-dim);
+      border-radius: 6px;
+      padding: 5px 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.14s ease;
+    }
+
+    .btn-char:hover {
+      background: rgba(0, 255, 65, 0.25);
+      color: #fff;
+    }
+
+    /* Consola de feedback ortográfico */
+    .feedback-box {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.96rem;
+      line-height: 1.48;
+      margin-top: 10px;
+    }
+
+    .feedback-box.visible {
+      display: block;
+      animation: fadeSlide 0.24s ease;
+    }
+
+    .feedback-box.ok {
+      background: rgba(0, 255, 65, 0.12);
+      border: 1.5px solid var(--neon);
+      color: #c8ffd4;
+    }
+
+    .feedback-box.warn {
+      background: rgba(255, 184, 0, 0.12);
+      border: 1.5px solid var(--amber);
+      color: #ffe6a3;
+    }
+
+    .feedback-box.err {
+      background: rgba(255, 59, 92, 0.14);
+      border: 1.5px solid var(--red);
+      color: #ffd0d8;
+    }
+
+    .solucion-destacada {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid var(--neon);
+      border-radius: 6px;
+      color: var(--neon);
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Pantalla final */
+    .pantalla-final {
+      display: none;
+      text-align: center;
+    }
+
+    .pantalla-final.visible {
+      display: block;
+      animation: fadeSlide 0.3s ease;
+    }
+
+    .pantalla-final h2 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.9rem;
+      color: var(--neon);
+      margin: 0 0 8px;
+      text-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+    }
+
+    .nota-final {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 2.5rem;
+      color: #031206;
+      background: var(--neon);
+      padding: 8px 30px;
+      border-radius: 12px;
+      margin: 10px 0 14px;
+      box-shadow: 0 0 22px rgba(0, 255, 65, 0.5);
+    }
+
+    .tabla-resumen {
+      text-align: left;
+      max-height: 280px;
+      overflow-y: auto;
+      background: rgba(2, 10, 4, 0.85);
+      border: 1px solid var(--neon-dim);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 16px 0 20px;
+      font-size: 0.9rem;
+    }
+
+    .fila-resumen {
+      padding: 8px 6px;
+      border-bottom: 1px dashed rgba(0, 255, 65, 0.25);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .fila-resumen:last-child {
+      border-bottom: none;
+    }
+
+    .acciones-finales {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="matrix-canvas"></canvas>
+<div class="scanlines"></div>
+
+<div class="terminal-wrap">
+  <header class="header-matrix">
+    <div class="brand-title">
+      <div class="matrix-badge">01</div>
+      <div>
+        <h1>MATRIX // DICTADO DE NÚMEROS</h1>
+        <p>3.º de Primaria · Decenas de millar, ordinales hasta el 20.º y ortografía numérica</p>
+      </div>
+    </div>
+    <div class="top-controls">
+      <button class="btn-mini" id="btn-ejemplos" onclick="alternarEjemplos()">📘 Ocultar ejemplos</button>
+      <button class="btn-mini" id="btn-sonido" onclick="alternarSonido()">🔊 Sonido: ON</button>
+    </div>
+  </header>
+
+  <!-- Ejemplos verificados: 2.004 y 3.º NO existen en el banco de preguntas -->
+  <section class="panel-ejemplos" id="panel-ejemplos">
+    <div class="titulo-ejemplos">
+      <span>&gt;_ EJEMPLOS DE ENTRENAMIENTO (cómo funciona la misión)</span>
+    </div>
+    <div class="grid-ejemplos">
+      <div class="ejemplo-card">
+        <strong>1. De cifras a letras</strong>
+        Si aparece <code>2.004</code> <span class="flecha">→</span> escribes:<br>
+        <code>dos mil cuatro</code>
+      </div>
+      <div class="ejemplo-card">
+        <strong>2. De letras a cifras</strong>
+        Si aparece <code>mil doscientos</code> <span class="flecha">→</span> escribes:<br>
+        <code>1.200</code> (o <code>1200</code>)
+      </div>
+      <div class="ejemplo-card">
+        <strong>3. Números ordinales</strong>
+        Si aparece <code>3.º</code> <span class="flecha">→</span> <code>tercero</code><br>
+        Si aparece <code>tercero</code> <span class="flecha">→</span> <code>3.º</code> (o <code>3º</code>)
+      </div>
+    </div>
+  </section>
+
+  <!-- Barra HUD -->
+  <section class="hud-bar">
+    <div class="progreso-wrap">
+      <div class="progreso-label">
+        <span id="label-pregunta">TRANSMISIÓN 1 / 10</span>
+        <span id="label-porcentaje">0%</span>
+      </div>
+      <div class="barra-fondo">
+        <div class="barra-relleno" id="barra-relleno"></div>
+      </div>
+    </div>
+    <div class="stat-pill" id="stat-aciertos">ACIERTOS: 0</div>
+    <div class="stat-pill banco" id="stat-banco" title="Números sin repetir disponibles en la base de datos">NUEVOS: 44</div>
+  </section>
+
+  <!-- Consola principal -->
+  <main class="consola-juego">
+    <div id="vista-pregunta">
+      <div class="meta-pregunta">
+        <div class="tag-tipo" id="tag-tipo">CARDINAL · CIFRAS → LETRAS</div>
+        <div class="intentos-box">
+          <span>INTENTOS:</span>
+          <span class="escudo" id="escudo-1"></span>
+          <span class="escudo" id="escudo-2"></span>
+          <span class="escudo" id="escudo-3"></span>
+          <span id="texto-intentos">(3/3)</span>
+        </div>
+      </div>
+
+      <div class="pantalla-dictado">
+        <div class="orden-mision" id="orden-mision">&gt;_ ESCRIBE ESTE NÚMERO CON LETRAS (cuida las tildes y la ortografía):</div>
+        <div class="valor-mostrado" id="valor-mostrado">---</div>
+        <button type="button" class="btn-voz" onclick="escucharNumero()">🔊 Escuchar dictado</button>
+      </div>
+
+      <div class="teclado-ayuda" id="teclado-ayuda">
+        <span class="teclado-label">Caracteres rápidos:</span>
+        <button type="button" class="btn-char" onclick="insertarCaracter('á')">á</button>
+        <button type="button" class="btn-char" onclick="insertarCaracter('é')">é</button>
+        <button type="button" class="btn-char" onclick="insertarCaracter('í')">í</button>
+        <button type="button" class="btn-char" onclick="insertarCaracter('ó')">ó</button>
+        <button type="button" class="btn-char" onclick="insertarCaracter('ú')">ú</button>
+        <button type="button" class="btn-char" onclick="insertarCaracter('º')">º</button>
+      </div>
+
+      <form class="form-codigo" onsubmit="comprobarRespuesta(event)">
+        <input
+          type="text"
+          id="input-respuesta"
+          class="input-matrix"
+          placeholder="Introduce tu respuesta aquí..."
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          required
+        />
+        <button type="submit" class="btn-matrix" id="btn-comprobar">EJECUTAR [↵]</button>
+      </form>
+
+      <div class="feedback-box" id="feedback-box"></div>
+
+      <button type="button" class="btn-matrix btn-siguiente" id="btn-siguiente" onclick="siguientePregunta()">
+        SIGUIENTE TRANSMISIÓN &gt;&gt;
+      </button>
+    </div>
+
+    <!-- Pantalla final -->
+    <div class="pantalla-final" id="pantalla-final">
+      <h2 id="titulo-final">MISIÓN COMPLETADA</h2>
+      <div class="nota-final" id="nota-final">0 / 10</div>
+      <p id="mensaje-final" style="color: var(--text); max-width: 620px; margin: 0 auto;"></p>
+
+      <div class="tabla-resumen" id="tabla-resumen"></div>
+
+      <div class="acciones-finales">
+        <button type="button" class="btn-matrix" onclick="iniciarNuevaPartida()">
+          🔄 NUEVA PARTIDA (NÚMEROS NUEVOS)
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  /* ========================
+     1. LLUVIA MATRIX (CANVAS)
+     ======================== */
+  (function iniciarLluviaMatrix() {
+    const canvas = document.getElementById("matrix-canvas");
+    const ctx = canvas.getContext("2d");
+    const chars = "0123456789ºABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    const fontSize = 16;
+    let columns = 0;
+    let drops = [];
+
+    function redimensionar() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array.from({ length: columns }, () => Math.floor(Math.random() * -40));
+    }
+
+    window.addEventListener("resize", redimensionar);
+    redimensionar();
+
+    function dibujar() {
+      ctx.fillStyle = "rgba(3, 10, 4, 0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#00ff41";
+      ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(dibujar, 52);
+  })();
+
+  /* =========================================================
+     2. BANCO DE 44 NÚMEROS (NINGUNO COINCIDE CON LOS EJEMPLOS)
+     Ejemplos excluidos: 2.004, 1.200 y 3.º (tercero)
+     ========================================================= */
+  const BANCO_CARDINALES = [
+    { id: "c1", tipo: "cardinal", cifras: "16.200", cifrasLimpias: "16200", letras: "dieciséis mil doscientos" },
+    { id: "c2", tipo: "cardinal", cifras: "22.315", cifrasLimpias: "22315", letras: "veintidós mil trescientos quince" },
+    { id: "c3", tipo: "cardinal", cifras: "34.608", cifrasLimpias: "34608", letras: "treinta y cuatro mil seiscientos ocho" },
+    { id: "c4", tipo: "cardinal", cifras: "45.512", cifrasLimpias: "45512", letras: "cuarenta y cinco mil quinientos doce" },
+    { id: "c5", tipo: "cardinal", cifras: "58.723", cifrasLimpias: "58723", letras: "cincuenta y ocho mil setecientos veintitrés" },
+    { id: "c6", tipo: "cardinal", cifras: "64.926", cifrasLimpias: "64926", letras: "sesenta y cuatro mil novecientos veintiséis" },
+    { id: "c7", tipo: "cardinal", cifras: "73.416", cifrasLimpias: "73416", letras: "setenta y tres mil cuatrocientos dieciséis" },
+    { id: "c8", tipo: "cardinal", cifras: "89.222", cifrasLimpias: "89222", letras: "ochenta y nueve mil doscientos veintidós" },
+    { id: "c9", tipo: "cardinal", cifras: "92.309", cifrasLimpias: "92309", letras: "noventa y dos mil trescientos nueve" },
+    { id: "c10", tipo: "cardinal", cifras: "12.640", cifrasLimpias: "12640", letras: "doce mil seiscientos cuarenta" },
+    { id: "c11", tipo: "cardinal", cifras: "23.507", cifrasLimpias: "23507", letras: "veintitrés mil quinientos siete" },
+    { id: "c12", tipo: "cardinal", cifras: "26.814", cifrasLimpias: "26814", letras: "veintiséis mil ochocientos catorce" },
+    { id: "c13", tipo: "cardinal", cifras: "40.916", cifrasLimpias: "40916", letras: "cuarenta mil novecientos dieciséis" },
+    { id: "c14", tipo: "cardinal", cifras: "53.205", cifrasLimpias: "53205", letras: "cincuenta y tres mil doscientos cinco" },
+    { id: "c15", tipo: "cardinal", cifras: "19.732", cifrasLimpias: "19732", letras: "diecinueve mil setecientos treinta y dos" },
+    { id: "c16", tipo: "cardinal", cifras: "30.422", cifrasLimpias: "30422", letras: "treinta mil cuatrocientos veintidós" },
+    { id: "c17", tipo: "cardinal", cifras: "84.619", cifrasLimpias: "84619", letras: "ochenta y cuatro mil seiscientos diecinueve" },
+    { id: "c18", tipo: "cardinal", cifras: "70.526", cifrasLimpias: "70526", letras: "setenta mil quinientos veintiséis" },
+    { id: "c19", tipo: "cardinal", cifras: "15.328", cifrasLimpias: "15328", letras: "quince mil trescientos veintiocho" },
+    { id: "c20", tipo: "cardinal", cifras: "96.211", cifrasLimpias: "96211", letras: "noventa y seis mil doscientos once" },
+    { id: "c21", tipo: "cardinal", cifras: "6.216", cifrasLimpias: "6216", letras: "seis mil doscientos dieciséis" },
+    { id: "c22", tipo: "cardinal", cifras: "8.523", cifrasLimpias: "8523", letras: "ocho mil quinientos veintitrés" },
+    { id: "c23", tipo: "cardinal", cifras: "4.629", cifrasLimpias: "4629", letras: "cuatro mil seiscientos veintinueve" },
+    { id: "c24", tipo: "cardinal", cifras: "9.745", cifrasLimpias: "9745", letras: "nueve mil setecientos cuarenta y cinco" },
+    { id: "c25", tipo: "cardinal", cifras: "3.922", cifrasLimpias: "3922", letras: "tres mil novecientos veintidós" },
+    { id: "c26", tipo: "cardinal", cifras: "7.318", cifrasLimpias: "7318", letras: "siete mil trescientos dieciocho" },
+    { id: "c27", tipo: "cardinal", cifras: "11.406", cifrasLimpias: "11406", letras: "once mil cuatrocientos seis" },
+    { id: "c28", tipo: "cardinal", cifras: "27.803", cifrasLimpias: "27803", letras: "veintisiete mil ochocientos tres" }
+  ];
+
+  const BANCO_ORDINALES = [
+    { id: "o5", tipo: "ordinal", cifras: "5.º", numBase: "5", letras: "quinto", variantes: ["quinta"] },
+    { id: "o6", tipo: "ordinal", cifras: "6.º", numBase: "6", letras: "sexto", variantes: ["sexta"] },
+    { id: "o7", tipo: "ordinal", cifras: "7.º", numBase: "7", letras: "séptimo", variantes: ["séptima"] },
+    { id: "o8", tipo: "ordinal", cifras: "8.º", numBase: "8", letras: "octavo", variantes: ["octava"] },
+    { id: "o9", tipo: "ordinal", cifras: "9.º", numBase: "9", letras: "noveno", variantes: ["novena"] },
+    { id: "o10", tipo: "ordinal", cifras: "10.º", numBase: "10", letras: "décimo", variantes: ["décima"] },
+    { id: "o11", tipo: "ordinal", cifras: "11.º", numBase: "11", letras: "undécimo", variantes: ["undécima", "decimoprimero", "decimoprimera"] },
+    { id: "o12", tipo: "ordinal", cifras: "12.º", numBase: "12", letras: "duodécimo", variantes: ["duodécima", "decimosegundo", "decimosegunda"] },
+    { id: "o13", tipo: "ordinal", cifras: "13.º", numBase: "13", letras: "decimotercero", variantes: ["decimotercera"] },
+    { id: "o14", tipo: "ordinal", cifras: "14.º", numBase: "14", letras: "decimocuarto", variantes: ["decimocuarta"] },
+    { id: "o15", tipo: "ordinal", cifras: "15.º", numBase: "15", letras: "decimoquinto", variantes: ["decimoquinta"] },
+    { id: "o16", tipo: "ordinal", cifras: "16.º", numBase: "16", letras: "decimosexto", variantes: ["decimosexta"] },
+    { id: "o17", tipo: "ordinal", cifras: "17.º", numBase: "17", letras: "decimoséptimo", variantes: ["decimoséptima"] },
+    { id: "o18", tipo: "ordinal", cifras: "18.º", numBase: "18", letras: "decimoctavo", variantes: ["decimoctava"] },
+    { id: "o19", tipo: "ordinal", cifras: "19.º", numBase: "19", letras: "decimonoveno", variantes: ["decimonovena"] },
+    { id: "o20", tipo: "ordinal", cifras: "20.º", numBase: "20", letras: "vigésimo", variantes: ["vigésima"] }
+  ];
+
+  const TOTAL_PREGUNTAS = 10;
+  const MAX_INTENTOS = 3;
+  const STORAGE_KEY = "matrix_dictado_usados_v1";
+
+  let idsUsados = cargarUsados();
+  let partidaActual = [];
+  let indice = 0;
+  let intentosRestantes = MAX_INTENTOS;
+  let aciertos = 0;
+  let preguntaResuelta = false;
+  let historialPartida = [];
+  let sonidoActivo = true;
+  let audioCtx = null;
+
+  function cargarUsados() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function guardarUsados() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(idsUsados));
+    } catch {}
+  }
+
+  function barajar(arr) {
+    const copia = [...arr];
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+  }
+
+  function tocarSonido(tipo) {
+    if (!sonidoActivo) return;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const t = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (tipo === "ok") {
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(520, t);
+        osc.frequency.setValueAtTime(780, t + 0.09);
+        gain.gain.setValueAtTime(0.14, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+        osc.start(t);
+        osc.stop(t + 0.29);
+      } else if (tipo === "warn") {
+        osc.type = "square";
+        osc.frequency.setValueAtTime(280, t);
+        gain.gain.setValueAtTime(0.07, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+        osc.start(t);
+        osc.stop(t + 0.19);
+      } else if (tipo === "err") {
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(210, t);
+        osc.frequency.linearRampToValueAtTime(120, t + 0.28);
+        gain.gain.setValueAtTime(0.09, t);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+        osc.start(t);
+        osc.stop(t + 0.31);
+      }
+    } catch {}
+  }
+
+  /* =========================================================
+     3. SELECCIÓN DE 10 PREGUNTAS SIN REPETIR ENTRE PARTIDAS
+     ========================================================= */
+  function construirPartida() {
+    let cardDisponibles = BANCO_CARDINALES.filter(x => !idsUsados.includes(x.id));
+    let ordDisponibles = BANCO_ORDINALES.filter(x => !idsUsados.includes(x.id));
+
+    // Si quedan menos de 7 cardinales o menos de 3 ordinales sin usar, reiniciamos el ciclo completo
+    if (cardDisponibles.length < 7 || ordDisponibles.length < 3) {
+      idsUsados = [];
+      guardarUsados();
+      cardDisponibles = [...BANCO_CARDINALES];
+      ordDisponibles = [...BANCO_ORDINALES];
+    }
+
+    const elegidosCard = barajar(cardDisponibles).slice(0, 7);
+    const elegidosOrd = barajar(ordDisponibles).slice(0, 3);
+    const combinados = barajar([...elegidosCard, ...elegidosOrd]);
+
+    // 5 de cifras -> letras y 5 de letras -> cifras (barajados)
+    const modos = barajar([
+      "cifras_a_letras", "cifras_a_letras", "cifras_a_letras", "cifras_a_letras", "cifras_a_letras",
+      "letras_a_cifras", "letras_a_cifras", "letras_a_cifras", "letras_a_cifras", "letras_a_cifras"
+    ]);
+
+    partidaActual = combinados.map((item, idx) => ({
+      ...item,
+      modo: modos[idx]
+    }));
+
+    // Registrar como usados para que en la siguiente partida NO se repitan
+    partidaActual.forEach(p => {
+      if (!idsUsados.includes(p.id)) idsUsados.push(p.id);
+    });
+    guardarUsados();
+  }
+
+  function actualizarContadorBanco() {
+    const totalBanco = BANCO_CARDINALES.length + BANCO_ORDINALES.length;
+    const restantes = Math.max(0, totalBanco - idsUsados.length);
+    document.getElementById("stat-banco").textContent = `NUEVOS: ${restantes}`;
+  }
+
+  function iniciarNuevaPartida() {
+    construirPartida();
+    indice = 0;
+    aciertos = 0;
+    historialPartida = [];
+
+    document.getElementById("vista-pregunta").style.display = "block";
+    document.getElementById("pantalla-final").classList.remove("visible");
+    actualizarContadorBanco();
+    cargarPregunta();
+  }
+
+  function cargarPregunta() {
+    const item = partidaActual[indice];
+    intentosRestantes = MAX_INTENTOS;
+    preguntaResuelta = false;
+
+    // HUD
+    document.getElementById("label-pregunta").textContent = `TRANSMISIÓN ${indice + 1} / ${TOTAL_PREGUNTAS}`;
+    const pct = Math.round((indice / TOTAL_PREGUNTAS) * 100);
+    document.getElementById("label-porcentaje").textContent = `${pct}%`;
+    document.getElementById("barra-relleno").style.width = `${pct}%`;
+    document.getElementById("stat-aciertos").textContent = `ACIERTOS: ${aciertos}`;
+
+    // Etiqueta de tipo y modo
+    const tag = document.getElementById("tag-tipo");
+    const tipoTxt = item.tipo === "ordinal" ? "ORDINAL (1.º-20.º)" : "CARDINAL";
+    const modoTxt = item.modo === "cifras_a_letras" ? "CIFRAS → LETRAS" : "LETRAS → CIFRAS";
+    tag.textContent = `${tipoTxt} · ${modoTxt}`;
+    tag.className = item.tipo === "ordinal" ? "tag-tipo ordinal" : "tag-tipo";
+
+    // Orden y valor mostrado
+    const orden = document.getElementById("orden-mision");
+    const valor = document.getElementById("valor-mostrado");
+    const input = document.getElementById("input-respuesta");
+
+    if (item.modo === "cifras_a_letras") {
+      orden.textContent = ">_ ESCRIBE ESTE NÚMERO CON LETRAS (cuida las tildes y la ortografía):";
+      valor.textContent = item.cifras;
+      input.placeholder = "Escribe el número en letras...";
+    } else {
+      orden.textContent = item.tipo === "ordinal"
+        ? ">_ ESCRIBE ESTE NÚMERO ORDINAL CON CIFRAS (no olvides el símbolo º):"
+        : ">_ ESCRIBE ESTE NÚMERO CON CIFRAS:";
+      valor.textContent = item.letras;
+      input.placeholder = item.tipo === "ordinal" ? "Ej. 3.º o 3º" : "Escribe el número en cifras...";
+    }
+
+    input.value = "";
+    input.disabled = false;
+    document.getElementById("btn-comprobar").disabled = false;
+    document.getElementById("btn-siguiente").classList.remove("visible");
+
+    const fb = document.getElementById("feedback-box");
+    fb.className = "feedback-box";
+    fb.innerHTML = "";
+
+    actualizarEscudos();
+    input.focus();
+  }
+
+  function actualizarEscudos() {
+    for (let i = 1; i <= MAX_INTENTOS; i++) {
+      const el = document.getElementById(`escudo-${i}`);
+      el.className = i <= intentosRestantes ? "escudo" : "escudo perdido";
+    }
+    document.getElementById("texto-intentos").textContent = `(${intentosRestantes}/${MAX_INTENTOS})`;
+  }
+
+  /* =========================================================
+     4. CORRECCIÓN ORTOGRÁFICA Y DIAGNÓSTICO DE ERRORES
+     ========================================================= */
+  function limpiarEspacios(txt) {
+    return txt.trim().toLowerCase().replace(/\s+/g, " ");
+  }
+
+  function quitarTildes(txt) {
+    return txt.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function diagnosticarErrorLetras(entrada, solucion) {
+    const sinTildesIn = quitarTildes(entrada);
+    const sinTildesSol = quitarTildes(solucion);
+
+    // 1. Solo fallan tildes
+    if (sinTildesIn === sinTildesSol) {
+      return "⚠️ <strong>¡Ojo con las TILDES!</strong> Todas las letras están bien, pero falta o sobra alguna tilde (por ejemplo: <em>dieciséis, veintidós, veintitrés, veintiséis, séptimo, décimo, undécimo, duodécimo, decimoséptimo, vigésimo</em>).";
+    }
+
+    // 2. Fallo de espacios (junto / separado)
+    if (sinTildesIn.replace(/\s+/g, "") === sinTildesSol.replace(/\s+/g, "")) {
+      return "⚠️ <strong>¡Revisa los espacios!</strong> Del 16 al 29 se escriben en <strong>una sola palabra</strong> (<em>veintidós</em>), del 31 al 99 separados con <strong>y</strong> (<em>treinta y cuatro</em>), y los ordinales del 13.º al 19.º van en una sola palabra.";
+    }
+
+    // 3. Fallo de 'sc' en centenas (doscientos, trescientos, seiscientos)
+    if ((solucion.includes("doscientos") || solucion.includes("trescientos") || solucion.includes("seiscientos")) &&
+        !entrada.includes("sc")) {
+      return "⚠️ <strong>Pista ortográfica:</strong> Recuerda que <em>doscientos, trescientos y seiscientos</em> se escriben siempre con <strong>SC</strong>.";
+    }
+
+    // 4. Confusión B / V
+    if (solucion.includes("v") && entrada.includes("b") && !solucion.includes("b")) {
+      return "⚠️ <strong>Pista ortográfica (B/V):</strong> Revisa la letra <strong>V</strong> (palabras como <em>veinte, veintidós, novecientos, octavo, noveno o vigésimo</em> llevan V).";
+    }
+
+    // 5. Confusión C / S / Z en centenas o decenas
+    if (sinTildesSol.includes("ciento") && !sinTildesIn.includes("ciento")) {
+      return "⚠️ <strong>Pista ortográfica:</strong> Revisa cómo has escrito las centenas (<em>cientos</em> se escribe con <strong>C</strong>, y <em>quinientos</em> con <strong>QU</strong>).";
+    }
+
+    // 6. Confusión en ordinales especiales
+    if (solucion.includes("vigésimo") || solucion.includes("undécimo") || solucion.includes("duodécimo")) {
+      return "⚠️ <strong>Pista de ordinales:</strong> Revisa cómo se escribe exactamente este ordinal y recuerda llevar cuidado con la tilde y la <strong>C</strong> o <strong>G</strong>.";
+    }
+
+    return "⚠️ <strong>Código incorrecto.</strong> Léelo despacio en voz alta y revisa cada palabra, las tildes y la ortografía.";
+  }
+
+  function comprobarRespuesta(event) {
+    event.preventDefault();
+    if (preguntaResuelta) return;
+
+    const item = partidaActual[indice];
+    const inputEl = document.getElementById("input-respuesta");
+    const rawInput = inputEl.value;
+    if (!rawInput.trim()) return;
+
+    let esCorrecto = false;
+    let mensajeError = "";
+    const respuestaEsperada = item.modo === "cifras_a_letras" ? item.letras : item.cifras;
+
+    if (item.modo === "cifras_a_letras") {
+      const limpia = limpiarEspacios(rawInput);
+      const validas = [item.letras, ...(item.variantes || [])];
+      if (validas.includes(limpia)) {
+        esCorrecto = true;
+      } else {
+        mensajeError = diagnosticarErrorLetras(limpia, item.letras);
+      }
+    } else {
+      // Letras -> Cifras
+      const sinEspacios = rawInput.trim().replace(/\s+/g, "");
+      if (item.tipo === "cardinal") {
+        // Aceptar 16200 o 16.200 (con punto bien colocado)
+        const soloDigitos = sinEspacios.replace(/\./g, "");
+        if (/^\d+$/.test(soloDigitos) && soloDigitos === item.cifrasLimpias) {
+          esCorrecto = true;
+        } else {
+          mensajeError = "⚠️ <strong>Cifra incorrecta.</strong> Fíjate bien en los millares, centenas, decenas y unidades (recuerda poner los ceros donde corresponda).";
+        }
+      } else {
+        // Ordinal: aceptar 14º, 14.º, 14°, 14.°, 14ª, 14.ª
+        const patronOrdinal = new RegExp(`^${item.numBase}\\.?[º°ª]$`);
+        if (patronOrdinal.test(sinEspacios)) {
+          esCorrecto = true;
+        } else if (sinEspacios === item.numBase) {
+          mensajeError = "⚠️ <strong>¡Casi!</strong> El número es correcto, pero es un <strong>ordinal</strong>: añade el símbolo <strong>º</strong> al final (puedes usar el botón rápido de arriba).";
+        } else {
+          mensajeError = "⚠️ <strong>Ordinal incorrecto.</strong> Piensa qué puesto ocupa (del 1.º al 20.º) y añade el símbolo <strong>º</strong>.";
+        }
+      }
+    }
+
+    const fb = document.getElementById("feedback-box");
+
+    if (esCorrecto) {
+      aciertos++;
+      preguntaResuelta = true;
+      tocarSonido("ok");
+      document.getElementById("stat-aciertos").textContent = `ACIERTOS: ${aciertos}`;
+      fb.className = "feedback-box visible ok";
+      fb.innerHTML = `✅ <strong>¡ACCESO CONCEDIDO!</strong> Respuesta perfecta: <span class="solucion-destacada">${respuestaEsperada}</span>`;
+      historialPartida.push({
+        mostrado: item.modo === "cifras_a_letras" ? item.cifras : item.letras,
+        solucion: respuestaEsperada,
+        ok: true
+      });
+      bloquearYMostrarSiguiente();
+    } else {
+      intentosRestantes--;
+      actualizarEscudos();
+
+      if (intentosRestantes > 0) {
+        tocarSonido("warn");
+        fb.className = "feedback-box visible warn";
+        fb.innerHTML = `${mensajeError}<br><em>Te quedan <strong>${intentosRestantes}</strong> ${intentosRestantes === 1 ? "intento" : "intentos"} para corregirlo.</em>`;
+        inputEl.focus();
+        inputEl.select();
+      } else {
+        preguntaResuelta = true;
+        tocarSonido("err");
+        fb.className = "feedback-box visible err";
+        fb.innerHTML = `❌ <strong>SIN INTENTOS RESTANTES (0/3).</strong><br>La escritura correcta era:<br><span class="solucion-destacada">${respuestaEsperada}</span>`;
+        historialPartida.push({
+          mostrado: item.modo === "cifras_a_letras" ? item.cifras : item.letras,
+          solucion: respuestaEsperada,
+          ok: false
+        });
+        bloquearYMostrarSiguiente();
+      }
+    }
+  }
+
+  function bloquearYMostrarSiguiente() {
+    document.getElementById("input-respuesta").disabled = true;
+    document.getElementById("btn-comprobar").disabled = true;
+    const btnSig = document.getElementById("btn-siguiente");
+    btnSig.textContent = indice === TOTAL_PREGUNTAS - 1
+      ? "VER INFORME FINAL DE MISIÓN >>"
+      : "SIGUIENTE TRANSMISIÓN >>";
+    btnSig.classList.add("visible");
+    btnSig.focus();
+  }
+
+  function siguientePregunta() {
+    if (indice < TOTAL_PREGUNTAS - 1) {
+      indice++;
+      cargarPregunta();
+    } else {
+      mostrarFinal();
+    }
+  }
+
+  function mostrarFinal() {
+    document.getElementById("barra-relleno").style.width = "100%";
+    document.getElementById("label-porcentaje").textContent = "100%";
+    document.getElementById("vista-pregunta").style.display = "none";
+    document.getElementById("pantalla-final").classList.add("visible");
+    document.getElementById("nota-final").textContent = `${aciertos} / ${TOTAL_PREGUNTAS}`;
+
+    const titulo = document.getElementById("titulo-final");
+    const msg = document.getElementById("mensaje-final");
+
+    if (aciertos === TOTAL_PREGUNTAS) {
+      titulo.textContent = "👑 ¡ERES EL ELEGIDO DE MATRIX!";
+      msg.textContent = "Has descifrado los 10 números con ortografía impecable. ¡Nivel experto en decenas de millar y ordinales!";
+    } else if (aciertos >= 7) {
+      titulo.textContent = "🟢 ¡MISIÓN SUPERADA CON ÉXITO!";
+      msg.textContent = "Muy buen control de los números y su ortografía. Revisa los detalles de abajo y prueba una nueva ronda con números diferentes.";
+    } else {
+      titulo.textContent = "⚡ ENTRENAMIENTO COMPLETADO";
+      msg.textContent = "Buen intento. Fíjate bien en las tildes, las centenas con SC y los ordinales, y vuelve a intentarlo con una ronda nueva.";
+    }
+
+    const tabla = document.getElementById("tabla-resumen");
+    tabla.innerHTML = historialPartida.map((h, i) => `
+      <div class="fila-resumen">
+        <span><strong>${h.ok ? "✅" : "❌"} #${i + 1}:</strong> ${h.mostrado}</span>
+        <span style="color: var(--neon);">${h.solucion}</span>
+      </div>
+    `).join("");
+  }
+
+  /* =========================================================
+     5. UTILIDADES (VOZ, CARACTERES RÁPIDOS, CONTROLES)
+     ========================================================= */
+  function insertarCaracter(ch) {
+    const input = document.getElementById("input-respuesta");
+    if (input.disabled) return;
+    const inicio = input.selectionStart || input.value.length;
+    const fin = input.selectionEnd || input.value.length;
+    input.value = input.value.slice(0, inicio) + ch + input.value.slice(fin);
+    input.focus();
+    input.setSelectionRange(inicio + ch.length, inicio + ch.length);
+  }
+
+  function escucharNumero() {
+    if (!("speechSynthesis" in window)) return;
+    const item = partidaActual[indice];
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(item.letras);
+    utter.lang = "es-ES";
+    utter.rate = 0.9;
+    window.speechSynthesis.speak(utter);
+  }
+
+  function alternarEjemplos() {
+    const panel = document.getElementById("panel-ejemplos");
+    const btn = document.getElementById("btn-ejemplos");
+    panel.classList.toggle("oculto");
+    btn.textContent = panel.classList.contains("oculto") ? "📘 Ver ejemplos" : "📘 Ocultar ejemplos";
+  }
+
+  function alternarSonido() {
+    sonidoActivo = !sonidoActivo;
+    document.getElementById("btn-sonido").textContent = sonidoActivo ? "🔊 Sonido: ON" : "🔇 Sonido: OFF";
+  }
+
+  iniciarNuevaPartida();
+</script>
+
+</body>
+</html>
