@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partes de un Insecto: La Mantis Religiosa · Ciencias Naturales</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap');
+
+    :root {
+      --verde-hoja: #2e8b57;
+      --verde-lima: #8ac926;
+      --verde-claro: #e9f5db;
+      --verde-oscuro: #1b4332;
+      --amarillo-sol: #ffca3a;
+      --coral: #ff595e;
+      --azul-cielo: #1982c4;
+      --fondo: #f4f9f1;
+      --blanco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 16px 48px;
+      font-family: 'Nunito', sans-serif;
+      color: var(--verde-oscuro);
+      background-color: var(--fondo);
+      background-image:
+        radial-gradient(circle at 10% 15%, rgba(138, 201, 38, 0.14) 0 120px, transparent 121px),
+        radial-gradient(circle at 90% 85%, rgba(46, 139, 87, 0.12) 0 150px, transparent 151px);
+    }
+
+    .contenedor {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .cabecera {
+      background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-hoja));
+      color: var(--blanco);
+      border-radius: 22px;
+      padding: 22px 26px;
+      box-shadow: 0 10px 24px rgba(27, 67, 50, 0.18);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .cabecera-texto h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+      margin: 0 0 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .cabecera-texto p {
+      margin: 0;
+      font-size: 1.02rem;
+      opacity: 0.94;
+    }
+
+    .badge-curso {
+      background: var(--amarillo-sol);
+      color: var(--verde-oscuro);
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .panel-etiquetas {
+      background: var(--blanco);
+      border: 2.5px solid #cde2c6;
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 6px 18px rgba(27, 67, 50, 0.07);
+    }
+
+    .instruccion-titulo {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      margin: 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--verde-oscuro);
+    }
+
+    .banco-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      min-height: 50px;
+      align-items: center;
+    }
+
+    .chip-etiqueta {
+      background: linear-gradient(180deg, #9be15d 0%, #6ab023 100%);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.08rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 14px;
+      cursor: grab;
+      border: 2px solid var(--verde-oscuro);
+      box-shadow: 0 4px 0 var(--verde-oscuro);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    }
+
+    .chip-etiqueta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 var(--verde-oscuro);
+    }
+
+    .chip-etiqueta:active {
+      cursor: grabbing;
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 var(--verde-oscuro);
+    }
+
+    .chip-etiqueta.seleccionada {
+      outline: 4px solid var(--amarillo-sol);
+      transform: scale(1.06);
+    }
+
+    .chip-etiqueta.colocada {
+      opacity: 0.35;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .tablero-mantis {
+      background: var(--blanco);
+      border: 2.5px solid #cde2c6;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 10px 28px rgba(27, 67, 50, 0.09);
+      position: relative;
+    }
+
+    .lienzo-relativo {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 10;
+      min-height: 460px;
+      background: linear-gradient(180deg, #e7f6ff 0%, #f5fced 58%, #e3f2d6 100%);
+      border-radius: 18px;
+      border: 2px solid #b7d7ad;
+      overflow: hidden;
+    }
+
+    .svg-mantis {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .drop-zone {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 138px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 2.5px dashed var(--azul-cielo);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      color: #5b7c6b;
+      cursor: pointer;
+      box-shadow: 0 5px 14px rgba(27, 67, 50, 0.14);
+      transition: all 0.18s ease;
+      z-index: 5;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.drag-over {
+      background: #e3f4ff;
+      border-color: var(--azul-cielo);
+      border-style: solid;
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    .drop-zone.llena {
+      border-style: solid;
+      border-color: var(--verde-oscuro);
+      background: #f0f9eb;
+      color: var(--verde-oscuro);
+      font-weight: 700;
+    }
+
+    .drop-zone.correcta {
+      background: #d8f3dc;
+      border-color: #2d6a4f;
+      color: #1b4332;
+      box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.25);
+    }
+
+    .drop-zone.incorrecta {
+      background: #ffe3e3;
+      border-color: var(--coral);
+      color: #9b1c1c;
+      animation: sacudir 0.3s ease;
+    }
+
+    @keyframes sacudir {
+      0%, 100% { transform: translate(-50%, -50%); }
+      25% { transform: translate(-54%, -50%); }
+      75% { transform: translate(-46%, -50%); }
+    }
+
+    /* Coordenadas sincronizadas con las líneas de la nueva ilustración */
+    #zone-antenas { top: 13%; left: 17%; }
+    #zone-ojos    { top: 41%; left: 12%; }
+    #zone-cabeza  { top: 73%; left: 15%; }
+    #zone-torax   { top: 16%; left: 53%; }
+    #zone-patas   { top: 84%; left: 52%; }
+    #zone-abdomen { top: 28%; left: 85%; }
+
+    .barra-controles {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .botones-accion {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+      padding: 11px 22px;
+      border-radius: 14px;
+      border: 2px solid var(--verde-oscuro);
+      cursor: pointer;
+      transition: transform 0.14s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-comprobar {
+      background: var(--amarillo-sol);
+      color: var(--verde-oscuro);
+      box-shadow: 0 4px 0 var(--verde-oscuro);
+    }
+
+    .btn-reiniciar {
+      background: var(--blanco);
+      color: var(--verde-oscuro);
+      box-shadow: 0 4px 0 #b7d7ad;
+    }
+
+    .mensaje-resultado {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.12rem;
+      padding: 10px 18px;
+      border-radius: 14px;
+      background: var(--verde-claro);
+      border: 2px solid #b7d7ad;
+      color: var(--verde-oscuro);
+    }
+
+    .ficha-curiosidad {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #fffbe6, #fff3bf);
+      border: 2px solid #f59f00;
+      border-radius: 18px;
+      padding: 16px 20px;
+      display: none;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .ficha-curiosidad.visible {
+      display: flex;
+    }
+
+    @media (max-width: 720px) {
+      .lienzo-relativo {
+        aspect-ratio: auto;
+        height: 540px;
+      }
+      .drop-zone {
+        width: 112px;
+        height: 38px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <header class="cabecera">
+    <div class="cabecera-texto">
+      <h1>🦗 Anatomía de un Insecto: La Mantis Religiosa</h1>
+      <p>Observa con atención la ilustración y coloca cada parte de su cuerpo en su lugar.</p>
+    </div>
+    <div class="badge-curso">3.º Primaria · Ciencias Naturales</div>
+  </header>
+
+  <section class="panel-etiquetas">
+    <h2 class="instruccion-titulo">🏷️ Arrastra cada etiqueta hasta su recuadro (o haz clic en la etiqueta y luego en el hueco):</h2>
+    <div class="banco-chips" id="banco-chips"></div>
+  </section>
+
+  <section class="tablero-mantis">
+    <div class="lienzo-relativo" id="lienzo">
+      <!-- Ilustración naturalista-ilustrada detallada de una Mantis Religiosa -->
+      <svg class="svg-mantis" viewBox="0 0 900 562" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustración figurativa y detallada de una mantis religiosa sobre una rama">
+        <defs>
+          <!-- Degradados orgánicos y volumétricos -->
+          <radialGradient id="luzFondo" cx="52%" cy="42%" r="55%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#d8f3dc" stop-opacity="0"/>
+          </radialGradient>
+
+          <linearGradient id="gradRama" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#a98467"/>
+            <stop offset="45%" stop-color="#7f5539"/>
+            <stop offset="100%" stop-color="#582f0e"/>
+          </linearGradient>
+
+          <linearGradient id="gradHoja1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#95d5b2"/>
+            <stop offset="50%" stop-color="#40916c"/>
+            <stop offset="100%" stop-color="#1b4332"/>
+          </linearGradient>
+
+          <linearGradient id="gradAbdomen" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#b5e48c"/>
+            <stop offset="40%" stop-color="#76c893"/>
+            <stop offset="80%" stop-color="#52b788"/>
+            <stop offset="100%" stop-color="#2d6a4f"/>
+          </linearGradient>
+
+          <linearGradient id="gradAlaSup" x1="0%" y1="0%" x2="100%" y2="85%">
+            <stop offset="0%" stop-color="#d9ed92"/>
+            <stop offset="35%" stop-color="#99d98c"/>
+            <stop offset="75%" stop-color="#52b788"/>
+            <stop offset="100%" stop-color="#2d6a4f"/>
+          </linearGradient>
+
+          <linearGradient id="gradTorax" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#b5e48c"/>
+            <stop offset="45%" stop-color="#74c69d"/>
+            <stop offset="100%" stop-color="#2d6a4f"/>
+          </linearGradient>
+
+          <linearGradient id="gradPataRaptora" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d9ed92"/>
+            <stop offset="50%" stop-color="#76c893"/>
+            <stop offset="100%" stop-color="#2d6a4f"/>
+          </linearGradient>
+
+          <linearGradient id="gradPataLejana" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#52b788"/>
+            <stop offset="100%" stop-color="#1b4332"/>
+          </linearGradient>
+
+          <radialGradient id="gradOjoCompuesto" cx="32%" cy="30%" r="68%">
+            <stop offset="0%" stop-color="#fff3b0"/>
+            <stop offset="28%" stop-color="#b5e48c"/>
+            <stop offset="68%" stop-color="#52b788"/>
+            <stop offset="100%" stop-color="#1b4332"/>
+          </radialGradient>
+
+          <linearGradient id="gradCabeza" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#d9ed92"/>
+            <stop offset="55%" stop-color="#99d98c"/>
+            <stop offset="100%" stop-color="#40916c"/>
+          </linearGradient>
+
+          <filter id="sombraSuave" x="-10%" y="-10%" width="120%" height="125%">
+            <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#1b4332" flood-opacity="0.18"/>
+          </filter>
+        </defs>
+
+        <!-- Halo luminoso detrás de la mantis -->
+        <ellipse cx="475" cy="275" rx="340" ry="205" fill="url(#luzFondo)"/>
+
+        <!-- Hojas desenfocadas de ambiente botánico -->
+        <path d="M 65 110 Q 115 70 155 105 Q 110 130 65 110 Z" fill="#b7e4c7" opacity="0.55"/>
+        <path d="M 760 95 Q 815 65 855 100 Q 805 125 760 95 Z" fill="#b7e4c7" opacity="0.5"/>
+        <circle cx="240" cy="85" r="7" fill="#d9ed92" opacity="0.7"/>
+        <circle cx="695" cy="115" r="9" fill="#b7e4c7" opacity="0.7"/>
+
+        <!-- ================= RAMA BOTÁNICA NATURAL ================= -->
+        <g filter="url(#sombraSuave)">
+          <!-- Tallo principal con curvatura natural y nudos -->
+          <path d="M 45 478 C 230 438, 560 448, 860 505 L 860 526 C 560 468, 230 458, 45 498 Z" fill="url(#gradRama)" stroke="#3d2314" stroke-width="2.5"/>
+          <!-- Textura de corteza -->
+          <path d="M 110 474 Q 260 452 430 458" fill="none" stroke="#ddb892" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+          <path d="M 490 464 Q 650 472 810 502" fill="none" stroke="#ddb892" stroke-width="2" opacity="0.55" stroke-linecap="round"/>
+
+          <!-- Hojas verdes con nervadura central -->
+          <path d="M 145 466 C 110 412, 52 405, 32 432 C 62 465, 108 474, 145 466 Z" fill="url(#gradHoja1)" stroke="#1b4332" stroke-width="2"/>
+          <path d="M 142 465 Q 92 438 40 432" fill="none" stroke="#b7e4c7" stroke-width="1.6" stroke-linecap="round"/>
+
+          <path d="M 705 480 C 755 422, 825 415, 862 448 C 818 482, 755 488, 705 480 Z" fill="url(#gradHoja1)" stroke="#1b4332" stroke-width="2"/>
+          <path d="M 708 479 Q 775 446 854 448" fill="none" stroke="#b7e4c7" stroke-width="1.6" stroke-linecap="round"/>
+
+          <path d="M 655 486 C 690 525, 745 538, 785 524 C 750 495, 698 485, 655 486 Z" fill="#40916c" stroke="#1b4332" stroke-width="2"/>
+        </g>
+
+        <!-- ================= MANTIS RELIGIOSA FIGURATIVA ================= -->
+        <g filter="url(#sombraSuave)">
+
+          <!-- 1. PATAS DEL LADO DERECHO (en segundo plano para dar profundidad 3D) -->
+          <!-- Pata trasera derecha -->
+          <path d="M 525 288 L 622 212 L 698 462 L 718 470" fill="none" stroke="#1b4332" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 525 288 L 622 212 L 698 462 L 718 470" fill="none" stroke="url(#gradPataLejana)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Pata media derecha -->
+          <path d="M 472 282 L 515 225 L 575 454 L 594 461" fill="none" stroke="#1b4332" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 472 282 L 515 225 L 575 454 L 594 461" fill="none" stroke="url(#gradPataLejana)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Pata delantera raptora derecha (asomando por detrás en pose de rezo) -->
+          <path d="M 332 238 L 282 325 L 368 352 L 338 392" fill="none" stroke="#1b4332" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 332 238 L 282 325 L 368 352 L 338 392" fill="none" stroke="#40916c" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- 2. ABDOMEN SEGMENTADO CON VOLUMEN -->
+          <path d="M 505 270 C 595 256, 712 292, 792 356 C 722 392, 595 368, 502 308 Z" fill="url(#gradAbdomen)" stroke="#1b4332" stroke-width="2.8"/>
+          <!-- Brillo lateral crema-verdoso del abdomen -->
+          <path d="M 518 298 C 602 346, 708 368, 778 354 C 708 380, 602 362, 512 306 Z" fill="#d9ed92" opacity="0.65"/>
+          <!-- Anillos / segmentos anatómicos del abdomen -->
+          <path d="M 552 272 Q 546 306 556 332" fill="none" stroke="#1b4332" stroke-width="2.2" opacity="0.75"/>
+          <path d="M 604 280 Q 598 318 610 348" fill="none" stroke="#1b4332" stroke-width="2.2" opacity="0.75"/>
+          <path d="M 656 294 Q 652 332 664 360" fill="none" stroke="#1b4332" stroke-width="2.2" opacity="0.75"/>
+          <path d="M 708 314 Q 705 346 716 368" fill="none" stroke="#1b4332" stroke-width="2.2" opacity="0.75"/>
+          <!-- Cercos (apéndices finales del abdomen) -->
+          <path d="M 790 355 L 808 350 M 788 360 L 805 366" stroke="#1b4332" stroke-width="2.5" stroke-linecap="round"/>
+
+          <!-- 3. ALAS SUPERPUESTAS CON NERVADURAS FINAS -->
+          <!-- Ala posterior asomando ligeramente -->
+          <path d="M 510 272 C 605 245, 725 278, 795 348 C 720 342, 605 318, 510 292 Z" fill="#b7e4c7" opacity="0.75" stroke="#2d6a4f" stroke-width="1.8"/>
+          <!-- Ala anterior (tegmina) principal con borde costal claro -->
+          <path d="M 498 266 C 592 228, 718 260, 785 338 C 700 326, 588 304, 498 284 Z" fill="url(#gradAlaSup)" stroke="#1b4332" stroke-width="2.6"/>
+          <!-- Borde brillante del ala -->
+          <path d="M 505 268 C 594 234, 712 264, 778 334" fill="none" stroke="#e9f5db" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Nervaduras delicadas del ala -->
+          <path d="M 530 272 Q 635 262 745 316" fill="none" stroke="#1b4332" stroke-width="1.3" opacity="0.5"/>
+          <path d="M 565 266 L 585 288 M 615 266 L 638 296 M 665 275 L 688 306 M 710 290 L 732 318" stroke="#1b4332" stroke-width="1.1" opacity="0.45"/>
+
+          <!-- 4. TÓRAX ALARGADO (PROTORAX Y MESOTÓRAX) -->
+          <!-- Base del tórax donde nacen las patas -->
+          <ellipse cx="492" cy="284" rx="28" ry="18" fill="#52b788" stroke="#1b4332" stroke-width="2.6"/>
+          <!-- Cuello largo (protórax) elegante y estilizado -->
+          <path d="M 334 218 C 385 228, 448 248, 498 268 C 502 282, 496 294, 484 296 C 436 276, 378 256, 328 240 Z" fill="url(#gradTorax)" stroke="#1b4332" stroke-width="2.8"/>
+          <!-- Ensanchamiento supracoxal característico del tórax de la mantis -->
+          <ellipse cx="352" cy="233" rx="22" ry="13" transform="rotate(16 352 233)" fill="#99d98c" stroke="#1b4332" stroke-width="2.2"/>
+          <!-- Línea dorsal luminosa del tórax -->
+          <path d="M 338 223 C 390 234, 446 252, 492 271" fill="none" stroke="#e9f5db" stroke-width="2.6" stroke-linecap="round"/>
+
+          <!-- 5. PATAS DEL LADO IZQUIERDO (PRIMER PLANO) -->
+          <!-- Pata trasera izquierda (fémur, tibia y tarso articulado sobre la rama) -->
+          <path d="M 512 292 L 598 188 L 656 462 L 682 471" fill="none" stroke="#1b4332" stroke-width="10.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 512 292 L 598 188 L 656 462 L 682 471" fill="none" stroke="url(#gradPataRaptora)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Pata media izquierda -->
+          <path d="M 466 288 L 486 212 L 532 454 L 555 462" fill="none" stroke="#1b4332" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 466 288 L 486 212 L 532 454 L 555 462" fill="none" stroke="url(#gradPataRaptora)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Pata delantera raptora izquierda (coxa, fémur con espinas, tibia y tarso) -->
+          <!-- Coxa -->
+          <path d="M 352 242 L 312 332" fill="none" stroke="#1b4332" stroke-width="14" stroke-linecap="round"/>
+          <path d="M 352 242 L 312 332" fill="none" stroke="#99d98c" stroke-width="9" stroke-linecap="round"/>
+          <!-- Fémur robusto -->
+          <path d="M 312 332 L 424 364" fill="none" stroke="#1b4332" stroke-width="17" stroke-linecap="round"/>
+          <path d="M 312 332 L 424 364" fill="none" stroke="url(#gradPataRaptora)" stroke-width="11.5" stroke-linecap="round"/>
+          <!-- Espinas afiladas bajo el fémur -->
+          <polygon points="334,341 339,356 346,345" fill="#ffd166" stroke="#1b4332" stroke-width="1.4"/>
+          <polygon points="352,346 357,362 364,350" fill="#ffd166" stroke="#1b4332" stroke-width="1.4"/>
+          <polygon points="370,351 375,367 382,355" fill="#ffd166" stroke="#1b4332" stroke-width="1.4"/>
+          <polygon points="388,356 393,372 400,360" fill="#ffd166" stroke="#1b4332" stroke-width="1.4"/>
+          <polygon points="405,361 410,375 416,364" fill="#ffd166" stroke="#1b4332" stroke-width="1.4"/>
+          <!-- Tibia plegada con garra y tarso fino -->
+          <path d="M 424 364 L 368 408 L 385 426" fill="none" stroke="#1b4332" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 424 364 L 368 408 L 385 426" fill="none" stroke="#b5e48c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- 6. CABEZA TRIANGULAR FIGURATIVA Y EXPRESIVA -->
+          <!-- Forma triangular redondeada de la cabeza -->
+          <path d="M 272 192 Q 306 184 338 202 Q 332 238 304 264 Q 276 244 272 192 Z" fill="url(#gradCabeza)" stroke="#1b4332" stroke-width="2.8" stroke-linejoin="round"/>
+          <!-- Tres ocelos (ojos simples) en la frente -->
+          <circle cx="301" cy="202" r="2.3" fill="#ffca3a" stroke="#1b4332" stroke-width="1"/>
+          <circle cx="310" cy="203" r="2.3" fill="#ffca3a" stroke="#1b4332" stroke-width="1"/>
+          <circle cx="305" cy="209" r="2.3" fill="#ffca3a" stroke="#1b4332" stroke-width="1"/>
+          <!-- Mandíbulas y palpos bucales -->
+          <path d="M 294 256 Q 303 268 313 257" fill="#ffd166" stroke="#1b4332" stroke-width="2"/>
+          <path d="M 298 263 L 294 273 M 309 263 L 313 273" stroke="#1b4332" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Grandes ojos compuestos laterales con brillo y pseudopupila -->
+          <!-- Ojo izquierdo (en primer plano) -->
+          <ellipse cx="273" cy="208" rx="16" ry="22" transform="rotate(-22 273 208)" fill="url(#gradOjoCompuesto)" stroke="#1b4332" stroke-width="2.8"/>
+          <ellipse cx="268" cy="200" rx="4.5" ry="7" transform="rotate(-22 268 200)" fill="#ffffff" opacity="0.85"/>
+          <circle cx="275" cy="211" r="3.2" fill="#1b4332"/>
+
+          <!-- Ojo derecho -->
+          <ellipse cx="334" cy="215" rx="14" ry="20" transform="rotate(20 334 215)" fill="url(#gradOjoCompuesto)" stroke="#1b4332" stroke-width="2.8"/>
+          <ellipse cx="330" cy="208" rx="3.8" ry="6" transform="rotate(20 330 208)" fill="#ffffff" opacity="0.85"/>
+          <circle cx="333" cy="218" r="2.8" fill="#1b4332"/>
+
+          <!-- Antenas largas, finas y articuladas -->
+          <path d="M 294 192 C 258 130, 202 88, 134 78" fill="none" stroke="#1b4332" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M 312 194 C 288 124, 245 76, 182 54" fill="none" stroke="#1b4332" stroke-width="2.8" stroke-linecap="round"/>
+        </g>
+
+        <!-- ================= LÍNEAS GUÍA Y PUNTOS DE SEÑALIZACIÓN ================= -->
+        <!-- 1. Antenas -->
+        <line x1="155" y1="88" x2="215" y2="115" stroke="#1982c4" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="215" cy="115" r="5.5" fill="#ff595e" stroke="#1b4332" stroke-width="2"/>
+
+        <!-- 2. Ojos -->
+        <line x1="175" y1="230" x2="258" y2="212" stroke="#1982c4" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="258" cy="212" r="5.5" fill="#ff595e" stroke="#1b4332" stroke-width="2"/>
+
+        <!-- 3. Cabeza -->
+        <line x1="195" y1="395" x2="294" y2="250" stroke="#1982c4" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="294" cy="250" r="5.5" fill="#ff595e" stroke="#1b4332" stroke-width="2"/>
+
+        <!-- 4. Tórax -->
+        <line x1="472" y1="112" x2="424" y2="250" stroke="#1982c4" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="424" cy="250" r="5.5" fill="#ff595e" stroke="#1b4332" stroke-width="2"/>
+
+        <!-- 5. Patas -->
+        <line x1="468" y1="452" x2="412" y2="368" stroke="#1982c4" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="412" cy="368" r="5.5" fill="#ff595e" stroke="#1b4332" stroke-width="2"/>
+
+        <!-- 6. Abdomen -->
+        <line x1="752" y1="180" x2="665" y2="318" stroke="#1982c4" stroke-width="2.5" stroke-dasharray="5 4"/>
+        <circle cx="665" cy="318" r="5.5" fill="#ff595e" stroke="#1b4332" stroke-width="2"/>
+      </svg>
+
+      <!-- Zonas interactivas de destino -->
+      <div class="drop-zone" id="zone-antenas" data-correcta="Antenas">¿Qué parte es?</div>
+      <div class="drop-zone" id="zone-ojos"    data-correcta="Ojos">¿Qué parte es?</div>
+      <div class="drop-zone" id="zone-cabeza"  data-correcta="Cabeza">¿Qué parte es?</div>
+      <div class="drop-zone" id="zone-torax"   data-correcta="Tórax">¿Qué parte es?</div>
+      <div class="drop-zone" id="zone-patas"   data-correcta="Patas">¿Qué parte es?</div>
+      <div class="drop-zone" id="zone-abdomen" data-correcta="Abdomen">¿Qué parte es?</div>
+    </div>
+
+    <div class="barra-controles">
+      <div class="botones-accion">
+        <button class="btn btn-comprobar" onclick="comprobarRespuestas()">✅ Comprobar respuestas</button>
+        <button class="btn btn-reiniciar" onclick="reiniciarActividad()">🔄 Reiniciar</button>
+      </div>
+      <div class="mensaje-resultado" id="mensaje-resultado">
+        Coloca las 6 etiquetas sobre la mantis religiosa.
+      </div>
+    </div>
+
+    <div class="ficha-curiosidad" id="ficha-curiosidad">
+      <div style="font-size: 2.2rem;">🦗</div>
+      <div>
+        <strong style="font-family: 'Fredoka', sans-serif; font-size: 1.1rem;">¡Sabías que...!</strong>
+        <p style="margin: 4px 0 0; font-size: 0.98rem;">
+          Como todos los insectos, la mantis religiosa tiene el cuerpo dividido en <strong>3 partes</strong> (<strong>cabeza, tórax y abdomen</strong>), tiene <strong>6 patas</strong> (dos de ellas delanteras con pinchos para cazar) y puede girar su cabeza triangular casi por completo.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  const etiquetasLista = ["Ojos", "Patas", "Antenas", "Cabeza", "Tórax", "Abdomen"];
+  let etiquetaSeleccionada = null;
+
+  function mezclar(array) {
+    const copia = [...array];
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copia[i], copia[j]] = [copia[j], copia[i]];
+    }
+    return copia;
+  }
+
+  function iniciarActividad() {
+    const banco = document.getElementById("banco-chips");
+    banco.innerHTML = "";
+    etiquetaSeleccionada = null;
+
+    const mezcladas = mezclar(etiquetasLista);
+    mezcladas.forEach(texto => {
+      const chip = document.createElement("div");
+      chip.className = "chip-etiqueta";
+      chip.textContent = texto;
+      chip.draggable = true;
+      chip.dataset.valor = texto;
+      chip.id = `chip-${texto}`;
+
+      chip.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", texto);
+        seleccionarChip(chip);
+      });
+
+      chip.addEventListener("click", () => {
+        if (chip.classList.contains("colocada")) return;
+        if (etiquetaSeleccionada === chip) {
+          chip.classList.remove("seleccionada");
+          etiquetaSeleccionada = null;
+        } else {
+          seleccionarChip(chip);
+        }
+      });
+
+      banco.appendChild(chip);
+    });
+
+    document.querySelectorAll(".drop-zone").forEach(zone => {
+      zone.textContent = "¿Qué parte es?";
+      zone.dataset.actual = "";
+      zone.className = "drop-zone";
+
+      zone.ondragover = (e) => {
+        e.preventDefault();
+        zone.classList.add("drag-over");
+      };
+
+      zone.ondragleave = () => {
+        zone.classList.remove("drag-over");
+      };
+
+      zone.ondrop = (e) => {
+        e.preventDefault();
+        zone.classList.remove("drag-over");
+        const valor = e.dataTransfer.getData("text/plain");
+        if (valor) colocarEtiquetaEnZona(zone, valor);
+      };
+
+      zone.onclick = () => {
+        if (zone.dataset.actual) {
+          devolverEtiquetaAlBanco(zone.dataset.actual);
+          zone.dataset.actual = "";
+          zone.textContent = "¿Qué parte es?";
+          zone.className = "drop-zone";
+          return;
+        }
+        if (etiquetaSeleccionada) {
+          colocarEtiquetaEnZona(zone, etiquetaSeleccionada.dataset.valor);
+        }
+      };
+    });
+
+    document.getElementById("mensaje-resultado").textContent = "Coloca las 6 etiquetas sobre la mantis religiosa.";
+    document.getElementById("ficha-curiosidad").classList.remove("visible");
+  }
+
+  function seleccionarChip(chip) {
+    document.querySelectorAll(".chip-etiqueta").forEach(c => c.classList.remove("seleccionada"));
+    chip.classList.add("seleccionada");
+    etiquetaSeleccionada = chip;
+  }
+
+  function colocarEtiquetaEnZona(zone, valor) {
+    if (zone.dataset.actual) {
+      devolverEtiquetaAlBanco(zone.dataset.actual);
+    }
+
+    zone.dataset.actual = valor;
+    zone.textContent = valor;
+    zone.className = "drop-zone llena";
+
+    const chip = document.getElementById(`chip-${valor}`);
+    if (chip) {
+      chip.classList.remove("seleccionada");
+      chip.classList.add("colocada");
+    }
+    etiquetaSeleccionada = null;
+  }
+
+  function devolverEtiquetaAlBanco(valor) {
+    const chip = document.getElementById(`chip-${valor}`);
+    if (chip) {
+      chip.classList.remove("colocada");
+    }
+  }
+
+  function comprobarRespuestas() {
+    const zonas = document.querySelectorAll(".drop-zone");
+    let aciertos = 0;
+    let vacias = 0;
+
+    zonas.forEach(zone => {
+      const actual = zone.dataset.actual;
+      const correcta = zone.dataset.correcta;
+
+      zone.classList.remove("correcta", "incorrecta");
+
+      if (!actual) {
+        vacias++;
+      } else if (actual === correcta) {
+        aciertos++;
+        zone.classList.add("correcta");
+      } else {
+        zone.classList.add("incorrecta");
+      }
+    });
+
+    const msg = document.getElementById("mensaje-resultado");
+    const ficha = document.getElementById("ficha-curiosidad");
+
+    if (vacias > 0) {
+      msg.textContent = `⚠️ Aún te faltan ${vacias} etiqueta(s) por colocar. ¡Complétalas todas!`;
+      ficha.classList.remove("visible");
+    } else if (aciertos === zonas.length) {
+      msg.textContent = "🎉 ¡Perfecto! Has acertado las 6 partes de la mantis religiosa.";
+      ficha.classList.add("visible");
+    } else {
+      msg.textContent = `Has acertado ${aciertos} de 6. Haz clic sobre las etiquetas en rojo para quitarlas e inténtalo de nuevo.`;
+      ficha.classList.remove("visible");
+    }
+  }
+
+  function reiniciarActividad() {
+    iniciarActividad();
+  }
+
+  iniciarActividad();
+</script>
+
+</body>
+</html>
