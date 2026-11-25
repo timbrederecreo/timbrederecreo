@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuestionario Mágico: Pamela Panamá contra la Bruja Descalza</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap');
+
+    :root {
+      --papel-crema: #fdf6e9;
+      --azul-jipi: #2b7bbb;
+      --azul-claro: #a8d5f2;
+      --rojo-caperuza: #d94343;
+      --amarillo-sol: #f4b942;
+      --verde-duende: #4ba36c;
+      --morado-magia: #7e57c2;
+      --tinta: #2a2421;
+      --sombra-papel: 5px 6px 0px rgba(42, 36, 33, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 14px 50px;
+      font-family: 'Nunito', sans-serif;
+      color: var(--tinta);
+      /* Fondo estilo papel texturizado y recortes de colores */
+      background-color: #f3e5cc;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(43, 123, 187, 0.14) 0 90px, transparent 91px),
+        radial-gradient(circle at 88% 14%, rgba(217, 67, 67, 0.14) 0 110px, transparent 111px),
+        radial-gradient(circle at 82% 78%, rgba(75, 163, 108, 0.14) 0 120px, transparent 121px),
+        radial-gradient(circle at 15% 85%, rgba(244, 185, 66, 0.18) 0 100px, transparent 101px),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.25) 0px, rgba(255,255,255,0.25) 2px, transparent 2px, transparent 8px);
+    }
+
+    .contenedor {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    /* Cabecera estilo collage recortado */
+    .cabecera {
+      background: var(--azul-jipi);
+      color: #fff;
+      padding: 26px 24px 32px;
+      border-radius: 18px 26px 14px 24px;
+      border: 4px dashed #fff;
+      box-shadow: var(--sombra-papel);
+      text-align: center;
+      position: relative;
+      transform: rotate(-0.6deg);
+      margin-bottom: 28px;
+    }
+
+    .etiqueta-curso {
+      display: inline-block;
+      background: var(--amarillo-sol);
+      color: var(--tinta);
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 6px 16px;
+      border-radius: 12px;
+      transform: rotate(1.5deg);
+      box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cabecera h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      margin: 6px 0 8px;
+      line-height: 1.15;
+      text-shadow: 2px 3px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .cabecera p {
+      margin: 0;
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    /* Ilustración SVG decorativa estilo collage */
+    .collage-iconos {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .parche-collage {
+      background: var(--papel-crema);
+      color: var(--tinta);
+      padding: 6px 14px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border: 2px solid var(--tinta);
+      box-shadow: 3px 3px 0 var(--tinta);
+    }
+    .parche-1 { transform: rotate(-2deg); background: #ffd97d; }
+    .parche-2 { transform: rotate(1.8deg); background: #b8e2f8; }
+    .parche-3 { transform: rotate(-1.2deg); background: #f8b4b4; }
+
+    /* Barra de progreso */
+    .barra-estado {
+      background: var(--papel-crema);
+      border: 3px solid var(--tinta);
+      border-radius: 16px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      box-shadow: var(--sombra-papel);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .progreso-texto {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .barra-fondo {
+      flex: 1;
+      min-width: 180px;
+      height: 18px;
+      background: #e3d5be;
+      border-radius: 10px;
+      border: 2px solid var(--tinta);
+      overflow: hidden;
+    }
+
+    .barra-relleno {
+      height: 100%;
+      width: 0%;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--verde-duende),
+        var(--verde-duende) 10px,
+        #66bd86 10px,
+        #66bd86 20px
+      );
+      transition: width 0.35s ease;
+    }
+
+    /* Tarjetas de preguntas estilo recortes de papel */
+    .tarjeta-pregunta {
+      background: var(--papel-crema);
+      border: 3px solid var(--tinta);
+      border-radius: 16px 22px 18px 14px;
+      padding: 22px 20px;
+      margin-bottom: 22px;
+      box-shadow: var(--sombra-papel);
+      position: relative;
+      transition: transform 0.2s ease;
+    }
+
+    .tarjeta-pregunta:nth-child(odd) {
+      transform: rotate(-0.35deg);
+    }
+    .tarjeta-pregunta:nth-child(even) {
+      transform: rotate(0.35deg);
+    }
+
+    /* Cinta adhesiva decorativa superior */
+    .cinta-adhesiva {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1.5deg);
+      width: 95px;
+      height: 22px;
+      background: rgba(244, 185, 66, 0.72);
+      border-left: 2px dotted rgba(42,36,33,0.35);
+      border-right: 2px dotted rgba(42,36,33,0.35);
+    }
+
+    .encabezado-pregunta {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .numero-recorte {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--rojo-caperuza);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2.5px solid var(--tinta);
+      border-radius: 10px 14px 8px 12px;
+      box-shadow: 2px 3px 0 var(--tinta);
+      transform: rotate(-3deg);
+    }
+
+    .tarjeta-pregunta:nth-child(even) .numero-recorte {
+      background: var(--morado-magia);
+      transform: rotate(3deg);
+    }
+
+    .texto-pregunta {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.18rem;
+      line-height: 1.35;
+      margin: 4px 0 0;
+    }
+
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opcion-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      border: 2.5px solid var(--tinta);
+      border-radius: 12px;
+      padding: 12px 15px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.03rem;
+      font-weight: 700;
+      color: var(--tinta);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 rgba(42, 36, 33, 0.15);
+      transition: all 0.15s ease;
+    }
+
+    .opcion-btn:hover:not(:disabled) {
+      background: #eef7fd;
+      transform: translateX(4px);
+      border-color: var(--azul-jipi);
+    }
+
+    .letra-opcion {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--azul-claro);
+      border: 2px solid var(--tinta);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .opcion-btn.correcta {
+      background: #d4f3df;
+      border-color: #1f6e3d;
+      color: #134726;
+      box-shadow: 3px 3px 0 #1f6e3d;
+    }
+
+    .opcion-btn.correcta .letra-opcion {
+      background: var(--verde-duende);
+      color: #fff;
+    }
+
+    .opcion-btn.incorrecta {
+      background: #fde0e0;
+      border-color: #a82424;
+      color: #6e1414;
+      opacity: 0.9;
+    }
+
+    .opcion-btn.incorrecta .letra-opcion {
+      background: var(--rojo-caperuza);
+      color: #fff;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      display: none;
+      border: 2px dashed var(--tinta);
+    }
+
+    .feedback.visible {
+      display: block;
+      animation: aparecer 0.25s ease;
+    }
+
+    .feedback.ok {
+      background: #e6f9ed;
+      color: #185a32;
+    }
+
+    .feedback.error {
+      background: #fff3d6;
+      color: #7a4b00;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Panel final de resultados */
+    .panel-final {
+      background: var(--amarillo-sol);
+      border: 4px solid var(--tinta);
+      border-radius: 22px;
+      padding: 26px 22px;
+      text-align: center;
+      box-shadow: var(--sombra-papel);
+      margin-top: 28px;
+    }
+
+    .panel-final h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.75rem;
+      margin: 0 0 10px;
+    }
+
+    .puntuacion-grande {
+      display: inline-block;
+      background: #fff;
+      border: 3px solid var(--tinta);
+      border-radius: 16px;
+      padding: 10px 26px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2rem;
+      margin: 8px 0 14px;
+      box-shadow: 4px 4px 0 var(--tinta);
+      transform: rotate(-1deg);
+    }
+
+    .btn-reiniciar {
+      background: var(--azul-jipi);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.15rem;
+      padding: 12px 26px;
+      border: 3px solid var(--tinta);
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 var(--tinta);
+      transition: transform 0.15s ease;
+    }
+
+    .btn-reiniciar:hover {
+      transform: scale(1.04);
+      background: #22669c;
+    }
+  </style>
+</head>
+<body>
+
+<div class="contenedor">
+  <header class="cabecera">
+    <div class="etiqueta-curso">3.º de Primaria · Comprensión Lectora</div>
+    <h1>🎩 Pamela Panamá contra la Bruja Descalza 👢</h1>
+    <p>Un viaje recortado con magia de papel por la obra de <strong>Violeta Monreal</strong></p>
+    <div class="collage-iconos">
+      <span class="parche-collage parche-1">✂️ Estilo Collage</span>
+      <span class="parche-collage parche-2">🧪 Frascos Mágicos</span>
+      <span class="parche-collage parche-3">🧙‍♀️ Reino de Jipi-Japa</span>
+    </div>
+  </header>
+
+  <div class="barra-estado">
+    <div class="progreso-texto" id="texto-progreso">Respondidas: <strong>0 / 10</strong></div>
+    <div class="barra-fondo">
+      <div class="barra-relleno" id="barra-relleno"></div>
+    </div>
+    <div class="progreso-texto" id="texto-aciertos">Aciertos: <strong>0</strong> ⭐</div>
+  </div>
+
+  <main id="contenedor-preguntas"></main>
+
+  <section class="panel-final" id="panel-final">
+    <h2>🏆 ¡Tu resultado en Jipi-Japa!</h2>
+    <div class="puntuacion-grande" id="nota-final">0 / 10</div>
+    <p id="mensaje-final" style="font-size: 1.1rem; font-weight: 700; margin-bottom: 18px;">
+      ¡Responde a todas las preguntas para descubrir tu título de guardián o guardiana de los cuentos!
+    </p>
+    <button class="btn-reiniciar" onclick="reiniciarCuestionario()">🔄 Volver a jugar</button>
+  </section>
+</div>
+
+<script>
+  const preguntas = [
+    {
+      pregunta: "¿Qué tienen de especial los nombres de los personajes de esta historia?",
+      opciones: [
+        "Todos tienen nombres de distintos tipos de sombreros.",
+        "Todos tienen nombres de animales del bosque.",
+        "Todos tienen nombres de instrumentos musicales."
+      ],
+      correcta: 0,
+      explicacion: "¡Exacto! Pamela, Panamá, Papahígo, Salacot o Caperuza son nombres de sombreros."
+    },
+    {
+      pregunta: "¿Quién es Papahígo en la vida de Pamela?",
+      opciones: [
+        "Su profesor de dibujo del colegio.",
+        "Su abuelo, que siempre le hace regalos muy especiales.",
+        "El rey malvado de un país lejano."
+      ],
+      correcta: 1,
+      explicacion: "¡Muy bien! Papahígo es el abuelo de Pamela y quien le abrió la puerta a la magia."
+    },
+    {
+      pregunta: "¿Qué regalo recibe Pamela de su abuelo Papahígo por su nuevo cumpleaños en este libro?",
+      opciones: [
+        "Una bicicleta voladora de color rojo.",
+        "Un paraguas que habla siete idiomas.",
+        "Unas preciosas botas mágicas."
+      ],
+      correcta: 2,
+      explicacion: "¡Correcto! Las botas que le regala Papahígo dirigirán sus pasos hacia una nueva aventura."
+    },
+    {
+      pregunta: "¿Cómo se llama el reino fantástico que vuelve a estar en peligro?",
+      opciones: [
+        "El reino de Jipi-Japa.",
+        "El reino de Bombín-Bom.",
+        "El reino de Chistera Alta."
+      ],
+      correcta: 0,
+      explicacion: "¡Genial! El reino de Jipi-Japa es el mundo mágico que Pamela ya había conocido gracias al frasco azul."
+    },
+    {
+      pregunta: "¿Quién es la malvada bruja descalza que prepara una terrible venganza?",
+      opciones: [
+        "La bruja Boina.",
+        "La bruja Caperuza.",
+        "La bruja Pamplona."
+      ],
+      correcta: 1,
+      explicacion: "¡Así es! La malvada bruja Caperuza quiere vengarse y poner en peligro todo el reino."
+    },
+    {
+      pregunta: "¿Qué amigo del mundo real acompaña a Pamela en este nuevo viaje al reino mágico?",
+      opciones: [
+        "Su amigo Andrés.",
+        "Su primo Lucas.",
+        "Su vecino Mateo."
+      ],
+      correcta: 0,
+      explicacion: "¡Estupendo! En esta ocasión, las botas llevan a Pamela hasta Jipi-Japa acompañada de su amigo Andrés."
+    },
+    {
+      pregunta: "¿A qué amigo del reino de Jipi-Japa habían ayudado antes y vuelven a socorrer?",
+      opciones: [
+        "Al gigante Turbante.",
+        "A su amigo Salacot.",
+        "Al mago Sombrerilla."
+      ],
+      correcta: 1,
+      explicacion: "¡Bravo! Salacot es el gran amigo de Pamela en el reino de Jipi-Japa."
+    },
+    {
+      pregunta: "¿Qué gran prueba o habilidad necesita usar Pamela para salvar a todos sus amigos?",
+      opciones: [
+        "Correr más rápido que el viento.",
+        "Distinguir lo verdadero de lo falso.",
+        "Cocinar un pastel gigante de chocolate."
+      ],
+      correcta: 1,
+      explicacion: "¡Súper! Frente a los engaños de la bruja, Pamela debe saber distinguir qué es verdadero y qué es falso."
+    },
+    {
+      pregunta: "¿Qué importante lección aprenden Pamela y sus amigos en sus aventuras?",
+      opciones: [
+        "Que es mejor no tener amigos para no meterse en líos.",
+        "El compromiso con los demás y cómo superar sus propios miedos.",
+        "Que los libros de aventuras son muy aburridos."
+      ],
+      correcta: 1,
+      explicacion: "¡Fantástico! La amistad, ayudar a los demás y vencer los miedos son el corazón de la historia."
+    },
+    {
+      pregunta: "¿Con qué técnica artística tan original ilustró Violeta Monreal este libro?",
+      opciones: [
+        "Con fotografías en blanco y negro.",
+        "Con collages hechos de papeles recortados y rasgados de colores.",
+        "Con figuras hechas de plastilina."
+      ],
+      correcta: 1,
+      explicacion: "¡Di en el clavo! Violeta Monreal es famosa por sus preciosos collages de papel rasgado llenos de textura y color."
+    }
+  ];
+
+  let respondidas = 0;
+  let aciertos = 0;
+  const letras = ["A", "B", "C"];
+
+  function renderizarCuestionario() {
+    const contenedor = document.getElementById("contenedor-preguntas");
+    contenedor.innerHTML = "";
+    respondidas = 0;
+    aciertos = 0;
+    actualizarMarcador();
+
+    preguntas.forEach((item, index) => {
+      const tarjeta = document.createElement("article");
+      tarjeta.className = "tarjeta-pregunta";
+      tarjeta.id = `pregunta-${index}`;
+
+      let botonesHTML = "";
+      item.opciones.forEach((opcion, iOpcion) => {
+        botonesHTML += `
+          <button class="opcion-btn" onclick="seleccionarRespuesta(${index}, ${iOpcion}, this)">
+            <span class="letra-opcion">${letras[iOpcion]}</span>
+            <span>${opcion}</span>
+          </button>
+        `;
+      });
+
+      tarjeta.innerHTML = `
+        <div class="cinta-adhesiva"></div>
+        <div class="encabezado-pregunta">
+          <div class="numero-recorte">${index + 1}</div>
+          <h3 class="texto-pregunta">${item.pregunta}</h3>
+        </div>
+        <div class="opciones" id="opciones-${index}">
+          ${botonesHTML}
+        </div>
+        <div class="feedback" id="feedback-${index}"></div>
+      `;
+
+      contenedor.appendChild(tarjeta);
+    });
+  }
+
+  function seleccionarRespuesta(indicePregunta, indiceOpcion, botonPulsado) {
+    const contenedorOpciones = document.getElementById(`opciones-${indicePregunta}`);
+    const botones = contenedorOpciones.querySelectorAll(".opcion-btn");
+    const feedback = document.getElementById(`feedback-${indicePregunta}`);
+    const datosPregunta = preguntas[indicePregunta];
+
+    // Desactivar botones de esta pregunta
+    botones.forEach(btn => btn.disabled = true);
+
+    respondidas++;
+
+    if (indiceOpcion === datosPregunta.correcta) {
+      aciertos++;
+      botonPulsado.classList.add("correcta");
+      feedback.className = "feedback visible ok";
+      feedback.innerHTML = `🎉 <strong>¡Genial!</strong> ${datosPregunta.explicacion}`;
+    } else {
+      botonPulsado.classList.add("incorrecta");
+      botones[datosPregunta.correcta].classList.add("correcta");
+      feedback.className = "feedback visible error";
+      feedback.innerHTML = `💡 <strong>¡Casi!</strong> La respuesta correcta era la <strong>${letras[datosPregunta.correcta]}</strong>. ${datosPregunta.explicacion}`;
+    }
+
+    actualizarMarcador();
+  }
+
+  function actualizarMarcador() {
+    document.getElementById("texto-progreso").innerHTML = `Respondidas: <strong>${respondidas} / ${preguntas.length}</strong>`;
+    document.getElementById("texto-aciertos").innerHTML = `Aciertos: <strong>${aciertos}</strong> ⭐`;
+    document.getElementById("barra-relleno").style.width = `${(respondidas / preguntas.length) * 100}%`;
+    document.getElementById("nota-final").textContent = `${aciertos} / ${preguntas.length}`;
+
+    const mensajeFinal = document.getElementById("mensaje-final");
+    if (respondidas === preguntas.length) {
+      if (aciertos >= 9) {
+        mensajeFinal.textContent = "👑 ¡Enhorabuena! Eres un auténtico Caballero o Dama del Reino de Jipi-Japa. ¡La bruja Caperuza no tiene nada que hacer contigo!";
+      } else if (aciertos >= 6) {
+        mensajeFinal.textContent = "👢 ¡Muy buen trabajo! Conoces muy bien las aventuras de Pamela Panamá y sus botas mágicas.";
+      } else {
+        mensajeFinal.textContent = "📖 ¡Buen intento! Te animo a volver a echarle un vistazo al libro de Violeta Monreal y probar otra vez.";
+      }
+    } else {
+      mensajeFinal.textContent = "¡Responde a todas las preguntas para descubrir tu título de guardián o guardiana de los cuentos!";
+    }
+  }
+
+  function reiniciarCuestionario() {
+    renderizarCuestionario();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  renderizarCuestionario();
+</script>
+
+</body>
+</html>
