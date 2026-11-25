@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cuestionario Mágico: Pamela Panamá contra la Bruja Descalza</title>
+  <title>Pamela Panamá contra la Bruja Descalza · El Duende Verde</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Patrick+Hand&family=Nunito:wght@600;700;800&display=swap');
 
     :root {
-      --papel-crema: #fdf6e9;
-      --azul-jipi: #2b7bbb;
-      --azul-claro: #a8d5f2;
-      --rojo-caperuza: #d94343;
-      --amarillo-sol: #f4b942;
-      --verde-duende: #4ba36c;
-      --morado-magia: #7e57c2;
-      --tinta: #2a2421;
-      --sombra-papel: 5px 6px 0px rgba(42, 36, 33, 0.22);
+      --duende-verde: #009a44;
+      --duende-verde-oscuro: #007031;
+      --papel-blanco: #fffdf8;
+      --papel-kraft: #e5c69b;
+      --papel-azul: #2673b8;
+      --papel-rojo: #d63638;
+      --papel-amarillo: #f6be28;
+      --papel-naranja: #ee7623;
+      --papel-morado: #7b4fa0;
+      --tinta-lapiz: #26221e;
     }
 
     * {
@@ -25,98 +26,196 @@
 
     body {
       margin: 0;
-      padding: 20px 14px 50px;
+      padding: 24px 14px 60px;
       font-family: 'Nunito', sans-serif;
-      color: var(--tinta);
-      /* Fondo estilo papel texturizado y recortes de colores */
-      background-color: #f3e5cc;
+      color: var(--tinta-lapiz);
+      /* Textura de papel de acuarela / cartulina artesanal con manchas de collage */
+      background-color: #f6efe2;
       background-image:
-        radial-gradient(circle at 12% 18%, rgba(43, 123, 187, 0.14) 0 90px, transparent 91px),
-        radial-gradient(circle at 88% 14%, rgba(217, 67, 67, 0.14) 0 110px, transparent 111px),
-        radial-gradient(circle at 82% 78%, rgba(75, 163, 108, 0.14) 0 120px, transparent 121px),
-        radial-gradient(circle at 15% 85%, rgba(244, 185, 66, 0.18) 0 100px, transparent 101px),
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.25) 0px, rgba(255,255,255,0.25) 2px, transparent 2px, transparent 8px);
+        radial-gradient(rgba(160, 135, 100, 0.14) 1px, transparent 0),
+        radial-gradient(rgba(0, 154, 68, 0.08) 2px, transparent 0);
+      background-size: 26px 26px, 41px 41px;
+      background-position: 0 0, 13px 17px;
     }
 
     .contenedor {
-      max-width: 820px;
+      max-width: 850px;
       margin: 0 auto;
-    }
-
-    /* Cabecera estilo collage recortado */
-    .cabecera {
-      background: var(--azul-jipi);
-      color: #fff;
-      padding: 26px 24px 32px;
-      border-radius: 18px 26px 14px 24px;
-      border: 4px dashed #fff;
-      box-shadow: var(--sombra-papel);
-      text-align: center;
       position: relative;
-      transform: rotate(-0.6deg);
+    }
+
+    /* Marco exterior estilo portada de El Duende Verde (Anaya) */
+    .marco-duende-verde {
+      background: var(--duende-verde);
+      padding: 16px 16px 24px;
+      border-radius: 18px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18), inset 0 0 0 3px rgba(255,255,255,0.25);
       margin-bottom: 28px;
+      position: relative;
     }
 
-    .etiqueta-curso {
-      display: inline-block;
-      background: var(--amarillo-sol);
-      color: var(--tinta);
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      padding: 6px 16px;
-      border-radius: 12px;
-      transform: rotate(1.5deg);
-      box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .cabecera h1 {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(1.6rem, 4vw, 2.3rem);
-      margin: 6px 0 8px;
-      line-height: 1.15;
-      text-shadow: 2px 3px 0px rgba(0, 0, 0, 0.25);
-    }
-
-    .cabecera p {
-      margin: 0;
-      font-size: 1.05rem;
-      opacity: 0.95;
-    }
-
-    /* Ilustración SVG decorativa estilo collage */
-    .collage-iconos {
+    .lomo-coleccion {
       display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 14px;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      padding: 2px 8px 12px;
       flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .parche-collage {
-      background: var(--papel-crema);
-      color: var(--tinta);
-      padding: 6px 14px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      border: 2px solid var(--tinta);
-      box-shadow: 3px 3px 0 var(--tinta);
+    .insignia-duende {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--duende-verde-oscuro);
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      box-shadow: 2px 3px 0 rgba(0,0,0,0.2);
     }
-    .parche-1 { transform: rotate(-2deg); background: #ffd97d; }
-    .parche-2 { transform: rotate(1.8deg); background: #b8e2f8; }
-    .parche-3 { transform: rotate(-1.2deg); background: #f8b4b4; }
 
-    /* Barra de progreso */
+    .etiqueta-edad {
+      background: var(--papel-amarillo);
+      color: var(--tinta-lapiz);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transform: rotate(1.5deg);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    }
+
+    /* Lienzo interior de la portada estilo collage rasgado de Violeta Monreal */
+    .portada-collage {
+      background: var(--papel-blanco);
+      border-radius: 12px;
+      padding: 24px 20px 26px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid rgba(38, 34, 30, 0.25);
+      box-shadow: inset 0 0 28px rgba(212, 185, 140, 0.35);
+    }
+
+    /* Recortes de papel rasgado de fondo en la portada */
+    .recorte-fondo-1 {
+      position: absolute;
+      top: -20px;
+      left: -25px;
+      width: 220px;
+      height: 140px;
+      background: #bfe3f7;
+      clip-path: polygon(0 0, 100% 8%, 92% 85%, 65% 96%, 22% 88%, 0 95%);
+      opacity: 0.75;
+      z-index: 0;
+    }
+
+    .recorte-fondo-2 {
+      position: absolute;
+      bottom: -25px;
+      right: -20px;
+      width: 260px;
+      height: 150px;
+      background: #fce09b;
+      clip-path: polygon(12% 14%, 58% 4%, 100% 18%, 100% 100%, 0 100%, 5% 48%);
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    .recorte-fondo-3 {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      width: 110px;
+      height: 110px;
+      background: #f6b6b6;
+      clip-path: polygon(20% 0%, 85% 10%, 100% 70%, 70% 100%, 10% 85%, 0% 30%);
+      opacity: 0.55;
+      z-index: 0;
+    }
+
+    .contenido-portada {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .contenido-portada {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    /* Ilustración SVG estilo papel rasgado y trazos de lápiz de Violeta Monreal */
+    .ilustracion-collage-svg {
+      width: 150px;
+      height: 165px;
+      margin: 0 auto;
+      filter: drop-shadow(3px 5px 3px rgba(38, 34, 30, 0.25));
+    }
+
+    .titulo-libro h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.55rem, 3.8vw, 2.25rem);
+      color: var(--papel-rojo);
+      margin: 0 0 6px;
+      line-height: 1.12;
+      text-shadow: 2px 2px 0 #f6be28;
+    }
+
+    .titulo-libro h1 span {
+      color: var(--papel-azul);
+      display: block;
+      font-size: 0.82em;
+      text-shadow: 1.5px 1.5px 0 #bfe3f7;
+    }
+
+    .subtitulo-autora {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.3rem;
+      color: var(--tinta-lapiz);
+      margin: 4px 0 12px;
+    }
+
+    .tiras-papel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .tiras-papel {
+        justify-content: center;
+      }
+    }
+
+    .tira {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 1.05rem;
+      padding: 4px 12px;
+      color: var(--tinta-lapiz);
+      border: 1.5px solid rgba(38,34,30,0.4);
+      box-shadow: 2px 2px 0 rgba(38,34,30,0.18);
+    }
+    .tira-a { background: #fff3b0; clip-path: polygon(2% 0%, 98% 4%, 100% 95%, 0% 100%); transform: rotate(-1.5deg); }
+    .tira-b { background: #d0ebff; clip-path: polygon(0% 5%, 100% 0%, 97% 96%, 3% 92%); transform: rotate(1.2deg); }
+    .tira-c { background: #ffd8d8; clip-path: polygon(3% 2%, 97% 0%, 100% 98%, 0% 93%); transform: rotate(-0.8deg); }
+
+    /* Barra de progreso estilo regla recortada */
     .barra-estado {
-      background: var(--papel-crema);
-      border: 3px solid var(--tinta);
-      border-radius: 16px;
+      background: var(--papel-blanco);
+      border: 2.5px solid var(--tinta-lapiz);
+      border-radius: 14px;
       padding: 12px 18px;
       margin-bottom: 24px;
-      box-shadow: var(--sombra-papel);
+      box-shadow: 4px 5px 0 rgba(38, 34, 30, 0.18);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -126,16 +225,16 @@
 
     .progreso-texto {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
     }
 
     .barra-fondo {
       flex: 1;
       min-width: 180px;
       height: 18px;
-      background: #e3d5be;
+      background: #ece3d3;
       border-radius: 10px;
-      border: 2px solid var(--tinta);
+      border: 2px solid var(--tinta-lapiz);
       overflow: hidden;
     }
 
@@ -144,81 +243,70 @@
       width: 0%;
       background: repeating-linear-gradient(
         -45deg,
-        var(--verde-duende),
-        var(--verde-duende) 10px,
-        #66bd86 10px,
-        #66bd86 20px
+        var(--duende-verde),
+        var(--duende-verde) 10px,
+        #28b865 10px,
+        #28b865 20px
       );
       transition: width 0.35s ease;
     }
 
-    /* Tarjetas de preguntas estilo recortes de papel */
+    /* Tarjetas de pregunta con estética de collage de papel rasgado y lápiz */
     .tarjeta-pregunta {
-      background: var(--papel-crema);
-      border: 3px solid var(--tinta);
-      border-radius: 16px 22px 18px 14px;
-      padding: 22px 20px;
-      margin-bottom: 22px;
-      box-shadow: var(--sombra-papel);
+      background: var(--papel-blanco);
+      border: 2.5px solid var(--tinta-lapiz);
+      /* Bordes ligeramente irregulares como papel cortado a mano */
+      border-radius: 14px 20px 15px 18px / 18px 14px 20px 15px;
+      padding: 24px 22px 20px;
+      margin-bottom: 24px;
+      box-shadow: 5px 6px 0 rgba(38, 34, 30, 0.16);
       position: relative;
-      transition: transform 0.2s ease;
     }
 
-    .tarjeta-pregunta:nth-child(odd) {
-      transform: rotate(-0.35deg);
-    }
-    .tarjeta-pregunta:nth-child(even) {
-      transform: rotate(0.35deg);
-    }
-
-    /* Cinta adhesiva decorativa superior */
-    .cinta-adhesiva {
+    /* Parche de papel kraft o de color en una esquina de cada tarjeta */
+    .parche-esquina {
       position: absolute;
-      top: -12px;
-      left: 50%;
-      transform: translateX(-50%) rotate(-1.5deg);
-      width: 95px;
-      height: 22px;
-      background: rgba(244, 185, 66, 0.72);
-      border-left: 2px dotted rgba(42,36,33,0.35);
-      border-right: 2px dotted rgba(42,36,33,0.35);
+      top: -10px;
+      right: 18px;
+      padding: 3px 12px;
+      font-family: 'Patrick Hand', cursive;
+      font-size: 0.98rem;
+      color: var(--tinta-lapiz);
+      border: 1.5px solid rgba(38,34,30,0.45);
+      box-shadow: 2px 2px 0 rgba(38,34,30,0.18);
+      clip-path: polygon(3% 0%, 97% 6%, 100% 94%, 0% 100%);
+      transform: rotate(1.8deg);
     }
 
     .encabezado-pregunta {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 14px;
+      margin-bottom: 16px;
     }
 
+    /* Número estilo recorte poligonal rasgado */
     .numero-recorte {
       flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      background: var(--rojo-caperuza);
+      width: 44px;
+      height: 44px;
       color: #fff;
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2.5px solid var(--tinta);
-      border-radius: 10px 14px 8px 12px;
-      box-shadow: 2px 3px 0 var(--tinta);
-      transform: rotate(-3deg);
-    }
-
-    .tarjeta-pregunta:nth-child(even) .numero-recorte {
-      background: var(--morado-magia);
-      transform: rotate(3deg);
+      clip-path: polygon(10% 4%, 92% 0%, 100% 88%, 85% 100%, 4% 94%, 0% 16%);
+      filter: drop-shadow(2px 3px 0 rgba(38, 34, 30, 0.35));
     }
 
     .texto-pregunta {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.18rem;
-      line-height: 1.35;
+      font-size: 1.16rem;
+      line-height: 1.36;
       margin: 4px 0 0;
+      color: var(--tinta-lapiz);
     }
 
     .opciones {
@@ -234,22 +322,22 @@
       width: 100%;
       text-align: left;
       background: #fff;
-      border: 2.5px solid var(--tinta);
-      border-radius: 12px;
-      padding: 12px 15px;
+      border: 2px solid var(--tinta-lapiz);
+      border-radius: 10px 14px 11px 13px;
+      padding: 11px 14px;
       font-family: 'Nunito', sans-serif;
-      font-size: 1.03rem;
+      font-size: 1.02rem;
       font-weight: 700;
-      color: var(--tinta);
+      color: var(--tinta-lapiz);
       cursor: pointer;
-      box-shadow: 3px 3px 0 rgba(42, 36, 33, 0.15);
-      transition: all 0.15s ease;
+      box-shadow: 3px 3px 0 rgba(38, 34, 30, 0.14);
+      transition: transform 0.14s ease, background 0.14s ease;
     }
 
     .opcion-btn:hover:not(:disabled) {
-      background: #eef7fd;
+      background: #f0f8ff;
       transform: translateX(4px);
-      border-color: var(--azul-jipi);
+      border-color: var(--papel-azul);
     }
 
     .letra-opcion {
@@ -258,133 +346,182 @@
       justify-content: center;
       width: 30px;
       height: 30px;
-      border-radius: 50%;
-      background: var(--azul-claro);
-      border: 2px solid var(--tinta);
+      background: #f6be28;
+      border: 2px solid var(--tinta-lapiz);
+      clip-path: polygon(12% 2%, 94% 8%, 98% 90%, 84% 98%, 6% 92%, 2% 15%);
       font-family: 'Fredoka', sans-serif;
-      font-size: 1rem;
+      font-size: 0.98rem;
       flex-shrink: 0;
     }
 
     .opcion-btn.correcta {
-      background: #d4f3df;
-      border-color: #1f6e3d;
-      color: #134726;
-      box-shadow: 3px 3px 0 #1f6e3d;
+      background: #dcf7e6;
+      border-color: var(--duende-verde-oscuro);
+      color: #0f4d28;
+      box-shadow: 3px 3px 0 var(--duende-verde-oscuro);
     }
 
     .opcion-btn.correcta .letra-opcion {
-      background: var(--verde-duende);
+      background: var(--duende-verde);
       color: #fff;
     }
 
     .opcion-btn.incorrecta {
-      background: #fde0e0;
-      border-color: #a82424;
-      color: #6e1414;
-      opacity: 0.9;
+      background: #fde2e2;
+      border-color: #a62626;
+      color: #6b1515;
     }
 
     .opcion-btn.incorrecta .letra-opcion {
-      background: var(--rojo-caperuza);
+      background: var(--papel-rojo);
       color: #fff;
     }
 
     .feedback {
-      margin-top: 12px;
-      padding: 10px 14px;
+      margin-top: 13px;
+      padding: 11px 14px;
       border-radius: 10px;
       font-size: 0.98rem;
       font-weight: 700;
       display: none;
-      border: 2px dashed var(--tinta);
+      border: 2px dashed var(--tinta-lapiz);
     }
 
     .feedback.visible {
       display: block;
-      animation: aparecer 0.25s ease;
+      animation: saltoSuave 0.25s ease;
     }
 
     .feedback.ok {
-      background: #e6f9ed;
-      color: #185a32;
+      background: #eafaf0;
+      color: #13592f;
     }
 
     .feedback.error {
-      background: #fff3d6;
-      color: #7a4b00;
+      background: #fff5d9;
+      color: #6e4500;
     }
 
-    @keyframes aparecer {
+    @keyframes saltoSuave {
       from { opacity: 0; transform: translateY(-4px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Panel final de resultados */
+    /* Panel final estilo sello de lectura de El Duende Verde */
     .panel-final {
-      background: var(--amarillo-sol);
-      border: 4px solid var(--tinta);
-      border-radius: 22px;
+      background: var(--duende-verde);
+      color: #fff;
+      border: 3px solid var(--tinta-lapiz);
+      border-radius: 20px;
       padding: 26px 22px;
       text-align: center;
-      box-shadow: var(--sombra-papel);
-      margin-top: 28px;
+      box-shadow: 6px 7px 0 rgba(38, 34, 30, 0.22);
+      margin-top: 30px;
     }
 
     .panel-final h2 {
       font-family: 'Fredoka', sans-serif;
       font-size: 1.75rem;
       margin: 0 0 10px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
     }
 
     .puntuacion-grande {
       display: inline-block;
-      background: #fff;
-      border: 3px solid var(--tinta);
-      border-radius: 16px;
-      padding: 10px 26px;
+      background: var(--papel-blanco);
+      color: var(--tinta-lapiz);
+      border: 3px solid var(--tinta-lapiz);
+      padding: 10px 28px;
       font-family: 'Fredoka', sans-serif;
-      font-size: 2rem;
+      font-size: 2.1rem;
       margin: 8px 0 14px;
-      box-shadow: 4px 4px 0 var(--tinta);
-      transform: rotate(-1deg);
+      clip-path: polygon(3% 4%, 97% 0%, 100% 95%, 2% 98%);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
     }
 
     .btn-reiniciar {
-      background: var(--azul-jipi);
-      color: #fff;
+      background: var(--papel-amarillo);
+      color: var(--tinta-lapiz);
       font-family: 'Fredoka', sans-serif;
       font-size: 1.15rem;
       padding: 12px 26px;
-      border: 3px solid var(--tinta);
+      border: 3px solid var(--tinta-lapiz);
       border-radius: 14px;
       cursor: pointer;
-      box-shadow: 4px 4px 0 var(--tinta);
+      box-shadow: 4px 4px 0 var(--tinta-lapiz);
       transition: transform 0.15s ease;
     }
 
     .btn-reiniciar:hover {
       transform: scale(1.04);
-      background: #22669c;
+      background: #ffd04d;
     }
   </style>
 </head>
 <body>
 
 <div class="contenedor">
-  <header class="cabecera">
-    <div class="etiqueta-curso">3.º de Primaria · Comprensión Lectora</div>
-    <h1>🎩 Pamela Panamá contra la Bruja Descalza 👢</h1>
-    <p>Un viaje recortado con magia de papel por la obra de <strong>Violeta Monreal</strong></p>
-    <div class="collage-iconos">
-      <span class="parche-collage parche-1">✂️ Estilo Collage</span>
-      <span class="parche-collage parche-2">🧪 Frascos Mágicos</span>
-      <span class="parche-collage parche-3">🧙‍♀️ Reino de Jipi-Japa</span>
+  <!-- Marco exterior característico de la colección El Duende Verde -->
+  <header class="marco-duende-verde">
+    <div class="lomo-coleccion">
+      <div class="insignia-duende">
+        <span>🍀</span>
+        <span>Colección El Duende Verde</span>
+      </div>
+      <div class="etiqueta-edad">3.º de Primaria · Comprensión Lectora</div>
+    </div>
+
+    <div class="portada-collage">
+      <div class="recorte-fondo-1"></div>
+      <div class="recorte-fondo-2"></div>
+      <div class="recorte-fondo-3"></div>
+
+      <div class="contenido-portada">
+        <!-- Ilustración SVG hecha con recortes poligonales y trazo de lápiz estilo Violeta Monreal -->
+        <svg class="ilustracion-collage-svg" viewBox="0 0 180 195" xmlns="http://www.w3.org/2000/svg" aria-label="Ilustración estilo collage de Pamela Panamá con su sombrero y sus botas mágicas">
+          <!-- Fondo recorte papel kraft -->
+          <polygon points="18,22 158,12 168,172 12,182" fill="#e5c69b" stroke="#26221e" stroke-width="1.5"/>
+          <!-- Cara recortada en papel rosado suave -->
+          <polygon points="62,65 118,62 122,115 90,128 58,114" fill="#fbd5c0" stroke="#26221e" stroke-width="1.8"/>
+          <!-- Pelo recortado en papel naranja/castaño rasgado -->
+          <polygon points="48,68 62,55 118,55 132,70 138,115 120,108 118,75 62,75 58,108 42,115" fill="#d96b27" stroke="#26221e" stroke-width="1.8"/>
+          <!-- Gran sombrero Panamá recortado en papel crema y cinta azul -->
+          <polygon points="22,64 158,58 145,74 32,78" fill="#fff7d6" stroke="#26221e" stroke-width="2"/>
+          <polygon points="56,28 124,25 132,62 48,65" fill="#fff2b2" stroke="#26221e" stroke-width="2"/>
+          <polygon points="50,52 130,49 132,62 48,65" fill="#2673b8" stroke="#26221e" stroke-width="1.5"/>
+          <!-- Ojos expresivos a lápiz -->
+          <circle cx="77" cy="90" r="4.5" fill="#26221e"/>
+          <circle cx="103" cy="89" r="4.5" fill="#26221e"/>
+          <circle cx="78.5" cy="88.5" r="1.5" fill="#fff"/>
+          <circle cx="104.5" cy="87.5" r="1.5" fill="#fff"/>
+          <!-- Mofletes de papel rojo -->
+          <polygon points="64,98 74,97 73,105 63,104" fill="#ee6b6e" opacity="0.75"/>
+          <polygon points="106,97 116,96 115,104 105,103" fill="#ee6b6e" opacity="0.75"/>
+          <!-- Sonrisa dibujada a lápiz -->
+          <path d="M 80 107 Q 90 116 100 106" fill="none" stroke="#26221e" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Botas mágicas protagonistas en la parte inferior (recorte rojo y amarillo) -->
+          <polygon points="44,134 74,132 76,162 92,166 90,178 42,178" fill="#d63638" stroke="#26221e" stroke-width="2"/>
+          <polygon points="98,132 128,134 126,162 144,166 142,178 96,178" fill="#d63638" stroke="#26221e" stroke-width="2"/>
+          <!-- Cordones / detalles amarillos de las botas -->
+          <polygon points="48,140 70,139 70,145 48,146" fill="#f6be28"/>
+          <polygon points="102,139 124,140 124,146 102,145" fill="#f6be28"/>
+        </svg>
+
+        <div class="titulo-libro">
+          <h1>Pamela Panamá <span>contra la Bruja Descalza</span></h1>
+          <div class="subtitulo-autora">Texto e ilustraciones en collage de <strong>Violeta Monreal</strong></div>
+          <div class="tiras-papel">
+            <span class="tira tira-a">✂️ Papeles rasgados</span>
+            <span class="tira tira-b">👢 Botas viajeras</span>
+            <span class="tira tira-c">🧙‍♀️ Bruja Caperuza</span>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
   <div class="barra-estado">
-    <div class="progreso-texto" id="texto-progreso">Respondidas: <strong>0 / 10</strong></div>
+    <div class="progreso-texto" id="texto-progreso">Preguntas respondidas: <strong>0 / 10</strong></div>
     <div class="barra-fondo">
       <div class="barra-relleno" id="barra-relleno"></div>
     </div>
@@ -394,116 +531,146 @@
   <main id="contenedor-preguntas"></main>
 
   <section class="panel-final" id="panel-final">
-    <h2>🏆 ¡Tu resultado en Jipi-Japa!</h2>
+    <h2>🍀 ¡Tu puntuación de lectura!</h2>
     <div class="puntuacion-grande" id="nota-final">0 / 10</div>
     <p id="mensaje-final" style="font-size: 1.1rem; font-weight: 700; margin-bottom: 18px;">
-      ¡Responde a todas las preguntas para descubrir tu título de guardián o guardiana de los cuentos!
+      Completa las 10 preguntas sobre la historia para comprobar cuánto recuerdas del libro.
     </p>
-    <button class="btn-reiniciar" onclick="reiniciarCuestionario()">🔄 Volver a jugar</button>
+    <button class="btn-reiniciar" onclick="reiniciarCuestionario()">🔄 Volver a hacer el cuestionario</button>
   </section>
 </div>
 
 <script>
   const preguntas = [
     {
-      pregunta: "¿Qué tienen de especial los nombres de los personajes de esta historia?",
+      etiqueta: "El inicio de la historia",
+      colorNum: "#d63638",
+      colorParche: "#fff3b0",
+      pregunta: "¿Qué regala el abuelo Papahígo a Pamela por su nuevo cumpleaños al principio del libro?",
       opciones: [
-        "Todos tienen nombres de distintos tipos de sombreros.",
-        "Todos tienen nombres de animales del bosque.",
-        "Todos tienen nombres de instrumentos musicales."
+        "Un par de botas mágicas que la llevan a vivir otra aventura.",
+        "Un nuevo frasco de cristal de color verde esmeralda.",
+        "Un sombrero de copa que concede tres deseos."
       ],
       correcta: 0,
-      explicacion: "¡Exacto! Pamela, Panamá, Papahígo, Salacot o Caperuza son nombres de sombreros."
+      explicacion: "¡Exacto! En la primera aventura le regaló el frasco azul, pero en este libro Papahígo le regala unas botas mágicas por su cumpleaños."
     },
     {
-      pregunta: "¿Quién es Papahígo en la vida de Pamela?",
-      opciones: [
-        "Su profesor de dibujo del colegio.",
-        "Su abuelo, que siempre le hace regalos muy especiales.",
-        "El rey malvado de un país lejano."
-      ],
-      correcta: 1,
-      explicacion: "¡Muy bien! Papahígo es el abuelo de Pamela y quien le abrió la puerta a la magia."
-    },
-    {
-      pregunta: "¿Qué regalo recibe Pamela de su abuelo Papahígo por su nuevo cumpleaños en este libro?",
-      opciones: [
-        "Una bicicleta voladora de color rojo.",
-        "Un paraguas que habla siete idiomas.",
-        "Unas preciosas botas mágicas."
-      ],
-      correcta: 2,
-      explicacion: "¡Correcto! Las botas que le regala Papahígo dirigirán sus pasos hacia una nueva aventura."
-    },
-    {
-      pregunta: "¿Cómo se llama el reino fantástico que vuelve a estar en peligro?",
-      opciones: [
-        "El reino de Jipi-Japa.",
-        "El reino de Bombín-Bom.",
-        "El reino de Chistera Alta."
-      ],
-      correcta: 0,
-      explicacion: "¡Genial! El reino de Jipi-Japa es el mundo mágico que Pamela ya había conocido gracias al frasco azul."
-    },
-    {
-      pregunta: "¿Quién es la malvada bruja descalza que prepara una terrible venganza?",
-      opciones: [
-        "La bruja Boina.",
-        "La bruja Caperuza.",
-        "La bruja Pamplona."
-      ],
-      correcta: 1,
-      explicacion: "¡Así es! La malvada bruja Caperuza quiere vengarse y poner en peligro todo el reino."
-    },
-    {
-      pregunta: "¿Qué amigo del mundo real acompaña a Pamela en este nuevo viaje al reino mágico?",
+      etiqueta: "Los compañeros de viaje",
+      colorNum: "#2673b8",
+      colorParche: "#d0ebff",
+      pregunta: "¿Quién acompaña a Pamela cuando las botas la llevan de nuevo al reino de Jipi-Japa?",
       opciones: [
         "Su amigo Andrés.",
-        "Su primo Lucas.",
-        "Su vecino Mateo."
+        "Su abuelo Papahígo.",
+        "Su profesora de Ciencias."
       ],
       correcta: 0,
-      explicacion: "¡Estupendo! En esta ocasión, las botas llevan a Pamela hasta Jipi-Japa acompañada de su amigo Andrés."
+      explicacion: "¡Muy bien! Esta vez Pamela no viaja sola: su amigo Andrés la acompaña al reino de Jipi-Japa."
     },
     {
-      pregunta: "¿A qué amigo del reino de Jipi-Japa habían ayudado antes y vuelven a socorrer?",
+      etiqueta: "Los nombres del cuento",
+      colorNum: "#009a44",
+      colorParche: "#d3f9d8",
+      pregunta: "Si todos los personajes de esta obra tienen nombres de sombreros, ¿quiénes son Salacot y Caperuza?",
       opciones: [
-        "Al gigante Turbante.",
-        "A su amigo Salacot.",
-        "Al mago Sombrerilla."
+        "Salacot es su amigo de Jipi-Japa y Caperuza es la malvada bruja.",
+        "Salacot es el perro de Andrés y Caperuza es la hermana de Pamela.",
+        "Salacot es el abuelo de Pamela y Caperuza es una hada buena."
       ],
-      correcta: 1,
-      explicacion: "¡Bravo! Salacot es el gran amigo de Pamela en el reino de Jipi-Japa."
+      correcta: 0,
+      explicacion: "¡Correcto! Salacot es el habitante de Jipi-Japa al que ayudan, y Caperuza es la malvada bruja que quiere vengarse."
     },
     {
-      pregunta: "¿Qué gran prueba o habilidad necesita usar Pamela para salvar a todos sus amigos?",
+      etiqueta: "El problema en Jipi-Japa",
+      colorNum: "#7b4fa0",
+      colorParche: "#f3d9fa",
+      pregunta: "¿Por qué vuelve a estar en peligro el reino mágico de Jipi-Japa?",
       opciones: [
-        "Correr más rápido que el viento.",
-        "Distinguir lo verdadero de lo falso.",
-        "Cocinar un pastel gigante de chocolate."
+        "Porque la bruja Caperuza prepara una terrible venganza contra ellos.",
+        "Porque se ha secado el río de limonada del reino.",
+        "Porque un dragón gigante se ha dormido encima del castillo."
       ],
-      correcta: 1,
-      explicacion: "¡Súper! Frente a los engaños de la bruja, Pamela debe saber distinguir qué es verdadero y qué es falso."
+      correcta: 0,
+      explicacion: "¡Así es! La bruja Caperuza busca vengarse de lo ocurrido en la primera historia y amenaza todo el reino."
     },
     {
-      pregunta: "¿Qué importante lección aprenden Pamela y sus amigos en sus aventuras?",
+      etiqueta: "La bruja descalza",
+      colorNum: "#ee7623",
+      colorParche: "#ffe8cc",
+      pregunta: "¿Por qué el título del libro llama a la villana «la Bruja Descalza»?",
       opciones: [
-        "Que es mejor no tener amigos para no meterse en líos.",
-        "El compromiso con los demás y cómo superar sus propios miedos.",
-        "Que los libros de aventuras son muy aburridos."
+        "Porque perdió sus zapatos mágicos y anda detrás del calzado especial de Pamela.",
+        "Porque le encanta caminar por la playa sin calcetines.",
+        "Porque en Jipi-Japa está prohibido llevar zapatos."
       ],
-      correcta: 1,
-      explicacion: "¡Fantástico! La amistad, ayudar a los demás y vencer los miedos son el corazón de la historia."
+      correcta: 0,
+      explicacion: "¡Genial! La bruja Caperuza va descalza y tiene mucho interés en las botas mágicas que lleva Pamela."
     },
     {
-      pregunta: "¿Con qué técnica artística tan original ilustró Violeta Monreal este libro?",
+      etiqueta: "Las trampas de la bruja",
+      colorNum: "#d63638",
+      colorParche: "#ffd8d8",
+      pregunta: "¿Qué truco utiliza la bruja Caperuza para intentar confundir a Pamela y a Andrés?",
       opciones: [
-        "Con fotografías en blanco y negro.",
-        "Con collages hechos de papeles recortados y rasgados de colores.",
-        "Con figuras hechas de plastilina."
+        "Crea engaños e ilusiones para que no sepan qué es real y qué es mentira.",
+        "Los convierte en dos estatuas de piedra en medio del bosque.",
+        "Les borra la memoria para que olviden cómo volver a casa."
       ],
-      correcta: 1,
-      explicacion: "¡Di en el clavo! Violeta Monreal es famosa por sus preciosos collages de papel rasgado llenos de textura y color."
+      correcta: 0,
+      explicacion: "¡Muy atento! La bruja usa la mentira y las apariencias falsas para hacerles dudar y que caigan en su trampa."
+    },
+    {
+      etiqueta: "La clave para vencer",
+      colorNum: "#2673b8",
+      colorParche: "#d0ebff",
+      pregunta: "¿Qué habilidad tiene que usar Pamela para derrotar los planes de la bruja Caperuza?",
+      opciones: [
+        "Aprender a distinguir lo verdadero de lo falso.",
+        "Preparar una poción con plumas de búho y miel.",
+        "Correr más rápido que la escoba voladora de la bruja."
+      ],
+      correcta: 0,
+      explicacion: "¡Exacto! Saber distinguir la verdad de la mentira es el gran reto que permite a Pamela salvar a sus amigos."
+    },
+    {
+      etiqueta: "El papel de Andrés",
+      colorNum: "#009a44",
+      colorParche: "#d3f9d8",
+      pregunta: "¿Cómo reacciona Andrés al vivir esta aventura mágica junto a Pamela?",
+      opciones: [
+        "Aunque al principio siente miedo, se arma de valor para ayudar a sus amigos.",
+        "Se enfada con Pamela y decide volver solo a su casa.",
+        "Se queda dormido durante toda la batalla contra la bruja."
+      ],
+      correcta: 0,
+      explicacion: "¡Bravo! Andrés demuestra que ser valiente no es no tener miedo, sino superarlo para ayudar a quien lo necesita."
+    },
+    {
+      etiqueta: "El desenlace",
+      colorNum: "#7b4fa0",
+      colorParche: "#f3d9fa",
+      pregunta: "¿Qué ocurre cuando Pamela y Andrés consiguen descubrir los engaños de la bruja?",
+      opciones: [
+        "Salvan a Salacot, devuelven la paz a Jipi-Japa y regresan sanos y salvos a casa.",
+        "Se quedan a vivir para siempre en el castillo de Jipi-Japa.",
+        "La bruja Caperuza se convierte en la nueva reina del lugar."
+      ],
+      correcta: 0,
+      explicacion: "¡Estupendo! Gracias a su ingenio y valentía, protegen Jipi-Japa y pueden regresar de vuelta a su mundo."
+    },
+    {
+      etiqueta: "El arte del libro",
+      colorNum: "#ee7623",
+      colorParche: "#fff3b0",
+      pregunta: "Si observas las ilustraciones de Violeta Monreal en este libro de El Duende Verde, ¿cómo están hechas?",
+      opciones: [
+        "Recortando y rasgando papeles de distintos colores y texturas como un collage.",
+        "Con fotografías reales de niños disfrazados.",
+        "Solo con líneas negras sobre fondo blanco, sin nada de color."
+      ],
+      correcta: 0,
+      explicacion: "¡Di en el clavo! Violeta Monreal crea sus personajes y escenarios rasgando papeles a mano y combinándolos con trazos de lápiz."
     }
   ];
 
@@ -534,9 +701,9 @@
       });
 
       tarjeta.innerHTML = `
-        <div class="cinta-adhesiva"></div>
+        <div class="parche-esquina" style="background: ${item.colorParche};">${item.etiqueta}</div>
         <div class="encabezado-pregunta">
-          <div class="numero-recorte">${index + 1}</div>
+          <div class="numero-recorte" style="background: ${item.colorNum};">${index + 1}</div>
           <h3 class="texto-pregunta">${item.pregunta}</h3>
         </div>
         <div class="opciones" id="opciones-${index}">
@@ -555,16 +722,14 @@
     const feedback = document.getElementById(`feedback-${indicePregunta}`);
     const datosPregunta = preguntas[indicePregunta];
 
-    // Desactivar botones de esta pregunta
     botones.forEach(btn => btn.disabled = true);
-
     respondidas++;
 
     if (indiceOpcion === datosPregunta.correcta) {
       aciertos++;
       botonPulsado.classList.add("correcta");
       feedback.className = "feedback visible ok";
-      feedback.innerHTML = `🎉 <strong>¡Genial!</strong> ${datosPregunta.explicacion}`;
+      feedback.innerHTML = `🎉 <strong>¡Muy bien!</strong> ${datosPregunta.explicacion}`;
     } else {
       botonPulsado.classList.add("incorrecta");
       botones[datosPregunta.correcta].classList.add("correcta");
@@ -576,7 +741,7 @@
   }
 
   function actualizarMarcador() {
-    document.getElementById("texto-progreso").innerHTML = `Respondidas: <strong>${respondidas} / ${preguntas.length}</strong>`;
+    document.getElementById("texto-progreso").innerHTML = `Preguntas respondidas: <strong>${respondidas} / ${preguntas.length}</strong>`;
     document.getElementById("texto-aciertos").innerHTML = `Aciertos: <strong>${aciertos}</strong> ⭐`;
     document.getElementById("barra-relleno").style.width = `${(respondidas / preguntas.length) * 100}%`;
     document.getElementById("nota-final").textContent = `${aciertos} / ${preguntas.length}`;
@@ -584,14 +749,14 @@
     const mensajeFinal = document.getElementById("mensaje-final");
     if (respondidas === preguntas.length) {
       if (aciertos >= 9) {
-        mensajeFinal.textContent = "👑 ¡Enhorabuena! Eres un auténtico Caballero o Dama del Reino de Jipi-Japa. ¡La bruja Caperuza no tiene nada que hacer contigo!";
+        mensajeFinal.textContent = "👑 ¡Lectura superada con matrícula! Conoces cada detalle de la aventura de Pamela y Andrés en Jipi-Japa.";
       } else if (aciertos >= 6) {
-        mensajeFinal.textContent = "👢 ¡Muy buen trabajo! Conoces muy bien las aventuras de Pamela Panamá y sus botas mágicas.";
+        mensajeFinal.textContent = "👢 ¡Buen trabajo! Has comprendido muy bien la historia, aunque algún detalle de la bruja Caperuza casi te despista.";
       } else {
-        mensajeFinal.textContent = "📖 ¡Buen intento! Te animo a volver a echarle un vistazo al libro de Violeta Monreal y probar otra vez.";
+        mensajeFinal.textContent = "📖 ¡Toca repasar el libro! Vuelve a leer algunos capítulos para recordar mejor qué pasa en Jipi-Japa.";
       }
     } else {
-      mensajeFinal.textContent = "¡Responde a todas las preguntas para descubrir tu título de guardián o guardiana de los cuentos!";
+      mensajeFinal.textContent = "Completa las 10 preguntas sobre la historia para comprobar cuánto recuerdas del libro.";
     }
   }
 
