@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>El Rosco de las Palabras Polisémicas · 3.º de Primaria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-top: #1a237e;
+      --bg-mid: #311b92;
+      --bg-bot: #006064;
+      --rosa: #ff4081;
+      --amarillo: #ffd740;
+      --turquesa: #00e5ff;
+      --verde: #00c853;
+      --rojo: #ff1744;
+      --naranja: #ff9100;
+      --azul-letra: #2979ff;
+      --blanco: #ffffff;
+      --texto-oscuro: #1e2240;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px 14px 48px;
+      font-family: 'Quicksand', sans-serif;
+      color: var(--blanco);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255, 64, 129, 0.32) 0%, transparent 32%),
+        radial-gradient(circle at 88% 14%, rgba(0, 229, 255, 0.28) 0%, transparent 34%),
+        radial-gradient(circle at 82% 85%, rgba(255, 215, 64, 0.24) 0%, transparent 35%),
+        linear-gradient(155deg, var(--bg-top) 0%, var(--bg-mid) 52%, var(--bg-bot) 100%);
+      overflow-x: hidden;
+    }
+
+    /* Confeti de fondo sutil */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .app {
+      max-width: 1120px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Cabecera estilo concurso de televisión escolar */
+    .cabecera {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 22px;
+      padding: 14px 22px;
+      margin-bottom: 22px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .marca-titulo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .icono-concurso {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--amarillo), var(--naranja));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 0 #c66900;
+      flex-shrink: 0;
+    }
+
+    .marca-titulo h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      margin: 0;
+      line-height: 1.05;
+      color: var(--amarillo);
+      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+    }
+
+    .marca-titulo p {
+      margin: 2px 0 0;
+      font-size: 0.95rem;
+      color: #e3f2fd;
+      font-weight: 700;
+    }
+
+    .controles-superiores {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-chip {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-chip:hover {
+      background: rgba(255, 255, 255, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .btn-chip.activo {
+      background: var(--amarillo);
+      color: var(--texto-oscuro);
+      border-color: #fff;
+    }
+
+    /* Distribución principal: Rosco a la izquierda, Panel de juego a la derecha */
+    .escenario {
+      display: grid;
+      grid-template-columns: 440px 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (max-width: 930px) {
+      .escenario {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Contenedor del Rosco */
+    .zona-rosco {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rosco-marco {
+      position: relative;
+      width: 410px;
+      height: 410px;
+      max-width: 92vw;
+      max-height: 92vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 64%, transparent 72%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Aro luminoso decorativo */
+    .aro-brillo {
+      position: absolute;
+      inset: 24px;
+      border-radius: 50%;
+      border: 3px dashed rgba(255, 215, 64, 0.38);
+      pointer-events: none;
+      animation: girarLento 60s linear infinite;
+    }
+
+    @keyframes girarLento {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .letra-ficha {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 3px solid #ffffff;
+      background: radial-gradient(circle at 30% 30%, #40c4ff, #1565c0);
+      color: #ffffff;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 1.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.38);
+      transform: translate(-50%, -50%);
+      transition: transform 0.22s ease, background 0.25s ease, box-shadow 0.25s ease;
+      user-select: none;
+    }
+
+    .letra-ficha:hover {
+      transform: translate(-50%, -50%) scale(1.12);
+    }
+
+    .letra-ficha.actual {
+      background: radial-gradient(circle at 30% 30%, #fff176, #ff9100);
+      color: #1e2240;
+      border-color: #ffffff;
+      transform: translate(-50%, -50%) scale(1.28);
+      z-index: 10;
+      box-shadow: 0 0 0 6px rgba(255, 215, 64, 0.4), 0 0 22px rgba(255, 215, 64, 0.9);
+      animation: latido 1.1s infinite ease-in-out;
+    }
+
+    @keyframes latido {
+      0%, 100% { box-shadow: 0 0 0 5px rgba(255, 215, 64, 0.38), 0 0 18px rgba(255, 215, 64, 0.85); }
+      50% { box-shadow: 0 0 0 10px rgba(255, 215, 64, 0.18), 0 0 28px rgba(255, 215, 64, 1); }
+    }
+
+    .letra-ficha.pasada {
+      background: radial-gradient(circle at 30% 30%, #b388ff, #651fff);
+      border-color: var(--amarillo);
+    }
+
+    .letra-ficha.correcta {
+      background: radial-gradient(circle at 30% 30%, #69f0ae, #00a152);
+      border-color: #e8f5e9;
+    }
+
+    .letra-ficha.incorrecta {
+      background: radial-gradient(circle at 30% 30%, #ff8a80, #d50000);
+      border-color: #ffebee;
+    }
+
+    /* Centro del rosco */
+    .centro-rosco {
+      width: 215px;
+      height: 215px;
+      border-radius: 50%;
+      background: linear-gradient(160deg, rgba(255,255,255,0.98), #eef6ff);
+      color: var(--texto-oscuro);
+      border: 5px solid var(--amarillo);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), inset 0 0 20px rgba(41, 121, 255, 0.14);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 12px;
+      z-index: 4;
+    }
+
+    .etiqueta-empieza {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #5c6bc0;
+    }
+
+    .letra-gigante {
+      font-family: 'Baloo 2', cursive;
+      font-size: 4.2rem;
+      font-weight: 800;
+      line-height: 0.92;
+      background: linear-gradient(135deg, #ff4081, #7c4dff, #00b0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 2px 0;
+    }
+
+    .marcadores-centro {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .pill-score {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem;
+      padding: 2px 10px;
+      border-radius: 999px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .pill-ok { background: var(--verde); }
+    .pill-err { background: var(--rojo); }
+
+    .reloj-badge {
+      margin-top: 6px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem;
+      color: #d84315;
+      background: #fff3e0;
+      padding: 2px 12px;
+      border-radius: 999px;
+      border: 2px solid #ffb74d;
+      display: none;
+    }
+
+    .reloj-badge.visible {
+      display: inline-block;
+    }
+
+    /* Tarjeta derecha de juego */
+    .panel-juego {
+      background: #ffffff;
+      color: var(--texto-oscuro);
+      border-radius: 26px;
+      padding: 26px 26px 24px;
+      border: 4px solid var(--amarillo);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .cabecera-tarjeta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .badge-turno {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #ff4081, #ff6d00);
+      color: #fff;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.08rem;
+      padding: 6px 16px;
+      border-radius: 999px;
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.16);
+    }
+
+    .progreso-mini {
+      font-family: 'Baloo 2', cursive;
+      color: #5c6bc0;
+      font-size: 1rem;
+    }
+
+    .instruccion-doble {
+      font-size: 1rem;
+      color: #455a64;
+      margin: 0 0 14px;
+      font-weight: 700;
+    }
+
+    /* Dos tarjetas de definiciones para la palabra polisémica */
+    .grid-definiciones {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 600px) {
+      .grid-definiciones {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tarjeta-def {
+      border-radius: 18px;
+      padding: 16px;
+      border: 3px solid transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .def-1 {
+      background: #fff3e0;
+      border-color: #ffab40;
+    }
+
+    .def-2 {
+      background: #e0f7fa;
+      border-color: #26c6da;
+    }
+
+    .def-cabecera {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem;
+    }
+
+    .def-1 .def-cabecera { color: #e65100; }
+    .def-2 .def-cabecera { color: #00695c; }
+
+    .def-texto {
+      font-size: 1.06rem;
+      line-height: 1.38;
+      font-weight: 700;
+      margin: 0;
+      color: #263238;
+    }
+
+    /* Zona de pista */
+    .caja-pista {
+      display: none;
+      background: #f3e5f5;
+      border: 2px dashed #ab47bc;
+      border-radius: 14px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.15rem;
+      color: #6a1b9a;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+
+    .caja-pista.visible {
+      display: block;
+      animation: popIn 0.25s ease;
+    }
+
+    /* Input y botones */
+    .formulario-respuesta {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .input-palabra {
+      flex: 1;
+      min-width: 190px;
+      padding: 13px 18px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.3rem;
+      border-radius: 16px;
+      border: 3px solid #90caf9;
+      outline: none;
+      color: var(--texto-oscuro);
+      background: #f8fbff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-palabra:focus {
+      border-color: #2979ff;
+      box-shadow: 0 0 0 4px rgba(41, 121, 255, 0.18);
+      background: #fff;
+    }
+
+    .btn-accion {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 16px;
+      padding: 12px 20px;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.12s ease, filter 0.15s ease;
+    }
+
+    .btn-accion:active {
+      transform: translateY(2px);
+    }
+
+    .btn-comprobar {
+      background: linear-gradient(135deg, #00c853, #009624);
+      box-shadow: 0 4px 0 #006b1a;
+    }
+
+    .btn-comprobar:hover { filter: brightness(1.06); }
+
+    .botones-secundarios {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-pasapalabra {
+      flex: 1;
+      background: linear-gradient(135deg, #7c4dff, #536dfe);
+      box-shadow: 0 4px 0 #3d2499;
+    }
+
+    .btn-pista {
+      background: linear-gradient(135deg, #ffab00, #ff6d00);
+      box-shadow: 0 4px 0 #c45100;
+    }
+
+    .btn-pasapalabra:hover, .btn-pista:hover { filter: brightness(1.06); }
+
+    /* Feedback animado */
+    .mensaje-feedback {
+      margin-top: 16px;
+      padding: 13px 16px;
+      border-radius: 16px;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.1rem;
+      display: none;
+      text-align: center;
+    }
+
+    .mensaje-feedback.visible {
+      display: block;
+      animation: popIn 0.25s ease;
+    }
+
+    .mensaje-feedback.ok {
+      background: #e8f5e9;
+      color: #1b5e20;
+      border: 2px solid #66bb6a;
+    }
+
+    .mensaje-feedback.err {
+      background: #ffebee;
+      color: #b71c1c;
+      border: 2px solid #ef5350;
+    }
+
+    .mensaje-feedback.info {
+      background: #ede7f6;
+      color: #4527a0;
+      border: 2px solid #9575cd;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Leyenda inferior del rosco */
+    .leyenda {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #e1f5fe;
+    }
+
+    .leyenda-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .punto {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      display: inline-block;
+    }
+
+    /* Pantalla final de resultados y repaso */
+    .pantalla-final {
+      display: none;
+      text-align: center;
+    }
+
+    .pantalla-final.visible {
+      display: block;
+      animation: popIn 0.35s ease;
+    }
+
+    .trofeo-final {
+      font-size: 3.6rem;
+      margin-bottom: 4px;
+    }
+
+    .pantalla-final h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: #311b92;
+      margin: 0 0 8px;
+    }
+
+    .resumen-numero {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffd740, #ff9100);
+      color: var(--texto-oscuro);
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      padding: 8px 28px;
+      border-radius: 18px;
+      margin: 8px 0 14px;
+      box-shadow: 0 4px 0 #c66900;
+    }
+
+    .lista-repaso {
+      max-height: 250px;
+      overflow-y: auto;
+      text-align: left;
+      background: #f5f7ff;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 14px 0 18px;
+      border: 2px solid #c5cae9;
+    }
+
+    .item-repaso {
+      padding: 8px 10px;
+      border-bottom: 1px solid #e0e6f8;
+      font-size: 0.95rem;
+    }
+
+    .item-repaso:last-child { border-bottom: none; }
+
+    .btn-reiniciar {
+      background: linear-gradient(135deg, #ff4081, #f50057);
+      box-shadow: 0 4px 0 #ad1457;
+      padding: 13px 28px;
+      font-size: 1.15rem;
+    }
+
+    @media (max-width: 480px) {
+      .letra-ficha {
+        width: 36px;
+        height: 36px;
+        font-size: 1.05rem;
+      }
+      .centro-rosco {
+        width: 170px;
+        height: 170px;
+      }
+      .letra-gigante {
+        font-size: 3.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="app">
+  <header class="cabecera">
+    <div class="marca-titulo">
+      <div class="icono-concurso">🎡</div>
+      <div>
+        <h1>El Rosco de las Palabras Polisémicas</h1>
+        <p>3.º de Primaria · Lee las dos definiciones y adivina la palabra</p>
+      </div>
+    </div>
+    <div class="controles-superiores">
+      <button class="btn-chip" id="btn-sonido" onclick="alternarSonido()">🔊 Sonido: SÍ</button>
+      <button class="btn-chip" id="btn-reloj" onclick="alternarReloj()">⏱️ Modo Reloj: NO</button>
+      <button class="btn-chip" onclick="reiniciarJuego()">🔄 Reiniciar</button>
+    </div>
+  </header>
+
+  <main class="escenario">
+    <!-- Columna izquierda: El Rosco -->
+    <section class="zona-rosco">
+      <div class="rosco-marco" id="rosco-marco">
+        <div class="aro-brillo"></div>
+        <div class="centro-rosco">
+          <div class="etiqueta-empieza">Empieza por</div>
+          <div class="letra-gigante" id="letra-centro">A</div>
+          <div class="marcadores-centro">
+            <span class="pill-score pill-ok" id="score-ok">✓ 0</span>
+            <span class="pill-score pill-err" id="score-err">✗ 0</span>
+          </div>
+          <div class="reloj-badge" id="reloj-badge">⏱️ 03:00</div>
+        </div>
+      </div>
+
+      <div class="leyenda">
+        <span class="leyenda-item"><span class="punto" style="background:#2979ff;"></span> Pendiente</span>
+        <span class="leyenda-item"><span class="punto" style="background:#ff9100;"></span> Turno actual</span>
+        <span class="leyenda-item"><span class="punto" style="background:#7c4dff;"></span> Pasapalabra</span>
+        <span class="leyenda-item"><span class="punto" style="background:#00c853;"></span> Acierto</span>
+        <span class="leyenda-item"><span class="punto" style="background:#ff1744;"></span> Fallo</span>
+      </div>
+    </section>
+
+    <!-- Columna derecha: Panel de definiciones e interacción -->
+    <section class="panel-juego">
+      <!-- Vista activa del juego -->
+      <div id="vista-juego">
+        <div class="cabecera-tarjeta">
+          <div class="badge-turno" id="badge-turno">🔤 Empieza por la letra A</div>
+          <div class="progreso-mini" id="progreso-mini">Restantes: 18 de 18</div>
+        </div>
+
+        <p class="instruccion-doble">🎯 ¿Qué palabra polisémica tiene estos dos significados?</p>
+
+        <div class="grid-definiciones">
+          <div class="tarjeta-def def-1">
+            <div class="def-cabecera"><span id="icono-1">🪡</span> <span>Significado 1</span></div>
+            <p class="def-texto" id="def-texto-1"></p>
+          </div>
+          <div class="tarjeta-def def-2">
+            <div class="def-cabecera"><span id="icono-2">⏰</span> <span>Significado 2</span></div>
+            <p class="def-texto" id="def-texto-2"></p>
+          </div>
+        </div>
+
+        <div class="caja-pista" id="caja-pista"></div>
+
+        <form class="formulario-respuesta" onsubmit="comprobarRespuesta(event)">
+          <input
+            type="text"
+            id="input-respuesta"
+            class="input-palabra"
+            placeholder="Escribe aquí la palabra..."
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            required
+          />
+          <button type="submit" class="btn-accion btn-comprobar">✅ Comprobar</button>
+        </form>
+
+        <div class="botones-secundarios">
+          <button type="button" class="btn-accion btn-pasapalabra" onclick="hacerPasapalabra()">⏭️ ¡Pasapalabra!</button>
+          <button type="button" class="btn-accion btn-pista" onclick="mostrarPista()">💡 Pista</button>
+        </div>
+
+        <div class="mensaje-feedback" id="mensaje-feedback"></div>
+      </div>
+
+      <!-- Vista final al terminar el rosco -->
+      <div class="pantalla-final" id="pantalla-final">
+        <div class="trofeo-final" id="trofeo-final">🏆</div>
+        <h2 id="titulo-final">¡Rosco completado!</h2>
+        <div class="resumen-numero" id="resumen-numero">0 / 18</div>
+        <p id="subtitulo-final" style="font-weight:700; color:#455a64; margin:0 0 10px;"></p>
+
+        <div class="lista-repaso" id="lista-repaso"></div>
+
+        <button class="btn-accion btn-reiniciar" onclick="reiniciarJuego()">🔄 Jugar otra vez</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const datosRosco = [
+    {
+      letra: "A",
+      palabra: "aguja",
+      icon1: "🪡",
+      def1: "Utensilio fino de metal con un agujerito que sirve para coser.",
+      icon2: "⏰",
+      def2: "Manecilla del reloj que señala las horas o los minutos."
+    },
+    {
+      letra: "B",
+      palabra: "banco",
+      icon1: "🪑",
+      def1: "Asiento largo en el parque donde pueden sentarse varias personas.",
+      icon2: "🏦",
+      def2: "Lugar o edificio donde las personas guardan su dinero."
+    },
+    {
+      letra: "C",
+      palabra: "carta",
+      icon1: "✉️",
+      def1: "Mensaje escrito en papel que se mete en un sobre para enviarlo a alguien.",
+      icon2: "🃏",
+      def2: "Cada una de las piezas de una baraja con la que jugamos."
+    },
+    {
+      letra: "D",
+      palabra: "diente",
+      icon1: "🦷",
+      def1: "Pieza blanca y dura que tenemos en la boca para masticar la comida.",
+      icon2: "🧄",
+      def2: "Cada uno de los gajos que forman una cabeza de ajo."
+    },
+    {
+      letra: "E",
+      palabra: "estrella",
+      icon1: "⭐",
+      def1: "Astro brillante que vemos en el cielo por la noche.",
+      icon2: "🌊",
+      def2: "Animal marino con cinco brazos que vive en el fondo del mar."
+    },
+    {
+      letra: "F",
+      palabra: "falda",
+      icon1: "👗",
+      def1: "Prenda de vestir que se lleva desde la cintura hacia abajo.",
+      icon2: "⛰️",
+      def2: "Parte más baja de una montaña."
+    },
+    {
+      letra: "G",
+      palabra: "gato",
+      icon1: "🐱",
+      def1: "Animal doméstico peludo que maúlla y ronronea.",
+      icon2: "🚗",
+      def2: "Herramienta que sirve para levantar un coche cuando se pincha una rueda."
+    },
+    {
+      letra: "H",
+      palabra: "hoja",
+      icon1: "🍃",
+      def1: "Parte verde y plana que crece en las ramas de los árboles y plantas.",
+      icon2: "📄",
+      def2: "Cada una de las páginas de papel de un cuaderno o un libro."
+    },
+    {
+      letra: "L",
+      palabra: "lengua",
+      icon1: "👅",
+      def1: "Órgano que tenemos dentro de la boca para hablar y saborear la comida.",
+      icon2: "🗣️",
+      def2: "Idioma que hablan las personas de un país, como el español o el inglés."
+    },
+    {
+      letra: "M",
+      palabra: "muñeca",
+      icon1: "🪆",
+      def1: "Juguete con forma de persona con el que juegan niños y niñas.",
+      icon2: "⌚",
+      def2: "Parte del cuerpo donde se une la mano con el brazo."
+    },
+    {
+      letra: "N",
+      palabra: "naranja",
+      icon1: "🍊",
+      def1: "Fruta redonda y jugosa con la que hacemos zumo para desayunar.",
+      icon2: "🎨",
+      def2: "Color que resulta al mezclar el rojo y el amarillo."
+    },
+    {
+      letra: "O",
+      palabra: "ojo",
+      icon1: "👁️",
+      def1: "Órgano de la cara con el que podemos ver todo lo que nos rodea.",
+      icon2: "🧵",
+      def2: "Agujerito de una aguja por donde pasamos el hilo para coser."
+    },
+    {
+      letra: "P",
+      palabra: "planta",
+      icon1: "🪴",
+      def1: "Ser vivo que nace de la tierra, como una flor o un árbol.",
+      icon2: "🦶",
+      def2: "Parte inferior del pie que apoyamos en el suelo al caminar."
+    },
+    {
+      letra: "R",
+      palabra: "ratón",
+      icon1: "🐭",
+      def1: "Pequeño animal roedor de cola larga al que le encanta el queso.",
+      icon2: "🖱️",
+      def2: "Aparato que movemos con la mano para manejar la flechita del ordenador."
+    },
+    {
+      letra: "S",
+      palabra: "sirena",
+      icon1: "🧜‍♀️",
+      def1: "Ser fantástico de los cuentos con cuerpo de mujer y cola de pez.",
+      icon2: "🚑",
+      def2: "Aparato que suena muy fuerte en las ambulancias y coches de policía."
+    },
+    {
+      letra: "T",
+      palabra: "trompa",
+      icon1: "🐘",
+      def1: "Nariz muy larga y flexible que tienen los elefantes.",
+      icon2: "🎺",
+      def2: "Instrumento musical de viento hecho de metal que se toca soplando."
+    },
+    {
+      letra: "V",
+      palabra: "vela",
+      icon1: "🕯️",
+      def1: "Barra de cera con una mecha que encendemos para dar luz o soplar en un cumpleaños.",
+      icon2: "⛵",
+      def2: "Tela muy grande que aprovecha el viento para hacer avanzar un barco."
+    },
+    {
+      letra: "Y",
+      palabra: "yema",
+      icon1: "🍳",
+      def1: "Parte redonda y amarilla que está en el centro de un huevo.",
+      icon2: "👆",
+      def2: "Punta suave de cada uno de los dedos de la mano."
+    }
+  ];
+
+  // Estados posibles: "pendiente", "pasada", "correcta", "incorrecta"
+  let estados = [];
+  let indiceActual = 0;
+  let sonidoActivo = true;
+  let relojActivo = false;
+  let segundosRestantes = 180;
+  let intervaloReloj = null;
+  let pistaUsada = false;
+  let bloqueado = false;
+
+  // Audio sintetizado (Web Audio API) para que funcione 100% offline
+  let audioCtx = null;
+  function tocarSonido(tipo) {
+    if (!sonidoActivo) return;
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const ahora = audioCtx.currentTime;
+
+      if (tipo === "ok") {
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, ahora + i * 0.08);
+          gain.gain.setValueAtTime(0.16, ahora + i * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, ahora + i * 0.08 + 0.22);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(ahora + i * 0.08);
+          osc.stop(ahora + i * 0.08 + 0.24);
+        });
+      } else if (tipo === "err") {
+        [240, 185].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(freq, ahora + i * 0.12);
+          gain.gain.setValueAtTime(0.1, ahora + i * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, ahora + i * 0.12 + 0.22);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(ahora + i * 0.12);
+          osc.stop(ahora + i * 0.12 + 0.24);
+        });
+      } else if (tipo === "pasa") {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(420, ahora);
+        osc.frequency.exponentialRampToValueAtTime(620, ahora + 0.15);
+        gain.gain.setValueAtTime(0.12, ahora);
+        gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.18);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(ahora);
+        osc.stop(ahora + 0.2);
+      } else if (tipo === "fin") {
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(freq, ahora + i * 0.11);
+          gain.gain.setValueAtTime(0.18, ahora + i * 0.11);
+          gain.gain.exponentialRampToValueAtTime(0.001, ahora + i * 0.11 + 0.38);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(ahora + i * 0.11);
+          osc.stop(ahora + i * 0.11 + 0.4);
+        });
+      }
+    } catch (e) {}
+  }
+
+  function normalizarTexto(txt) {
+    return txt
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function construirRosco() {
+    const marco = document.getElementById("rosco-marco");
+    marco.querySelectorAll(".letra-ficha").forEach(el => el.remove());
+
+    const total = datosRosco.length;
+    const radioPorcentaje = 43.5;
+
+    datosRosco.forEach((item, idx) => {
+      const angulo = (idx / total) * Math.PI * 2 - Math.PI / 2;
+      const x = 50 + radioPorcentaje * Math.cos(angulo);
+      const y = 50 + radioPorcentaje * Math.sin(angulo);
+
+      const ficha = document.createElement("button");
+      ficha.type = "button";
+      ficha.className = "letra-ficha";
+      ficha.id = `ficha-${idx}`;
+      ficha.textContent = item.letra;
+      ficha.style.left = `${x}%`;
+      ficha.style.top = `${y}%`;
+      ficha.title = `Ir a la letra ${item.letra}`;
+      ficha.onclick = () => {
+        if (bloqueado) return;
+        if (estados[idx] === "pendiente" || estados[idx] === "pasada") {
+          indiceActual = idx;
+          pistaUsada = false;
+          ocultarFeedback();
+          actualizarInterfaz();
+          document.getElementById("input-respuesta").focus();
+        }
+      };
+      marco.appendChild(ficha);
+    });
+  }
+
+  function actualizarInterfaz() {
+    const item = datosRosco[indiceActual];
+
+    // Actualizar fichas del rosco
+    datosRosco.forEach((_, idx) => {
+      const ficha = document.getElementById(`ficha-${idx}`);
+      ficha.className = "letra-ficha";
+      if (estados[idx] === "correcta") ficha.classList.add("correcta");
+      else if (estados[idx] === "incorrecta") ficha.classList.add("incorrecta");
+      else if (estados[idx] === "pasada") ficha.classList.add("pasada");
+
+      if (idx === indiceActual && (estados[idx] === "pendiente" || estados[idx] === "pasada")) {
+        ficha.classList.add("actual");
+      }
+    });
+
+    const aciertos = estados.filter(e => e === "correcta").length;
+    const fallos = estados.filter(e => e === "incorrecta").length;
+    const restantes = datosRosco.length - aciertos - fallos;
+
+    document.getElementById("score-ok").textContent = `✓ ${aciertos}`;
+    document.getElementById("score-err").textContent = `✗ ${fallos}`;
+    document.getElementById("progreso-mini").textContent = `Restantes: ${restantes} de ${datosRosco.length}`;
+
+    if (restantes === 0) {
+      mostrarPantallaFinal();
+      return;
+    }
+
+    document.getElementById("letra-centro").textContent = item.letra;
+    document.getElementById("badge-turno").textContent = `🔤 Empieza por la letra ${item.letra}`;
+    document.getElementById("icono-1").textContent = item.icon1;
+    document.getElementById("def-texto-1").textContent = item.def1;
+    document.getElementById("icono-2").textContent = item.icon2;
+    document.getElementById("def-texto-2").textContent = item.def2;
+
+    const cajaPista = document.getElementById("caja-pista");
+    if (!pistaUsada) {
+      cajaPista.className = "caja-pista";
+      cajaPista.textContent = "";
+    }
+
+    const input = document.getElementById("input-respuesta");
+    input.value = "";
+    input.focus();
+  }
+
+  function buscarSiguientePendiente(desde) {
+    const total = datosRosco.length;
+    for (let paso = 1; paso <= total; paso++) {
+      const candidato = (desde + paso) % total;
+      if (estados[candidato] === "pendiente" || estados[candidato] === "pasada") {
+        return candidato;
+      }
+    }
+    return -1;
+  }
+
+  function comprobarRespuesta(event) {
+    event.preventDefault();
+    if (bloqueado) return;
+
+    const input = document.getElementById("input-respuesta");
+    const respuestaUsuario = normalizarTexto(input.value);
+    if (!respuestaUsuario) return;
+
+    const item = datosRosco[indiceActual];
+    const solucion = normalizarTexto(item.palabra);
+    bloqueado = true;
+
+    if (respuestaUsuario === solucion) {
+      estados[indiceActual] = "correcta";
+      tocarSonido("ok");
+      mostrarFeedback(`🎉 ¡GENIAL! La palabra polisémica es «${item.palabra.toUpperCase()}».`, "ok");
+    } else {
+      estados[indiceActual] = "incorrecta";
+      tocarSonido("err");
+      mostrarFeedback(`💡 ¡Casi! La palabra correcta era «${item.palabra.toUpperCase()}».`, "err");
+    }
+
+    // Refrescar colores inmediatamente
+    const ficha = document.getElementById(`ficha-${indiceActual}`);
+    ficha.className = `letra-ficha ${estados[indiceActual]}`;
+
+    setTimeout(() => {
+      bloqueado = false;
+      pistaUsada = false;
+      const siguiente = buscarSiguientePendiente(indiceActual);
+      if (siguiente === -1) {
+        mostrarPantallaFinal();
+      } else {
+        indiceActual = siguiente;
+        ocultarFeedback();
+        actualizarInterfaz();
+      }
+    }, 1350);
+  }
+
+  function hacerPasapalabra() {
+    if (bloqueado) return;
+    estados[indiceActual] = "pasada";
+    tocarSonido("pasa");
+    mostrarFeedback(`⏭️ ¡Pasapalabra! Volveremos luego a la letra ${datosRosco[indiceActual].letra}.`, "info");
+    bloqueado = true;
+
+    setTimeout(() => {
+      bloqueado = false;
+      pistaUsada = false;
+      const siguiente = buscarSiguientePendiente(indiceActual);
+      if (siguiente !== -1) {
+        indiceActual = siguiente;
+      }
+      ocultarFeedback();
+      actualizarInterfaz();
+    }, 650);
+  }
+
+  function mostrarPista() {
+    if (bloqueado) return;
+    const palabra = datosRosco[indiceActual].palabra.toUpperCase();
+    const letrasMostradas = palabra
+      .split("")
+      .map((ch, i) => (i === 0 || i === palabra.length - 1 ? ch : "_"))
+      .join(" ");
+
+    pistaUsada = true;
+    const cajaPista = document.getElementById("caja-pista");
+    cajaPista.textContent = `💡 Pista (${palabra.length} letras): ${letrasMostradas}`;
+    cajaPista.className = "caja-pista visible";
+    document.getElementById("input-respuesta").focus();
+  }
+
+  function mostrarFeedback(texto, tipo) {
+    const el = document.getElementById("mensaje-feedback");
+    el.textContent = texto;
+    el.className = `mensaje-feedback visible ${tipo}`;
+  }
+
+  function ocultarFeedback() {
+    const el = document.getElementById("mensaje-feedback");
+    el.className = "mensaje-feedback";
+  }
+
+  function mostrarPantallaFinal() {
+    detenerReloj();
+    tocarSonido("fin");
+
+    const aciertos = estados.filter(e => e === "correcta").length;
+    const total = datosRosco.length;
+
+    document.getElementById("vista-juego").style.display = "none";
+    document.getElementById("pantalla-final").classList.add("visible");
+    document.getElementById("letra-centro").textContent = "★";
+    document.getElementById("resumen-numero").textContent = `${aciertos} / ${total}`;
+
+    const trofeo = document.getElementById("trofeo-final");
+    const titulo = document.getElementById("titulo-final");
+    const subtitulo = document.getElementById("subtitulo-final");
+
+    if (aciertos === total) {
+      trofeo.textContent = "👑";
+      titulo.textContent = "¡BOTE CONSEGUIDO!";
+      subtitulo.textContent = "¡Increíble! Has acertado las 18 palabras polisémicas sin un solo fallo.";
+      lanzarConfeti();
+    } else if (aciertos >= 13) {
+      trofeo.textContent = "🏆";
+      titulo.textContent = "¡Campeón o campeona del Rosco!";
+      subtitulo.textContent = "¡Fantástico trabajo! Dominas muy bien las palabras polisémicas.";
+      lanzarConfeti();
+    } else if (aciertos >= 8) {
+      trofeo.textContent = "🌟";
+      titulo.textContent = "¡Muy buen intento!";
+      subtitulo.textContent = "Has acertado muchas palabras. Repasa aquí abajo las que te faltaron:";
+    } else {
+      trofeo.textContent = "📚";
+      titulo.textContent = "¡A seguir practicando!";
+      subtitulo.textContent = "Mira el repaso de las palabras polisémicas y vuelve a intentarlo:";
+    }
+
+    const repaso = document.getElementById("lista-repaso");
+    repaso.innerHTML = datosRosco.map((item, idx) => {
+      const ok = estados[idx] === "correcta";
+      const iconoEstado = ok ? "✅" : "❌";
+      return `
+        <div class="item-repaso">
+          <strong>${iconoEstado} ${item.letra} — ${item.palabra.toUpperCase()}:</strong>
+          ${item.def1} / ${item.def2}
+        </div>
+      `;
+    }).join("");
+  }
+
+  function alternarSonido() {
+    sonidoActivo = !sonidoActivo;
+    document.getElementById("btn-sonido").textContent = sonidoActivo ? "🔊 Sonido: SÍ" : "🔇 Sonido: NO";
+  }
+
+  function alternarReloj() {
+    relojActivo = !relojActivo;
+    const btn = document.getElementById("btn-reloj");
+    const badge = document.getElementById("reloj-badge");
+
+    if (relojActivo) {
+      btn.textContent = "⏱️ Modo Reloj: SÍ";
+      btn.classList.add("activo");
+      badge.classList.add("visible");
+      iniciarReloj();
+    } else {
+      btn.textContent = "⏱️ Modo Reloj: NO";
+      btn.classList.remove("activo");
+      badge.classList.remove("visible");
+      detenerReloj();
+    }
+  }
+
+  function iniciarReloj() {
+    detenerReloj();
+    segundosRestantes = 180;
+    pintarReloj();
+    intervaloReloj = setInterval(() => {
+      segundosRestantes--;
+      pintarReloj();
+      if (segundosRestantes <= 0) {
+        detenerReloj();
+        mostrarPantallaFinal();
+      }
+    }, 1000);
+  }
+
+  function detenerReloj() {
+    if (intervaloReloj) {
+      clearInterval(intervaloReloj);
+      intervaloReloj = null;
+    }
+  }
+
+  function pintarReloj() {
+    const min = String(Math.floor(segundosRestantes / 60)).padStart(2, "0");
+    const seg = String(segundosRestantes % 60).padStart(2, "0");
+    document.getElementById("reloj-badge").textContent = `⏱️ ${min}:${seg}`;
+  }
+
+  function reiniciarJuego() {
+    detenerReloj();
+    estados = new Array(datosRosco.length).fill("pendiente");
+    indiceActual = 0;
+    pistaUsada = false;
+    bloqueado = false;
+
+    document.getElementById("vista-juego").style.display = "block";
+    document.getElementById("pantalla-final").classList.remove("visible");
+    ocultarFeedback();
+    construirRosco();
+    actualizarInterfaz();
+
+    if (relojActivo) {
+      iniciarReloj();
+    }
+  }
+
+  /* Animación ligera de confeti al ganar */
+  function lanzarConfeti() {
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colores = ["#ff4081", "#ffd740", "#00e5ff", "#00c853", "#ff9100", "#7c4dff"];
+    const piezas = Array.from({ length: 110 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * -canvas.height * 0.5,
+      w: 8 + Math.random() * 6,
+      h: 10 + Math.random() * 6,
+      vx: (Math.random() - 0.5) * 4,
+      vy: 3 + Math.random() * 4,
+      rot: Math.random() * 360,
+      vrot: (Math.random() - 0.5) * 10,
+      color: colores[Math.floor(Math.random() * colores.length)]
+    }));
+
+    let frames = 0;
+    function animar() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      piezas.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vrot;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+      frames++;
+      if (frames < 170) {
+        requestAnimationFrame(animar);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    animar();
+  }
+
+  reiniciarJuego();
+</script>
+
+</body>
+</html>
