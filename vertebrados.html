@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Timbre del Recreo | Grupos de Vertebrados (3.º Primaria)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8faf9;
+            --surface: #ffffff;
+            --dark: #1e293b;
+            --muted: #475569;
+            --border: #e2e8f0;
+            --emerald: #059669;
+            --emerald-dark: #047857;
+            --emerald-bg: #ecfdf5;
+            --sky: #0284c7;
+            --sky-bg: #f0f9ff;
+            --amber: #f59e0b;
+            --amber-bg: #fffbeb;
+            --rose: #e11d48;
+            --rose-bg: #fff1f2;
+            --radius: 20px;
+            --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(180deg, #ecfdf5 0%, #f0f9ff 55%, var(--bg) 100%);
+            color: var(--dark);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+            margin-top: 0;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 28px 20px 56px;
+        }
+
+        .topbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.94);
+            border: 2px solid #a7f3d0;
+            border-radius: 18px;
+            padding: 14px 20px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .brand {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand span {
+            color: var(--emerald);
+        }
+
+        .score-badge {
+            background: var(--emerald-bg);
+            border: 1px solid #6ee7b7;
+            color: var(--emerald-dark);
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+        }
+
+        .hero-box {
+            background: var(--surface);
+            border: 2px solid #a7f3d0;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+        }
+
+        .pill {
+            display: inline-block;
+            background: var(--emerald-bg);
+            color: var(--emerald-dark);
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .rule-tip {
+            background: var(--sky-bg);
+            border-left: 4px solid var(--sky);
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #0c4a6e;
+            font-size: 0.94rem;
+            font-weight: 700;
+            margin-top: 14px;
+        }
+
+        .question-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .q-num {
+            display: inline-block;
+            background: #e2e8f0;
+            color: var(--dark);
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        .q-title {
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+        }
+
+        .photo-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 4 / 3;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .photo-caption {
+            margin-top: 8px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            color: var(--muted);
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .opt-btn {
+            background: #f8fafc;
+            border: 2px solid #cbd5e1;
+            color: var(--dark);
+            padding: 12px 10px;
+            border-radius: 14px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+            transition: transform 0.12s, background-color 0.15s, border-color 0.15s;
+        }
+
+        .opt-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            border-color: var(--emerald);
+            background: var(--emerald-bg);
+        }
+
+        .opt-btn:disabled {
+            cursor: default;
+        }
+
+        .opt-btn.correct {
+            background: var(--emerald-bg);
+            border-color: var(--emerald);
+            color: #065f46;
+        }
+
+        .opt-btn.wrong {
+            background: var(--rose-bg);
+            border-color: var(--rose);
+            color: #9f1239;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            font-weight: 800;
+            font-size: 0.94rem;
+            min-height: 22px;
+        }
+
+        .feedback.ok {
+            color: var(--emerald);
+        }
+
+        .feedback.bad {
+            color: var(--rose);
+        }
+
+        .summary-box {
+            background: var(--surface);
+            border: 2px solid #6ee7b7;
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-top: 24px;
+        }
+
+        .btn-reset {
+            background: var(--emerald);
+            color: #ffffff;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 12px 22px;
+            border-radius: 14px;
+            margin-top: 12px;
+        }
+
+        .btn-reset:hover {
+            background: var(--emerald-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="topbar">
+            <a href="index.html" class="brand">🔔 El Timbre <span>del Recreo</span></a>
+            <div class="score-badge">Aciertos: <span id="score">0</span> / 5 ⭐</div>
+        </div>
+
+        <section class="hero-box">
+            <span class="pill">3.º de Primaria · Conocimiento del Medio</span>
+            <h1>Etiqueta los <span style="color:var(--emerald);">Animales Vertebrados</span></h1>
+            <p style="color:var(--muted); margin:0;">
+                Observa la ilustración de cada animal y elige la etiqueta correcta del grupo de vertebrados al que pertenece:
+                <strong>mamíferos</strong>, <strong>aves</strong>, <strong>reptiles</strong>, <strong>anfibios</strong> o <strong>peces</strong>.
+            </p>
+            <div class="rule-tip">
+                🐾 Los animales vertebrados tienen columna vertebral y esqueleto interno. Cada grupo tiene rasgos que ayudan a identificarlos.
+            </div>
+        </section>
+
+        <main id="quiz-container"></main>
+
+        <section id="summary-box" class="summary-box" style="display:none;" aria-live="polite">
+            <h2 id="summary-title">¡Actividad terminada!</h2>
+            <p id="summary-text" style="color:var(--muted); font-weight:700; margin:6px 0 0;"></p>
+            <button type="button" class="btn-reset" onclick="resetQuiz()">🔄 Volver a intentarlo</button>
+        </section>
+    </div>
+
+    <script>
+        (function () {
+            const GROUPS = ["Mamíferos", "Aves", "Reptiles", "Anfibios", "Peces"];
+
+            const SVG_ART = {
+                mamifero: `
+                    <svg viewBox="0 0 280 210" role="img" aria-label="Ilustración de un perro mamífero">
+                        <rect width="280" height="210" fill="#fef3c7"/>
+                        <rect x="0" y="158" width="280" height="52" fill="#86efac"/>
+                        <!-- Orejas -->
+                        <ellipse cx="95" cy="78" rx="18" ry="30" transform="rotate(18 95 78)" fill="#92400e"/>
+                        <ellipse cx="165" cy="78" rx="18" ry="30" transform="rotate(-18 165 78)" fill="#92400e"/>
+                        <!-- Cabeza -->
+                        <circle cx="130" cy="96" r="36" fill="#d97706"/>
+                        <!-- Hocico -->
+                        <ellipse cx="130" cy="110" rx="18" ry="13" fill="#fde68a"/>
+                        <ellipse cx="130" cy="105" rx="6" ry="4" fill="#1e293b"/>
+                        <!-- Ojos -->
+                        <circle cx="115" cy="88" r="5" fill="#1e293b"/>
+                        <circle cx="145" cy="88" r="5" fill="#1e293b"/>
+                        <circle cx="116" cy="86" r="1.8" fill="#ffffff"/>
+                        <circle cx="146" cy="86" r="1.8" fill="#ffffff"/>
+                        <!-- Cuerpo -->
+                        <ellipse cx="135" cy="148" rx="34" ry="22" fill="#d97706"/>
+                        <!-- Patas -->
+                        <rect x="108" y="156" width="12" height="20" rx="5" fill="#b45309"/>
+                        <rect x="148" y="156" width="12" height="20" rx="5" fill="#b45309"/>
+                        <!-- Cola -->
+                        <path d="M168 144 Q194 126 188 110" fill="none" stroke="#b45309" stroke-width="8" stroke-linecap="round"/>
+                    </svg>
+                `,
+                ave: `
+                    <svg viewBox="0 0 280 210" role="img" aria-label="Ilustración de un pájaro ave">
+                        <rect width="280" height="210" fill="#e0f2fe"/>
+                        <circle cx="232" cy="44" r="22" fill="#fde047"/>
+                        <!-- Cola -->
+                        <polygon points="82,126 52,112 60,136" fill="#0284c7"/>
+                        <!-- Cuerpo -->
+                        <ellipse cx="132" cy="122" rx="48" ry="32" fill="#38bdf8"/>
+                        <!-- Ala -->
+                        <path d="M108 116 Q138 100 154 126 Q132 138 108 116 Z" fill="#0284c7"/>
+                        <!-- Cabeza -->
+                        <circle cx="174" cy="94" r="24" fill="#38bdf8"/>
+                        <!-- Pico -->
+                        <polygon points="196,90 220,96 196,103" fill="#f97316"/>
+                        <!-- Ojo -->
+                        <circle cx="180" cy="89" r="4.5" fill="#0f172a"/>
+                        <circle cx="181.5" cy="87.5" r="1.5" fill="#ffffff"/>
+                        <!-- Patas -->
+                        <line x1="124" y1="152" x2="124" y2="174" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="144" y1="152" x2="144" y2="174" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                `,
+                reptil: `
+                    <svg viewBox="0 0 280 210" role="img" aria-label="Ilustración de una tortuga reptil">
+                        <rect width="280" height="210" fill="#fef9c3"/>
+                        <rect x="0" y="156" width="280" height="54" fill="#fde68a"/>
+                        <!-- Patas -->
+                        <ellipse cx="98" cy="154" rx="14" ry="9" fill="#16a34a"/>
+                        <ellipse cx="166" cy="154" rx="14" ry="9" fill="#16a34a"/>
+                        <!-- Cabeza -->
+                        <ellipse cx="204" cy="134" rx="22" ry="15" fill="#22c55e"/>
+                        <circle cx="212" cy="129" r="4" fill="#0f172a"/>
+                        <!-- Caparazón -->
+                        <path d="M74 148 A62 52 0 0 1 198 148 Z" fill="#15803d"/>
+                        <path d="M106 114 L136 102 L166 114 L156 142 L116 142 Z" fill="none" stroke="#86efac" stroke-width="3"/>
+                    </svg>
+                `,
+                anfibio: `
+                    <svg viewBox="0 0 280 210" role="img" aria-label="Ilustración de una rana anfibio">
+                        <rect width="280" height="210" fill="#ecfdf5"/>
+                        <ellipse cx="140" cy="166" rx="105" ry="22" fill="#6ee7b7"/>
+                        <!-- Patas traseras -->
+                        <path d="M88 152 Q64 134 78 162 L106 162 Z" fill="#16a34a"/>
+                        <path d="M192 152 Q216 134 202 162 L174 162 Z" fill="#16a34a"/>
+                        <!-- Cuerpo -->
+                        <ellipse cx="140" cy="136" rx="46" ry="28" fill="#22c55e"/>
+                        <ellipse cx="140" cy="144" rx="28" ry="15" fill="#bbf7d0"/>
+                        <!-- Ojos saltones -->
+                        <circle cx="116" cy="100" r="14" fill="#22c55e"/>
+                        <circle cx="164" cy="100" r="14" fill="#22c55e"/>
+                        <circle cx="116" cy="100" r="6" fill="#0f172a"/>
+                        <circle cx="164" cy="100" r="6" fill="#0f172a"/>
+                        <!-- Sonrisa -->
+                        <path d="M122 124 Q140 134 158 124" fill="none" stroke="#14532d" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                `,
+                pez: `
+                    <svg viewBox="0 0 280 210" role="img" aria-label="Ilustración de un pez vertebrado">
+                        <rect width="280" height="210" fill="#cffafe"/>
+                        <!-- Burbujas -->
+                        <circle cx="216" cy="76" r="5" fill="#ffffff" opacity="0.8"/>
+                        <circle cx="226" cy="58" r="8" fill="#ffffff" opacity="0.8"/>
+                        <circle cx="218" cy="38" r="4" fill="#ffffff" opacity="0.8"/>
+                        <!-- Cola -->
+                        <polygon points="78,108 42,78 48,108 42,138" fill="#fb923c"/>
+                        <!-- Aleta dorsal -->
+                        <polygon points="122,74 146,52 160,76" fill="#fb923c"/>
+                        <!-- Cuerpo -->
+                        <ellipse cx="138" cy="108" rx="56" ry="34" fill="#f97316"/>
+                        <!-- Escamas / raya -->
+                        <path d="M118 82 Q126 108 118 134" fill="none" stroke="#fed7aa" stroke-width="3"/>
+                        <path d="M138 78 Q146 108 138 138" fill="none" stroke="#fed7aa" stroke-width="3"/>
+                        <!-- Ojo -->
+                        <circle cx="172" cy="98" r="6" fill="#ffffff"/>
+                        <circle cx="173" cy="98" r="3.5" fill="#0f172a"/>
+                    </svg>
+                `
+            };
+
+            const questions = [
+                {
+                    title: "1. ¿A qué grupo de vertebrados pertenece este animal con pelo y crías que toman leche?",
+                    caption: "Animal de sangre caliente con pelo y patas",
+                    svg: SVG_ART.mamifero,
+                    answer: "Mamíferos",
+                    explain: "Es un mamífero: tiene el cuerpo cubierto de pelo y las crías se alimentan de leche."
+                },
+                {
+                    title: "2. Etiqueta este vertebrado con plumas, alas y pico:",
+                    caption: "Vertebrado con alas y plumas",
+                    svg: SVG_ART.ave,
+                    answer: "Aves",
+                    explain: "Es un ave: tiene plumas, alas, pico y nace de huevos."
+                },
+                {
+                    title: "3. ¿Qué etiqueta corresponde a este animal con escamas o caparazón duro?",
+                    caption: "Vertebrado de piel seca con escamas o caparazón",
+                    svg: SVG_ART.reptil,
+                    answer: "Reptiles",
+                    explain: "Es un reptil: tiene escamas o caparazón resistente y respira por pulmones."
+                },
+                {
+                    title: "4. ¿A qué grupo pertenece este animal de piel húmeda que vive cerca del agua?",
+                    caption: "Animal de piel desnuda y húmeda",
+                    svg: SVG_ART.anfibio,
+                    answer: "Anfibios",
+                    explain: "Es un anfibio: tiene la piel húmeda y sin escamas, y suele vivir entre el agua y la tierra."
+                },
+                {
+                    title: "5. Etiqueta este vertebrado que nada con aletas y respira en el agua:",
+                    caption: "Vertebrado acuático con aletas",
+                    svg: SVG_ART.pez,
+                    answer: "Peces",
+                    explain: "Es un pez: vive en el agua, se mueve con aletas y suele tener escamas."
+                }
+            ];
+
+            let score = 0;
+            let answeredCount = 0;
+
+            function renderQuiz() {
+                const container = document.getElementById("quiz-container");
+                container.innerHTML = "";
+                score = 0;
+                answeredCount = 0;
+                document.getElementById("score").textContent = "0";
+                document.getElementById("summary-box").style.display = "none";
+
+                questions.forEach((q, qIdx) => {
+                    const card = document.createElement("article");
+                    card.className = "question-card";
+
+                    const badge = document.createElement("span");
+                    badge.className = "q-num";
+                    badge.textContent = "Pregunta " + (qIdx + 1) + " de " + questions.length;
+
+                    const title = document.createElement("h2");
+                    title.className = "q-title";
+                    title.textContent = q.title;
+
+                    const photoPanel = document.createElement("div");
+                    photoPanel.className = "photo-panel";
+
+                    const photoFrame = document.createElement("div");
+                    photoFrame.className = "photo-frame";
+                    photoFrame.innerHTML = q.svg;
+
+                    const caption = document.createElement("div");
+                    caption.className = "photo-caption";
+                    caption.textContent = q.caption;
+
+                    photoPanel.appendChild(photoFrame);
+                    photoPanel.appendChild(caption);
+
+                    const optsDiv = document.createElement("div");
+                    optsDiv.className = "options";
+
+                    const feedback = document.createElement("div");
+                    feedback.className = "feedback";
+
+                    GROUPS.forEach((groupName) => {
+                        const btn = document.createElement("button");
+                        btn.type = "button";
+                        btn.className = "opt-btn";
+                        btn.textContent = groupName;
+                        btn.addEventListener("click", () => {
+                            const allButtons = optsDiv.querySelectorAll("button");
+                            allButtons.forEach((b) => { b.disabled = true; });
+
+                            if (groupName === q.answer) {
+                                btn.classList.add("correct");
+                                feedback.className = "feedback ok";
+                                feedback.textContent = "✅ ¡Correcto! " + q.explain;
+                                score += 1;
+                                document.getElementById("score").textContent = String(score);
+                            } else {
+                                btn.classList.add("wrong");
+                                allButtons.forEach((b) => {
+                                    if (b.textContent === q.answer) b.classList.add("correct");
+                                });
+                                feedback.className = "feedback bad";
+                                feedback.textContent = "❌ No es ese grupo. " + q.explain;
+                            }
+
+                            answeredCount += 1;
+                            if (answeredCount === questions.length) {
+                                showSummary();
+                            }
+                        });
+                        optsDiv.appendChild(btn);
+                    });
+
+                    card.appendChild(badge);
+                    card.appendChild(title);
+                    card.appendChild(photoPanel);
+                    card.appendChild(optsDiv);
+                    card.appendChild(feedback);
+                    container.appendChild(card);
+                });
+            }
+
+            function showSummary() {
+                const box = document.getElementById("summary-box");
+                const title = document.getElementById("summary-title");
+                const text = document.getElementById("summary-text");
+
+                if (score === 5) {
+                    title.textContent = "🏆 ¡Fantástico! Dominas los vertebrados";
+                } else if (score >= 3) {
+                    title.textContent = "👏 ¡Muy buen trabajo!";
+                } else {
+                    title.textContent = "🌱 ¡Buen comienzo! Repasa y vuelve a probar";
+                }
+
+                text.textContent = "Has conseguido " + score + " de " + questions.length + " etiquetas correctas.";
+                box.style.display = "block";
+                box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+
+            window.resetQuiz = renderQuiz;
+            renderQuiz();
+        })();
+    </script>
+</body>
+</html>
